@@ -1,0 +1,22 @@
+{
+  "name": "to-do-app-fullstack",
+  "version": "1.0.0",
+  "description": "Todo app with deployment to aws",
+  "license": "ISC",
+  "author": "shanto",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "migrate": "node-pg-migrate"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "node-pg-migrate": "^8.0.4"
+  }
+}

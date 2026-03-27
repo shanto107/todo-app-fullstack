@@ -1,0 +1,29 @@
+# node modules
+node_modules/
+**/node_modules/
+#.env files
+.env
+backend/.env
+frontend/.env
+#build files
+.vite/
+frontend/dist/
+frontend/.vite/
+dist/
+build/
+#OS files
+.DS_Store
+Thumbs.db
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Sensitive variables
+terraform.tfvars
+*.tfvars
+
+# Optional (keep or remove based on preference)
+terraform/.terraform.lock.hcl
