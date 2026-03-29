@@ -1,6 +1,5 @@
-variable "project_name" {
+variable "name" {
   type    = string
-  default = "todo_app"
 }
 
 variable "ami_id" {
@@ -34,6 +33,10 @@ variable "key_name" {
   default = "main"
 }
 
-variable "user_data_path" {
+variable "associate_public_ip_address" {
+  type = bool
+}
+
+variable "user_data" {
   type = string
 }

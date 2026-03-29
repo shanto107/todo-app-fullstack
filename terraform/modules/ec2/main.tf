@@ -3,13 +3,13 @@ resource "aws_instance" "this" {
   instance_type               = var.instance_type
   subnet_id                   = var.subnet_id
   vpc_security_group_ids      = var.security_group_ids
-  associate_public_ip_address = true
+  associate_public_ip_address = var.associate_public_ip_address
   key_name                    = var.key_name
 
-  user_data = file(var.user_data_path)
+  user_data = var.user_data
   user_data_replace_on_change = true
 
   tags = {
-    Name = "${var.project_name}_frontend_server"
+    Name = var.name
   }
 }

@@ -1,27 +1,17 @@
 resource "aws_security_group" "this" {
-  name        = "${var.project_name}_sg"
-  description = "allow http, https, ssh"
+  name        = var.name
+  description = var.description
   vpc_id      = var.vpc_id
-  ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.own_ip]
-  }
-  ingress {
-    description = "HTTP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    description = "HTTPS"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  dynamic "ingress" {
+    for_each = var.ingress_rules
+    content {
+      from_port       = ingress.value.from_port
+      to_port         = ingress.value.to_port
+      protocol        = ingress.value.protocol
+      cidr_blocks     = try(ingress.value.cidr_blocks, null)
+      security_groups = try(ingress.value.source_security_groups, null)
+      description     = try(ingress.value.description, null)
+    }
   }
   egress {
     from_port   = 0
@@ -31,6 +21,6 @@ resource "aws_security_group" "this" {
   }
 
   tags = {
-    Name = "${var.project_name}_sg"
+    Name = var.name
   }
 }

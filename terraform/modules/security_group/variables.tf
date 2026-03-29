@@ -1,6 +1,5 @@
-variable "project_name" {
+variable "name" {
   type    = string
-  default = "todo_app"
 }
 
 variable "vpc_id" {
@@ -8,7 +7,10 @@ variable "vpc_id" {
   description = "vpc id for security group"
 }
 
-variable "own_ip" {
-  type        = string
-  description = "ip of own device"
+variable "description" {
+  type = string
+}
+
+variable "ingress_rules" {
+  type = list(any)
 }
