@@ -4,10 +4,18 @@ exec > >(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get clean
-rm -rf /var/lib/apt/lists/*
-apt-get update -o Acquire::Retries=5
-apt-get install -y --fix-missing curl git build-essential libatomic1 ca-certificates
+# apt-get clean
+# rm -rf /var/lib/apt/lists/*
+# apt-get update -o Acquire::Retries=5
+# apt-get install -y --fix-missing curl git build-essential libatomic1 ca-certificates
+
+for i in 1 2 3 4 5; do
+  apt-get clean
+  rm -rf /var/lib/apt/lists/*
+  apt-get update -o Acquire::Retries=5 && \
+  apt-get install -y --fix-missing curl git build-essential libatomic1 ca-certificates && break
+  sleep 10
+done
 
 sudo -u ubuntu -H bash -lc "
 export NVM_DIR=\"\$HOME/.nvm\"

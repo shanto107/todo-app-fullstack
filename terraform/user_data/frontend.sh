@@ -56,6 +56,8 @@ chown -R www-data:www-data /var/www/todo
 cat > /etc/nginx/sites-available/default <<'EOT'
 server {
     listen 80;
+    server_name todo.shanto.app;
+    
     root /var/www/todo;
     index index.html;
 

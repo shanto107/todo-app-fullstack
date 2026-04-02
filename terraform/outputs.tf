@@ -13,3 +13,11 @@ output "db_private_ip" {
 output "vpc_id" {
   value = module.vpc.vpc_id
 }
+
+output "alb_dns_name" {
+  value = aws_lb.alb.dns_name
+}
+
+output "todo_app_url" {
+  value = "https://${var.domain_name}"
+}

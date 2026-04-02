@@ -113,13 +113,12 @@ module "db_private_route_table" {
   name       = "${var.project_name}-db-private-rt"
 }
 
-
-# security group for frontend
-module "frontend_security_group" {
+# security group for application load balancer 
+module "alb_security_group" {
   source      = "./modules/security_group"
-  name        = "${var.project_name}-frontend-sg"
+  name        = "${var.project_name}-alb-sg"
   vpc_id      = module.vpc.vpc_id
-  description = "Frontend Security Group"
+  description = "ALB Security Group"
   ingress_rules = [
     {
       from_port   = 80
@@ -134,13 +133,33 @@ module "frontend_security_group" {
       protocol    = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
       description = "https"
+    }
+  ]
+}
+
+
+# security group for frontend
+module "frontend_security_group" {
+  source      = "./modules/security_group"
+  name        = "${var.project_name}-frontend-sg"
+  vpc_id      = module.vpc.vpc_id
+  description = "Frontend Security Group"
+  ingress_rules = [
+    {
+      from_port              = 80
+      to_port                = 80
+      protocol               = "tcp"
+      cidr_blocks            = []
+      source_security_groups = [module.alb_security_group.sg_id]
+      description            = "http"
     },
     {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-      description = "ssh"
+      from_port              = 22
+      to_port                = 22
+      protocol               = "tcp"
+      cidr_blocks            = ["0.0.0.0/0"]
+      source_security_groups = []
+      description            = "ssh"
     }
   ]
 }
@@ -193,6 +212,8 @@ module "db_instance" {
   associate_public_ip_address = false
   security_group_ids          = [module.db_security_group.sg_id]
   user_data                   = file("${path.module}/user_data/database.sh")
+
+  depends_on = [module.ngw, module.db_private_route_table]
 }
 
 #backend ec2 instance
@@ -209,6 +230,8 @@ module "backend_instance" {
   user_data = templatefile("${path.module}/user_data/backend.sh", {
     db_host = module.db_instance.private_ip
   })
+
+  depends_on = [module.ngw, module.backend_private_route_table]
 }
 
 #frontend ec2 instance
@@ -225,6 +248,102 @@ module "frontend_instance" {
   user_data = templatefile("${path.module}/user_data/frontend.sh", {
     backend_private_ip = module.backend_instance.private_ip
   })
+
+  depends_on = [module.backend_instance]
 }
+
+# data source from aws rotue53 hosted zone 
+data "aws_route53_zone" "main" {
+  name         = var.hosted_zone
+  private_zone = false
+}
+
+# creating alb-target-group
+resource "aws_lb_target_group" "alb_tg" {
+  name     = "${var.project_name}-alb-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = module.vpc.vpc_id
+
+  health_check {
+    enabled             = true
+    interval            = 30
+    path                = "/"
+    protocol            = "HTTP"
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    matcher             = "200"
+  }
+
+  tags = {
+    Name = "${var.project_name}-alb-tg"
+  }
+}
+
+# attach frontend to alb-target-group
+resource "aws_lb_target_group_attachment" "frontend_tg_attachment" {
+  target_group_arn = aws_lb_target_group.alb_tg.arn
+  target_id        = module.frontend_instance.instance_id
+  port             = 80
+}
+
+# creating application-load-balancer
+resource "aws_lb" "alb" {
+  name                       = "${var.project_name}-alb"
+  internal                   = false
+  load_balancer_type         = "application"
+  security_groups            = [module.alb_security_group.sg_id]
+  subnets                    = [module.frontend_public_subnet_az1.subnet_id, module.frontend_public_subnet_az2.subnet_id]
+  enable_deletion_protection = false
+
+  tags = {
+    Name = "${var.project_name}-alb"
+  }
+}
+
+# alb-listener for http 
+resource "aws_lb_listener" "http_listener" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+    redirect {
+      port        = 443
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+# alb-listener for https
+resource "aws_lb_listener" "https_listener" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.acm_certificate_arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb_tg.arn
+  }
+}
+
+# route53 alias record
+resource "aws_route53_record" "route53_record" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = var.domain_name
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.alb.dns_name
+    zone_id                = aws_lb.alb.zone_id
+    evaluate_target_health = true
+  }
+}
+
 
 

@@ -4,10 +4,18 @@ exec > >(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get clean
-rm -rf /var/lib/apt/lists/*
-apt-get update -o Acquire::Retries=5
-apt-get install -y --fix-missing postgresql postgresql-contrib
+# apt-get clean
+# rm -rf /var/lib/apt/lists/*
+# apt-get update -o Acquire::Retries=5
+# apt-get install -y --fix-missing postgresql postgresql-contrib
+
+for i in 1 2 3 4 5; do
+  apt-get clean
+  rm -rf /var/lib/apt/lists/*
+  apt-get update -o Acquire::Retries=5 && \
+  apt-get install -y --fix-missing postgresql postgresql-contrib && break
+  sleep 10
+done
 
 systemctl enable postgresql
 systemctl start postgresql

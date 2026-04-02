@@ -33,3 +33,17 @@ variable "instance_type" {
 variable "key_name" {
   type = string
 }
+
+variable "hosted_zone" {
+  type = string
+  default = "shanto.app"
+}
+
+variable "domain_name" {
+  type = string
+  default = "todo.shanto.app"
+}
+
+variable "acm_certificate_arn" {
+  type = string
+}
