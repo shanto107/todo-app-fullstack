@@ -94,7 +94,6 @@ module "public_route_table_az2" {
 }
 
 # route table for private subnet and ngw
-
 module "backend_private_route_table" {
   source     = "./modules/route_table"
   vpc_id     = module.vpc.vpc_id
