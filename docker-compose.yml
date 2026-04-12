@@ -1,0 +1,84 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: db-container
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env.docker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todo_app_user -d todo_app_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - todo-app-data:/var/lib/postgresql/data
+    networks:
+      - backend
+  migrate:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: todo-migration-image:1.0.0
+    container_name: migration-container
+    restart: no
+    env_file:
+      - ./backend/.env.docker
+    command: ["npm", "run", "migrate", "up"]
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: todo-backend-image:1.0.0
+    container_name: backend-container
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend/.env.docker
+    command: ["npm", "run", "dev"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    volumes:
+      - type: bind
+        source: ./backend
+        target: /todo-app/backend
+      - type: volume
+        target: /todo-app/backend/node_modules
+    networks:
+      - frontend
+      - backend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: todo-frontend-image:1.0.0
+    container_name: frontend-container
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /todo-app/frontend
+      - type: volume
+        target: /todo-app/frontend/node_modules
+    networks:
+      - frontend
+volumes:
+  todo-app-data:
+networks:
+  backend:
+  frontend:

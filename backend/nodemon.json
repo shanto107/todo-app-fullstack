@@ -1,0 +1,12 @@
+{
+    "watch": [
+        "controllers",
+        "db",
+        "routes",
+        "server.js"
+    ],
+    "ext": "js,json",
+    "ignore": ["node_modules", "migrations"],
+    "delay": 500,
+    "poll": true
+}
