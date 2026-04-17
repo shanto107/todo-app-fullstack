@@ -30,4 +30,4 @@ terraform.tfvars
 terraform/.terraform.lock.hcl
 
 # docker
-docker-stack.yml
+docker-secrets.sh

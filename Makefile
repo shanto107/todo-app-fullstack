@@ -57,6 +57,6 @@ release-images-all-platforms: build-images-all-platforms inspect-images
 aws-deploy:
 	docker --context $(DOCKER_CONTEXT) stack deploy -c docker-stack.yml --with-registry-auth $(DEPLOY_STACK_NAME)
 
-.PHONY: aws-deploy-status
-aws-deploy-status:
+.PHONY: get-aws-deploy-status
+get-aws-deploy-status:
 	docker --context $(DOCKER_CONTEXT) stack services $(DEPLOY_STACK_NAME)

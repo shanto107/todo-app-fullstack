@@ -1,0 +1,125 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment: 
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB_FILE: /run/secrets/db_name
+    secrets: 
+      - db_user
+      - db_password
+      - db_name
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todo_app_user -d todo_app_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - todo-app-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      restart_policy: 
+        condition: on-failure
+  
+  migrate:
+    image: shanto15/todo-backend:1.0.0
+    secrets:
+      - database_url
+    command: 
+      - sh
+      - -c
+      - |
+        export DATABASE_URL="$$(cat /run/secrets/database_url)"
+        until nc -z db 5432; do echo "waiting for db..."; sleep 2; done
+        npm run migrate up 
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      restart_policy: 
+        condition: none
+  
+  backend:
+    image: shanto15/todo-backend:1.0.0
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: ingress
+    command:
+      - sh
+      - -c 
+      - |
+        export DB_USER="$$(cat /run/secrets/db_user)"
+        export DB_HOST="$$(cat /run/secrets/db_host)"
+        export DB_NAME="$$(cat /run/secrets/db_name)"
+        export DB_PASSWORD="$$(cat /run/secrets/db_password)"
+        export DB_PORT="$$(cat /run/secrets/db_port)"
+        export DATABASE_URL="$$(cat /run/secrets/database_url)"
+        export PORT="$$(cat /run/secrets/backend_port)"
+        exec npm start 
+    secrets:
+      - db_user
+      - db_host
+      - db_name
+      - db_password
+      - db_port
+      - database_url
+      - backend_port
+    networks:
+      - frontend
+      - backend
+    deploy:
+      replicas: 1
+      restart_policy: 
+        condition: on-failure
+      update_config:
+        order: start-first
+    
+  frontend:
+    image: shanto15/todo-frontend:1.0.0
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: ingress
+    networks:
+      - frontend
+    deploy:
+      replicas: 1
+      restart_policy: 
+        condition: on-failure
+      update_config:
+        order: start-first
+    
+volumes:
+  todo-app-data:
+
+networks:
+  backend:
+    driver: overlay
+    attachable: true
+  frontend:
+    driver: overlay
+    attachable: true
+
+secrets: 
+  db_user:
+    external: true
+  db_password:
+    external: true
+  db_host:
+    external: true
+  db_port:
+    external: true
+  database_url:
+    external: true
+  db_name:
+    external: true
+  backend_port:
+    external: true
