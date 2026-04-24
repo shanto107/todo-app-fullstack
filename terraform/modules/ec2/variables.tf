@@ -1,5 +1,5 @@
 variable "name" {
-  type    = string
+  type = string
 }
 
 variable "ami_id" {
@@ -39,4 +39,9 @@ variable "associate_public_ip_address" {
 
 variable "user_data" {
   type = string
+}
+
+variable "iam_instance_profile" {
+  type    = string
+  default = null
 }

@@ -28,6 +28,7 @@ terraform.tfvars
 
 # Optional (keep or remove based on preference)
 terraform/.terraform.lock.hcl
+**/.terraform.lock.hcl
 
 # docker
 docker-secrets.sh

@@ -10,6 +10,7 @@ resource "aws_security_group" "this" {
       protocol        = ingress.value.protocol
       cidr_blocks     = try(ingress.value.cidr_blocks, null)
       security_groups = try(ingress.value.source_security_groups, null)
+      self            = try(ingress.value.self, null)
       description     = try(ingress.value.description, null)
     }
   }

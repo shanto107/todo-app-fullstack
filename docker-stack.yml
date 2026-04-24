@@ -23,6 +23,9 @@ services:
       - backend
     deploy:
       replicas: 1
+      placement:
+        constraints: 
+          - node.labels.role == db-node
       restart_policy: 
         condition: on-failure
   
@@ -41,6 +44,9 @@ services:
       - backend
     deploy:
       replicas: 1
+      placement:
+        constraints: 
+          - node.labels.role == app-node
       restart_policy: 
         condition: none
   
@@ -75,11 +81,18 @@ services:
       - frontend
       - backend
     deploy:
-      replicas: 1
+      replicas: 2
+      placement:
+        constraints:
+          - node.labels.role == app-node
+        preferences: 
+          - spread: node.id
       restart_policy: 
         condition: on-failure
       update_config:
+        parallelism: 1
         order: start-first
+        delay: 10s
     
   frontend:
     image: shanto15/todo-frontend:1.0.0
@@ -91,11 +104,18 @@ services:
     networks:
       - frontend
     deploy:
-      replicas: 1
+      replicas: 2
+      placement:
+        constraints:
+          - node.labels.role == app-node
+        preferences: 
+          - spread: node.id
       restart_policy: 
         condition: on-failure
       update_config:
+        parallelism: 1
         order: start-first
+        delay: 10s
     
 volumes:
   todo-app-data:
