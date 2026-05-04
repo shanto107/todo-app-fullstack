@@ -32,3 +32,9 @@ terraform/.terraform.lock.hcl
 
 # docker
 docker-secrets.sh
+
+# TypeScript cache
+*.tsbuildinfo
+
+# local dev
+*.local

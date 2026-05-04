@@ -21,7 +21,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: todo-migration-image:1.0.0
+    image: todo-migration-image:1.0.1
     container_name: migration-container
     restart: no
     env_file:
@@ -36,7 +36,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: todo-backend-image:1.0.0
+    image: todo-backend-image:1.0.1
     container_name: backend-container
     restart: unless-stopped
     ports:
@@ -60,7 +60,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: todo-frontend-image:1.0.0
+    image: todo-frontend-image:1.0.1
     container_name: frontend-container
     restart: unless-stopped
     ports:
