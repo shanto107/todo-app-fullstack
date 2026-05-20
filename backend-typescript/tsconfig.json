@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "nodenext",
+        "strict": true,
+        "moduleResolution": "nodenext",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "noUncheckedIndexedAccess": true,
+        "allowUnreachableCode": false,
+        "lib": ["ESNext"],
+        "types": ["node"],
+        "noEmit": true
+    },
+    "include": ["src/**/*.ts", "tests/**/*.ts", "drizzle.config.ts"],
+    "exclude": ["node_modules", "dist"]
+}

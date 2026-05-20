@@ -38,3 +38,5 @@ docker-secrets.sh
 
 # local dev
 *.local
+
+backend-typescript/Makefile
