@@ -7,10 +7,10 @@ export async function createTasks(app: Express, numberOfTasks: number) {
         Array.from({ length: numberOfTasks }, (_, index) => {
             let requestBody = {
                 title: `title ${index + 1}`,
-                description: `description ${index + 1}`
-            }
+                description: `description ${index + 1}`,
+            };
             return request(app).post(postEndpoint).send(requestBody);
-        })
+        }),
     );
     return responses;
 }

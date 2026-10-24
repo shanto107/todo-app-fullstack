@@ -6,7 +6,7 @@ import {
     inArray,
     isNotNull,
     isNull,
-    lte
+    lte,
 } from "drizzle-orm";
 import { type DB } from "../../db/index.js";
 import { tasks } from "../../db/schema/tasks.js";
@@ -26,7 +26,7 @@ export type TaskRepo = {
     addTask: (newTask: NewTask) => Promise<Task>;
     getTasks: (filters: TaskQuery) => Promise<PaginatedTasks>;
     getTaskById: (id: string) => Promise<Task>;
-    getTaskCounts: () => Promise<TaskCounts>
+    getTaskCounts: () => Promise<TaskCounts>;
     updateTask: (payload: UpdateTaskPayload) => Promise<Task>;
     deleteTask: (id: string) => Promise<Task>;
     restoreTask: (id: string) => Promise<Task>;
@@ -36,49 +36,38 @@ export type TaskRepo = {
     bulkDeleteTasks: (ids: string[]) => Promise<number>;
     bulkRestoreTasks: (ids: string[]) => Promise<number>;
     // bulkPermanentDeleteTasks: (ids: string[]) => Promise<number>;
-}
+};
 
 export function createTaskRepo(db: DB): TaskRepo {
-
     return {
         async addTask(newTask: NewTask): Promise<Task> {
-            const [result] = await db
-                .insert(tasks)
-                .values(newTask)
-                .returning();
+            const [result] = await db.insert(tasks).values(newTask).returning();
             if (!result) {
-                throw new Error("Failed to create new Task! Please try again!")
+                throw new Error("Failed to create new Task! Please try again!");
             }
             return result;
         },
 
         async getTasks(query: TaskQuery): Promise<PaginatedTasks> {
-            const { where, orderBy, page, limit, offset } = buildTaskQuery(query);
+            const { where, orderBy, page, limit, offset } =
+                buildTaskQuery(query);
 
-            const [items, numberOfItems] = await Promise.all(
-                [
-                    db
-                        .select()
-                        .from(tasks)
-                        .where(
-                            and(...where)
-                        )
-                        .orderBy(orderBy)
-                        .limit(limit)
-                        .offset(offset),
+            const [items, numberOfItems] = await Promise.all([
+                db
+                    .select()
+                    .from(tasks)
+                    .where(and(...where))
+                    .orderBy(orderBy)
+                    .limit(limit)
+                    .offset(offset),
 
-                    db
-                        .select(
-                            {
-                                count: count()
-                            }
-                        )
-                        .from(tasks)
-                        .where(
-                            and(...where)
-                        )
-                ]
-            );
+                db
+                    .select({
+                        count: count(),
+                    })
+                    .from(tasks)
+                    .where(and(...where)),
+            ]);
 
             const total = Number(numberOfItems[0]?.count ?? 0);
             const totalPages = Math.ceil(total / limit);
@@ -89,20 +78,16 @@ export function createTaskRepo(db: DB): TaskRepo {
                     page,
                     limit,
                     total,
-                    totalPages
-                }
-            }
+                    totalPages,
+                },
+            };
         },
 
         async getTaskById(id: string): Promise<Task> {
             const [result] = await db
                 .select()
                 .from(tasks)
-                .where(
-                    and(
-                        eq(tasks.id, id),
-                    )
-                )
+                .where(and(eq(tasks.id, id)));
             if (!result) {
                 throw new NotFoundError(`Task with id [${id}] not found!`);
             }
@@ -120,7 +105,7 @@ export function createTaskRepo(db: DB): TaskRepo {
                 [todayCountsRow],
                 [upcomingCountsRow],
                 [completedCountsRow],
-                [deletedCountsRow]
+                [deletedCountsRow],
             ] = await Promise.all([
                 db
                     .select({ inbox: count() })
@@ -128,8 +113,8 @@ export function createTaskRepo(db: DB): TaskRepo {
                     .where(
                         and(
                             inArray(tasks.status, ["todo", "in_progress"]),
-                            isNull(tasks.deletedAt)
-                        )
+                            isNull(tasks.deletedAt),
+                        ),
                     ),
 
                 db
@@ -139,8 +124,8 @@ export function createTaskRepo(db: DB): TaskRepo {
                         and(
                             inArray(tasks.status, ["todo", "in_progress"]),
                             lte(tasks.deadline, endOfToday),
-                            isNull(tasks.deletedAt)
-                        )
+                            isNull(tasks.deletedAt),
+                        ),
                     ),
 
                 db
@@ -150,26 +135,21 @@ export function createTaskRepo(db: DB): TaskRepo {
                         and(
                             inArray(tasks.status, ["todo", "in_progress"]),
                             gte(tasks.deadline, startOfTomorrow),
-                            isNull(tasks.deletedAt)
-                        )
+                            isNull(tasks.deletedAt),
+                        ),
                     ),
 
                 db
                     .select({ completed: count() })
                     .from(tasks)
                     .where(
-                        and(
-                            eq(tasks.status, "done"),
-                            isNull(tasks.deletedAt)
-                        )
+                        and(eq(tasks.status, "done"), isNull(tasks.deletedAt)),
                     ),
 
                 db
                     .select({ deleted: count() })
                     .from(tasks)
-                    .where(
-                        isNotNull(tasks.deletedAt)
-                    )
+                    .where(isNotNull(tasks.deletedAt)),
             ]);
 
             return {
@@ -177,8 +157,8 @@ export function createTaskRepo(db: DB): TaskRepo {
                 today: Number(todayCountsRow?.today ?? 0),
                 upcoming: Number(upcomingCountsRow?.upcoming ?? 0),
                 completed: Number(completedCountsRow?.completed ?? 0),
-                deleted: Number(deletedCountsRow?.deleted ?? 0)
-            }
+                deleted: Number(deletedCountsRow?.deleted ?? 0),
+            };
         },
 
         async updateTask(payload: UpdateTaskPayload): Promise<Task> {
@@ -186,12 +166,7 @@ export function createTaskRepo(db: DB): TaskRepo {
             const [result] = await db
                 .update(tasks)
                 .set(updates)
-                .where(
-                    and(
-                        eq(tasks.id, id),
-                        isNull(tasks.deletedAt)
-                    )
-                )
+                .where(and(eq(tasks.id, id), isNull(tasks.deletedAt)))
                 .returning();
             if (!result) {
                 throw new NotFoundError(`Task with id [${id}] not found!`);
@@ -202,17 +177,10 @@ export function createTaskRepo(db: DB): TaskRepo {
         async deleteTask(id: string): Promise<Task> {
             const [result] = await db
                 .update(tasks)
-                .set(
-                    {
-                        deletedAt: new Date()
-                    }
-                )
-                .where(
-                    and(
-                        eq(tasks.id, id),
-                        isNull(tasks.deletedAt)
-                    )
-                )
+                .set({
+                    deletedAt: new Date(),
+                })
+                .where(and(eq(tasks.id, id), isNull(tasks.deletedAt)))
                 .returning();
             if (!result) {
                 throw new NotFoundError(`Task with id [${id}] not found!`);
@@ -223,17 +191,10 @@ export function createTaskRepo(db: DB): TaskRepo {
         async restoreTask(id: string): Promise<Task> {
             const [result] = await db
                 .update(tasks)
-                .set(
-                    {
-                        deletedAt: null
-                    }
-                )
-                .where(
-                    and(
-                        eq(tasks.id, id),
-                        isNotNull(tasks.deletedAt)
-                    )
-                )
+                .set({
+                    deletedAt: null,
+                })
+                .where(and(eq(tasks.id, id), isNotNull(tasks.deletedAt)))
                 .returning();
             if (!result) {
                 throw new NotFoundError(`Task with id [${id}] not found!`);
@@ -245,17 +206,10 @@ export function createTaskRepo(db: DB): TaskRepo {
         async bulkCompleteTasks(ids: string[]): Promise<number> {
             const result = await db
                 .update(tasks)
-                .set(
-                    {
-                        status: "done"
-                    }
-                )
-                .where(
-                    and(
-                        inArray(tasks.id, ids),
-                        isNull(tasks.deletedAt)
-                    )
-                )
+                .set({
+                    status: "done",
+                })
+                .where(and(inArray(tasks.id, ids), isNull(tasks.deletedAt)))
                 .returning({ id: tasks.id });
             return result.length;
         },
@@ -263,17 +217,10 @@ export function createTaskRepo(db: DB): TaskRepo {
         async bulkActivateTasks(ids: string[]): Promise<number> {
             const result = await db
                 .update(tasks)
-                .set(
-                    {
-                        status: "todo"
-                    }
-                )
-                .where(
-                    and(
-                        inArray(tasks.id, ids),
-                        isNull(tasks.deletedAt)
-                    )
-                )
+                .set({
+                    status: "todo",
+                })
+                .where(and(inArray(tasks.id, ids), isNull(tasks.deletedAt)))
                 .returning({ id: tasks.id });
             return result.length;
         },
@@ -281,17 +228,10 @@ export function createTaskRepo(db: DB): TaskRepo {
         async bulkDeleteTasks(ids: string[]): Promise<number> {
             const result = await db
                 .update(tasks)
-                .set(
-                    {
-                        deletedAt: new Date()
-                    }
-                )
-                .where(
-                    and(
-                        inArray(tasks.id, ids),
-                        isNull(tasks.deletedAt)
-                    )
-                )
+                .set({
+                    deletedAt: new Date(),
+                })
+                .where(and(inArray(tasks.id, ids), isNull(tasks.deletedAt)))
                 .returning({ id: tasks.id });
             return result.length;
         },
@@ -299,16 +239,12 @@ export function createTaskRepo(db: DB): TaskRepo {
         async bulkRestoreTasks(ids: string[]): Promise<number> {
             const result = await db
                 .update(tasks)
-                .set(
-                    {
-                        deletedAt: null
-                    }
-                )
-                .where(
-                    inArray(tasks.id, ids)
-                )
+                .set({
+                    deletedAt: null,
+                })
+                .where(inArray(tasks.id, ids))
                 .returning({ id: tasks.id });
             return result.length;
-        }
-    }
+        },
+    };
 }

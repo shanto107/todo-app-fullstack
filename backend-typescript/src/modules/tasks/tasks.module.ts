@@ -11,6 +11,6 @@ export function createTaskModule(db: DB) {
     return {
         taskRepository: repository,
         taskService: service,
-        taskControllers: controllers
-    }
+        taskControllers: controllers,
+    };
 }

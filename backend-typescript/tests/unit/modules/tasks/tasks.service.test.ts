@@ -1,6 +1,9 @@
 import { describe, expect, test, vi } from "vitest";
 import { createTaskService } from "../../../../src/modules/tasks/tasks.service.js";
-import { UpdateTaskPayload, type NewTask } from "../../../../src/modules/tasks/tasks.types.js";
+import {
+    UpdateTaskPayload,
+    type NewTask,
+} from "../../../../src/modules/tasks/tasks.types.js";
 import { makeMockTask, makeMockTaskRepo } from "../../../helpers/taskMocks.js";
 import * as sanitizeModule from "../../../../src/utils/sanitize.js";
 import { uuidv7 } from "uuidv7";
@@ -10,17 +13,17 @@ describe("taskService.addTask()", () => {
     test("1. calls with sanitized title", async () => {
         // Arrange
         const resolvedTask = makeMockTask({
-            title: "test title !"
+            title: "test title !",
         });
         const repository = makeMockTaskRepo({
-            addTask: vi.fn().mockResolvedValue(resolvedTask)
+            addTask: vi.fn().mockResolvedValue(resolvedTask),
         });
         const input: NewTask = {
-            title: "test    title        !"
-        }
+            title: "test    title        !",
+        };
         const repositoryInput: NewTask = {
-            title: "test title !"
-        }
+            title: "test title !",
+        };
         // Apply
         const service = createTaskService(repository);
         const result = await service.addTask(input);
@@ -34,19 +37,19 @@ describe("taskService.addTask()", () => {
         // Arrange
         const resolvedTask = makeMockTask({
             title: "test title !",
-            description: "test description !"
+            description: "test description !",
         });
         const repository = makeMockTaskRepo({
-            addTask: vi.fn().mockResolvedValue(resolvedTask)
+            addTask: vi.fn().mockResolvedValue(resolvedTask),
         });
         const input: NewTask = {
             title: "test    title        !",
-            description: " test       description           ! "
-        }
+            description: " test       description           ! ",
+        };
         const repositoryInput: NewTask = {
             title: "test title !",
-            description: "test description !"
-        }
+            description: "test description !",
+        };
         // Apply
         const service = createTaskService(repository);
         const result = await service.addTask(input);
@@ -88,7 +91,7 @@ describe("taskService.addTask()", () => {
         const repository = makeMockTaskRepo();
         const input: NewTask = {
             title: "<script>no title</script>",
-        }
+        };
         // Apply
         const service = createTaskService(repository);
         const result = service.addTask(input);
@@ -104,8 +107,10 @@ describe("taskService.addTask()", () => {
         const sanitizeTextSpy = vi.spyOn(sanitizeModule, "sanitizeText");
         const repository = makeMockTaskRepo();
         const input: NewTask = {
-            title: "This is an intentionally very long title used for testing validation rules that enforce maximum length constraints. ".repeat(5),
-        }
+            title: "This is an intentionally very long title used for testing validation rules that enforce maximum length constraints. ".repeat(
+                5,
+            ),
+        };
         // Apply
         const service = createTaskService(repository);
         const result = service.addTask(input);
@@ -122,15 +127,21 @@ describe("taskService.addTask()", () => {
         const repository = makeMockTaskRepo();
         const input: NewTask = {
             title: "test title!",
-            description: "This is an intentionally very long title used for testing validation rules that enforce maximum length constraints. ".repeat(10),
-        }
+            description:
+                "This is an intentionally very long title used for testing validation rules that enforce maximum length constraints. ".repeat(
+                    10,
+                ),
+        };
         // Apply
         const service = createTaskService(repository);
         const result = service.addTask(input);
         // Assert
         expect(result).rejects.toThrow("Description too long!");
         expect(sanitizeTextSpy).toHaveBeenCalledWith("title", input.title);
-        expect(sanitizeTextSpy).toHaveBeenCalledWith("description", input.description);
+        expect(sanitizeTextSpy).toHaveBeenCalledWith(
+            "description",
+            input.description,
+        );
         expect(sanitizeTextSpy).toHaveBeenCalledTimes(2);
         expect(repository.addTask).not.toHaveBeenCalled();
     });
@@ -138,25 +149,26 @@ describe("taskService.addTask()", () => {
 
 // taskService.updateTask()
 describe("taskService.updateTask()", () => {
-
     test("1. update and sanitize title - 1", async () => {
         // Arrange
         const id = uuidv7();
         const resolvedTask = makeMockTask({
             id: id,
-            title: "updated title !"
+            title: "updated title !",
         });
         const repository = makeMockTaskRepo({
-            updateTask: vi.fn((payload: UpdateTaskPayload) => Promise.resolve(resolvedTask)),
+            updateTask: vi.fn((payload: UpdateTaskPayload) =>
+                Promise.resolve(resolvedTask),
+            ),
         });
         const payload: UpdateTaskPayload = {
             id: id,
-            title: "updated    <b>title</b>        !"
-        }
+            title: "updated    <b>title</b>        !",
+        };
         const repositoryInput: UpdateTaskPayload = {
             id: id,
-            title: "updated title !"
-        }
+            title: "updated title !",
+        };
         // Apply
         const service = createTaskService(repository);
         const result = await service.updateTask(payload);
@@ -171,19 +183,21 @@ describe("taskService.updateTask()", () => {
         const id = uuidv7();
         const resolvedTask = makeMockTask({
             id: id,
-            title: "updated title !"
+            title: "updated title !",
         });
         const repository = makeMockTaskRepo({
-            updateTask: vi.fn((payload: UpdateTaskPayload) => Promise.resolve(resolvedTask)),
+            updateTask: vi.fn((payload: UpdateTaskPayload) =>
+                Promise.resolve(resolvedTask),
+            ),
         });
         const payload: UpdateTaskPayload = {
             id: id,
-            title: "<script>alert(1)</script> updated    <b>title</b>        !"
-        }
+            title: "<script>alert(1)</script> updated    <b>title</b>        !",
+        };
         const repositoryInput: UpdateTaskPayload = {
             id: id,
-            title: "updated title !"
-        }
+            title: "updated title !",
+        };
         // Apply
         const service = createTaskService(repository);
         const result = await service.updateTask(payload);
@@ -255,7 +269,7 @@ describe("taskService.updateTask()", () => {
         const payload: UpdateTaskPayload = {
             id: id,
             title: "<script>no title</script>",
-        }
+        };
         // Apply
         const service = createTaskService(repository);
         const result = service.updateTask(payload);
@@ -274,15 +288,21 @@ describe("taskService.updateTask()", () => {
         const payload: UpdateTaskPayload = {
             id: id,
             title: "<script>alert(1)</script> updated title!",
-            description: "This is an intentionally very long title used for testing validation rules that enforce maximum length constraints. ".repeat(10),
-        }
+            description:
+                "This is an intentionally very long title used for testing validation rules that enforce maximum length constraints. ".repeat(
+                    10,
+                ),
+        };
         // Apply
         const service = createTaskService(repository);
         const result = service.updateTask(payload);
         // Assert
         expect(result).rejects.toThrow("Description too long!");
         expect(sanitizeTextSpy).toHaveBeenCalledWith("title", payload.title);
-        expect(sanitizeTextSpy).toHaveBeenCalledWith("description", payload.description);
+        expect(sanitizeTextSpy).toHaveBeenCalledWith(
+            "description",
+            payload.description,
+        );
         expect(sanitizeTextSpy).toHaveBeenCalledTimes(2);
         expect(repository.addTask).not.toHaveBeenCalled();
     });

@@ -1,4 +1,7 @@
-import { taskPriorityValues, taskStatusValues } from "../../modules/tasks/tasks.validation.js";
+import {
+    taskPriorityValues,
+    taskStatusValues,
+} from "../../modules/tasks/tasks.validation.js";
 import { connection, db } from "../index.js";
 import { tasks } from "../schema/tasks.js";
 import { MOCK_TASK_MARKER, mockTasks } from "./mock-tasks.js";
@@ -8,14 +11,10 @@ loadEnvFile(".env");
 
 async function seed() {
     if (process.env.NODE_ENV === "production") {
-        throw new Error(
-            "Database seeding is disabled in production."
-        );
+        throw new Error("Database seeding is disabled in production.");
     }
 
-    console.log(
-        `🚀 Seeding ${mockTasks.length} mock tasks...`
-    );
+    console.log(`🚀 Seeding ${mockTasks.length} mock tasks...`);
 
     const now = new Date();
 
@@ -37,27 +36,20 @@ async function seed() {
             createdAt,
             updatedAt: createdAt,
             deadline,
-            deletedAt
-        }
+            deletedAt,
+        };
     });
 
-    const result = await db
-        .insert(tasks)
-        .values(entries)
-        .returning({
-            id: tasks.id
-        });
+    const result = await db.insert(tasks).values(entries).returning({
+        id: tasks.id,
+    });
 
-    console.log(
-        `✅ Created ${result.length} mock tasks Successfully.`
-    );
+    console.log(`✅ Created ${result.length} mock tasks Successfully.`);
 }
 
 seed()
-    .catch(error => {
-        console.error(
-            "🚫 Failed to seed mock tasks!"
-        );
+    .catch((error) => {
+        console.error("🚫 Failed to seed mock tasks!");
         console.error(error);
         process.exitCode = 1;
     })

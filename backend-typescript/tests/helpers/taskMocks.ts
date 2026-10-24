@@ -11,8 +11,8 @@ export function makeMockTask(overrides: Partial<Task> = {}): Task {
         title: "default title",
         description: "",
         isCompleted: false,
-        ...overrides
-    }
+        ...overrides,
+    };
 }
 
 export function makeMockTaskRepo(overrides: Partial<TaskRepo> = {}): TaskRepo {
@@ -22,6 +22,6 @@ export function makeMockTaskRepo(overrides: Partial<TaskRepo> = {}): TaskRepo {
         getAllTasks: vi.fn().mockResolvedValue([defaultTask]),
         updateTask: vi.fn().mockResolvedValue(defaultTask),
         deleteTask: vi.fn().mockResolvedValue(defaultTask),
-        ...overrides
-    }
+        ...overrides,
+    };
 }

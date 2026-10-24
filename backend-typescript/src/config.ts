@@ -4,34 +4,29 @@ import loadEnvVariable from "./utils/load-env-variables.js";
 type APIConfig = {
     port: number;
     platform: string;
-}
+};
 
 type DBConfig = {
     url: string;
     migrationConfig: MigrationConfig;
-}
+};
 
 type Config = {
     api: APIConfig;
     db: DBConfig;
-}
+};
 
 const config: Config = {
     api: {
         port: +loadEnvVariable("PORT"),
-        platform: loadEnvVariable("NODE_ENV")
+        platform: loadEnvVariable("NODE_ENV"),
     },
     db: {
         url: loadEnvVariable("DB_URL"),
         migrationConfig: {
-            migrationsFolder: "./src/db/migrations"
-        }
-    }
-}
+            migrationsFolder: "./src/db/migrations",
+        },
+    },
+};
 
 export default config;
-
-
-
-
-

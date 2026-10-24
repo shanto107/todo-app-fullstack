@@ -1,7 +1,13 @@
 import { Router } from "express";
 import { TaskControllers } from "./tasks.controllers.js";
 import { validationHandler } from "../../middlewares/validation-handler.js";
-import { bulkTaskActionSchema, createTaskSchema, getTaskSchema, idInParamsSchema, updateTaskSchema } from "./tasks.validation.js";
+import {
+    bulkTaskActionSchema,
+    createTaskSchema,
+    getTaskSchema,
+    idInParamsSchema,
+    updateTaskSchema,
+} from "./tasks.validation.js";
 
 export function createTaskRouter(controllers: TaskControllers) {
     const router = Router();
@@ -9,87 +15,84 @@ export function createTaskRouter(controllers: TaskControllers) {
     router.post(
         "/",
         validationHandler({
-            body: createTaskSchema
+            body: createTaskSchema,
         }),
-        controllers.addTaskHandler
+        controllers.addTaskHandler,
     );
 
     router.get(
         "/",
         validationHandler({
-            query: getTaskSchema
+            query: getTaskSchema,
         }),
-        controllers.getTasksHandler
+        controllers.getTasksHandler,
     );
 
-    router.get(
-        "/counts",
-        controllers.getTaskCountsHandler
-    );
+    router.get("/counts", controllers.getTaskCountsHandler);
 
     router.patch(
         "/bulk/complete",
         validationHandler({
-            body: bulkTaskActionSchema
+            body: bulkTaskActionSchema,
         }),
-        controllers.bulkCompleteTasksHandler
+        controllers.bulkCompleteTasksHandler,
     );
 
     router.patch(
         "/bulk/activate",
         validationHandler({
-            body: bulkTaskActionSchema
+            body: bulkTaskActionSchema,
         }),
-        controllers.bulkActivateTasksHandler
+        controllers.bulkActivateTasksHandler,
     );
 
     router.patch(
         "/bulk/delete",
         validationHandler({
-            body: bulkTaskActionSchema
+            body: bulkTaskActionSchema,
         }),
-        controllers.bulkDeleteTasksHandler
+        controllers.bulkDeleteTasksHandler,
     );
 
     router.patch(
         "/bulk/restore",
         validationHandler({
-            body: bulkTaskActionSchema
+            body: bulkTaskActionSchema,
         }),
-        controllers.bulkRestoreTasksHandler
+        controllers.bulkRestoreTasksHandler,
     );
 
     router.get(
         "/:id",
         validationHandler({
-            params: idInParamsSchema
+            params: idInParamsSchema,
         }),
-        controllers.getTaskByIdHandler
+        controllers.getTaskByIdHandler,
     );
 
     router.put(
         "/:id",
         validationHandler({
             params: idInParamsSchema,
-            body: updateTaskSchema
+            body: updateTaskSchema,
         }),
-        controllers.updateTasksHandler
+        controllers.updateTasksHandler,
     );
 
     router.delete(
         "/:id",
         validationHandler({
-            params: idInParamsSchema
+            params: idInParamsSchema,
         }),
-        controllers.deleteTaskHandler
+        controllers.deleteTaskHandler,
     );
 
     router.patch(
         "/:id/restore",
         validationHandler({
-            params: idInParamsSchema
+            params: idInParamsSchema,
         }),
-        controllers.restoreTaskHandler
+        controllers.restoreTaskHandler,
     );
 
     return router;

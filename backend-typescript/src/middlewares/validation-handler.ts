@@ -1,15 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-import { ZodType } from "zod"
+import { ZodType } from "zod";
 
 type ValidationSchemas = {
     body?: ZodType;
     params?: ZodType;
     query?: ZodType;
-}
+};
 
 export function validationHandler(schemas: ValidationSchemas) {
     return (req: Request, res: Response, next: NextFunction) => {
-
         if (schemas.params) {
             req.params = schemas.params.parse(req.params) as typeof req.params;
         }

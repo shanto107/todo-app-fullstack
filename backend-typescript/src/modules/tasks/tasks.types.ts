@@ -5,12 +5,12 @@ import {
     createTaskSchema,
     getTaskSchema,
     idInParamsSchema,
-    updateTaskSchema
+    updateTaskSchema,
 } from "./tasks.validation.js";
 import { TypedRequest } from "../../shared/http.types.js";
 
 export type AtleastOne<T> = {
-    [key in keyof T]-?: Required<Pick<T, key>> & Partial<Omit<T, key>>
+    [key in keyof T]-?: Required<Pick<T, key>> & Partial<Omit<T, key>>;
 }[keyof T];
 
 export type BulkTaskAction = "complete" | "activate" | "delete" | "restore";
@@ -20,14 +20,14 @@ export type Task = typeof tasks.$inferSelect;
 export type NewTask = typeof tasks.$inferInsert;
 
 // inference from zod
-export type AddTaskBody = z.infer<typeof createTaskSchema>
-export type UpdateTaskBody = AtleastOne<z.infer<typeof updateTaskSchema>>
+export type AddTaskBody = z.infer<typeof createTaskSchema>;
+export type UpdateTaskBody = AtleastOne<z.infer<typeof updateTaskSchema>>;
 export type UpdateTaskPayload = Pick<Task, "id"> & UpdateTaskBody;
 export type IdInParams = z.infer<typeof idInParamsSchema>;
 export type TaskQuery = z.infer<typeof getTaskSchema>;
 export type TaskFilters = Omit<TaskQuery, "sortBy" | "sortDirection">;
 export type TaskFilterKeys = keyof TaskFilters;
-export type BulkTaskActionBody = z.infer<typeof bulkTaskActionSchema>
+export type BulkTaskActionBody = z.infer<typeof bulkTaskActionSchema>;
 
 // http request types for controllers
 export type AddTaskRequest = TypedRequest<{}, AddTaskBody, {}>;
@@ -36,7 +36,7 @@ export type GetTaskRequest = TypedRequest<IdInParams>;
 export type UpdateTaskRequest = TypedRequest<IdInParams, UpdateTaskBody, {}>;
 export type DeleteTaskRequst = TypedRequest<IdInParams>;
 export type RestoreTaskRequst = TypedRequest<IdInParams>;
-export type BulkTaskActionRequst = TypedRequest<{}, BulkTaskActionBody, {}>
+export type BulkTaskActionRequst = TypedRequest<{}, BulkTaskActionBody, {}>;
 
 export type PaginatedTasks = {
     items: Task[];
@@ -45,9 +45,8 @@ export type PaginatedTasks = {
         limit: number;
         total: number;
         totalPages: number;
-    }
-}
-
+    };
+};
 
 export type TaskCounts = {
     inbox: number;
@@ -55,4 +54,4 @@ export type TaskCounts = {
     upcoming: number;
     completed: number;
     deleted: number;
-}
+};

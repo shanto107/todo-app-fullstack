@@ -3,7 +3,7 @@ import { Response } from "express";
 export type ApiError = {
     message: string;
     field?: string;
-}
+};
 
 export type ApiResponse<T> = {
     success: boolean;
@@ -11,21 +11,21 @@ export type ApiResponse<T> = {
     message: string;
     data: T | null;
     errors: ApiError[] | null;
-}
+};
 
 export function sendSuccess<T>(
     res: Response,
     statusCode: number,
     code: string,
     message: string,
-    data: T
+    data: T,
 ) {
     return res.status(statusCode).json({
         success: true,
         code,
         message,
         data,
-        errors: null
+        errors: null,
     } satisfies ApiResponse<T>);
 }
 
@@ -34,13 +34,13 @@ export function sendError(
     statusCode: number,
     code: string,
     message: string,
-    errors: ApiError[] | null
+    errors: ApiError[] | null,
 ) {
     return res.status(statusCode).json({
         success: false,
         code,
         message,
         data: null,
-        errors
+        errors,
     } satisfies ApiResponse<null>);
 }

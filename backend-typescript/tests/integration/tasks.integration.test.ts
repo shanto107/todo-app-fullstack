@@ -7,7 +7,6 @@ import { uuidv7 } from "uuidv7";
 import { v4 as uuid } from "uuid";
 import { createTasks } from "../helpers/taskFactory.js";
 
-
 let app: Express;
 
 beforeAll(async () => {
@@ -23,24 +22,27 @@ afterEach(async () => {
 // checking POST /api/tasks
 
 describe("POST /api/tasks", () => {
-
     test("create task with a title & body", async () => {
         // Arrange
         const requestBody = {
             title: "new task",
-            description: "description"
+            description: "description",
         };
         const postEndpoint = "/api/tasks";
         // Apply
-        const response = await request(app).post(postEndpoint).send(requestBody);
+        const response = await request(app)
+            .post(postEndpoint)
+            .send(requestBody);
         // Assert
         expect(response.statusCode).toBe(201);
         expect(response.body.success).toBe(true);
         expect(response.body.data).toMatchObject({
-            id: expect.stringMatching(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i),
+            id: expect.stringMatching(
+                /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+            ),
             title: requestBody.title,
             description: requestBody.description,
-            isCompleted: false
+            isCompleted: false,
         });
     });
 
@@ -52,18 +54,22 @@ describe("POST /api/tasks", () => {
         const expectedResponseBody = {
             title: "new task",
             description: "",
-        }
+        };
         const postEndpoint = "/api/tasks";
         // Apply
-        const response = await request(app).post(postEndpoint).send(requestBody);
+        const response = await request(app)
+            .post(postEndpoint)
+            .send(requestBody);
         // Assert
         expect(response.statusCode).toBe(201);
         expect(response.body.success).toBe(true);
         expect(response.body.data).toMatchObject({
-            id: expect.stringMatching(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i),
+            id: expect.stringMatching(
+                /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+            ),
             title: expectedResponseBody.title,
             description: expectedResponseBody.description,
-            isCompleted: false
+            isCompleted: false,
         });
     });
 
@@ -75,7 +81,9 @@ describe("POST /api/tasks", () => {
 
         const postEndpoint = "/api/tasks";
         // Apply
-        const response = await request(app).post(postEndpoint).send(requestBody);
+        const response = await request(app)
+            .post(postEndpoint)
+            .send(requestBody);
         // Assert
         expect(response.statusCode).toBe(400);
         expect(response.body.success).toBe(false);
@@ -88,13 +96,17 @@ describe("POST /api/tasks", () => {
     test("create task with too long title", async () => {
         // Arrange
         const requestBody = {
-            title: "This is an intentionally very long title used for testing validation rules that enforce maximum length constraints. ".repeat(5),
+            title: "This is an intentionally very long title used for testing validation rules that enforce maximum length constraints. ".repeat(
+                5,
+            ),
             description: "description",
         };
 
         const postEndpoint = "/api/tasks";
         // Apply
-        const response = await request(app).post(postEndpoint).send(requestBody);
+        const response = await request(app)
+            .post(postEndpoint)
+            .send(requestBody);
         // Assert
         expect(response.statusCode).toBe(400);
         expect(response.body.success).toBe(false);
@@ -108,12 +120,17 @@ describe("POST /api/tasks", () => {
         // Arrange
         const requestBody = {
             title: "test title",
-            description: "This is an intentionally very long description used for testing validation rules that enforce maximum length constraints. ".repeat(10)
+            description:
+                "This is an intentionally very long description used for testing validation rules that enforce maximum length constraints. ".repeat(
+                    10,
+                ),
         };
 
         const postEndpoint = "/api/tasks";
         // Apply
-        const response = await request(app).post(postEndpoint).send(requestBody);
+        const response = await request(app)
+            .post(postEndpoint)
+            .send(requestBody);
         // Assert
         expect(response.statusCode).toBe(400);
         expect(response.body.success).toBe(false);
@@ -132,7 +149,9 @@ describe("POST /api/tasks", () => {
 
         const postEndpoint = "/api/tasks";
         // Apply
-        const response = await request(app).post(postEndpoint).send(requestBody);
+        const response = await request(app)
+            .post(postEndpoint)
+            .send(requestBody);
         // Assert
         expect(response.statusCode).toBe(400);
         expect(response.body.success).toBe(false);
@@ -148,19 +167,23 @@ describe("POST /api/tasks", () => {
         };
         const expectedResponseBody = {
             title: "valid title",
-            description: "description"
-        }
+            description: "description",
+        };
         const postEndpoint = "/api/tasks";
         // Apply
-        const response = await request(app).post(postEndpoint).send(requestBody);
+        const response = await request(app)
+            .post(postEndpoint)
+            .send(requestBody);
         // Assert
         expect(response.statusCode).toBe(201);
         expect(response.body.success).toBe(true);
         expect(response.body.data).toMatchObject({
-            id: expect.stringMatching(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i),
+            id: expect.stringMatching(
+                /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+            ),
             title: expectedResponseBody.title,
             description: expectedResponseBody.description,
-            isCompleted: false
+            isCompleted: false,
         });
     });
 
@@ -172,19 +195,23 @@ describe("POST /api/tasks", () => {
         };
         const expectedResponseBody = {
             title: "valid title",
-            description: "description"
-        }
+            description: "description",
+        };
         const postEndpoint = "/api/tasks";
         // Apply
-        const response = await request(app).post(postEndpoint).send(requestBody);
+        const response = await request(app)
+            .post(postEndpoint)
+            .send(requestBody);
         // Assert
         expect(response.statusCode).toBe(201);
         expect(response.body.success).toBe(true);
         expect(response.body.data).toMatchObject({
-            id: expect.stringMatching(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i),
+            id: expect.stringMatching(
+                /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+            ),
             title: expectedResponseBody.title,
             description: expectedResponseBody.description,
-            isCompleted: false
+            isCompleted: false,
         });
     });
 
@@ -196,19 +223,23 @@ describe("POST /api/tasks", () => {
         };
         const expectedResponseBody = {
             title: "this is a integration test",
-            description: "description"
-        }
+            description: "description",
+        };
         const postEndpoint = "/api/tasks";
         // Apply
-        const response = await request(app).post(postEndpoint).send(requestBody);
+        const response = await request(app)
+            .post(postEndpoint)
+            .send(requestBody);
         // Assert
         expect(response.statusCode).toBe(201);
         expect(response.body.success).toBe(true);
         expect(response.body.data).toMatchObject({
-            id: expect.stringMatching(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i),
+            id: expect.stringMatching(
+                /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+            ),
             title: expectedResponseBody.title,
             description: expectedResponseBody.description,
-            isCompleted: false
+            isCompleted: false,
         });
     });
 
@@ -216,30 +247,35 @@ describe("POST /api/tasks", () => {
         // Arrange
         const requestBody = {
             title: "this is a integration test",
-            description: "  sanitize   task   description <b>with</b>   dangerous <script>alert(1)</script>\ntags  ",
+            description:
+                "  sanitize   task   description <b>with</b>   dangerous <script>alert(1)</script>\ntags  ",
         };
         const expectedResponseBody = {
             title: "this is a integration test",
-            description: "sanitize task description <b>with</b> dangerous \ntags"
-        }
+            description:
+                "sanitize task description <b>with</b> dangerous \ntags",
+        };
         const postEndpoint = "/api/tasks";
         // Apply
-        const response = await request(app).post(postEndpoint).send(requestBody);
+        const response = await request(app)
+            .post(postEndpoint)
+            .send(requestBody);
         // Assert
         expect(response.statusCode).toBe(201);
         expect(response.body.success).toBe(true);
         expect(response.body.data).toMatchObject({
-            id: expect.stringMatching(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i),
+            id: expect.stringMatching(
+                /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+            ),
             title: expectedResponseBody.title,
             description: expectedResponseBody.description,
-            isCompleted: false
+            isCompleted: false,
         });
     });
 });
 
 // checking GET /api/tasks
 describe("GET /api/tasks", () => {
-
     test("Get all tasks", async () => {
         // Arrange
         const numberOfTasks = 5;
@@ -257,20 +293,19 @@ describe("GET /api/tasks", () => {
 
 // checking PUT /api/tasks/:id
 describe("PUT /api/tasks", () => {
-
     test("update task - 1 (title, description, isCompleted)", async () => {
         // Arrange
         const numberOfTasks = 5;
         let postResponses = await createTasks(app, numberOfTasks);
 
-        const taskIds = postResponses.map(response => response.body.data.id);
+        const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
         const putEndpoint = `/api/tasks/${taskIds[index]}`;
         const requestBody = {
             title: "updated title",
             description: "updated description",
-            isCompleted: true
-        }
+            isCompleted: true,
+        };
         // Apply
         const response = await request(app).put(putEndpoint).send(requestBody);
         // Assert
@@ -280,7 +315,7 @@ describe("PUT /api/tasks", () => {
             id: taskIds[index],
             title: requestBody.title,
             description: requestBody.description,
-            isCompleted: true
+            isCompleted: true,
         });
     });
 
@@ -289,12 +324,12 @@ describe("PUT /api/tasks", () => {
         const numberOfTasks = 5;
         let postResponses = await createTasks(app, numberOfTasks);
 
-        const taskIds = postResponses.map(response => response.body.data.id);
+        const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
         const putEndpoint = `/api/tasks/${taskIds[index]}`;
         const requestBody = {
-            title: "updated title"
-        }
+            title: "updated title",
+        };
         // Apply
         const response = await request(app).put(putEndpoint).send(requestBody);
         // Assert
@@ -303,7 +338,7 @@ describe("PUT /api/tasks", () => {
         expect(response.body.data).toMatchObject({
             id: taskIds[index],
             title: requestBody.title,
-            isCompleted: false
+            isCompleted: false,
         });
     });
 
@@ -312,12 +347,12 @@ describe("PUT /api/tasks", () => {
         const numberOfTasks = 5;
         let postResponses = await createTasks(app, numberOfTasks);
 
-        const taskIds = postResponses.map(response => response.body.data.id);
+        const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
         const putEndpoint = `/api/tasks/${taskIds[index]}`;
         const requestBody = {
-            description: "updated description"
-        }
+            description: "updated description",
+        };
         // Apply
         const response = await request(app).put(putEndpoint).send(requestBody);
         // Assert
@@ -326,7 +361,7 @@ describe("PUT /api/tasks", () => {
         expect(response.body.data).toMatchObject({
             id: taskIds[index],
             description: requestBody.description,
-            isCompleted: false
+            isCompleted: false,
         });
     });
 
@@ -335,12 +370,12 @@ describe("PUT /api/tasks", () => {
         const numberOfTasks = 5;
         let postResponses = await createTasks(app, numberOfTasks);
 
-        const taskIds = postResponses.map(response => response.body.data.id);
+        const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
         const putEndpoint = `/api/tasks/${taskIds[index]}`;
         const requestBody = {
-            isCompleted: true
-        }
+            isCompleted: true,
+        };
         // Apply
         const response = await request(app).put(putEndpoint).send(requestBody);
         // Assert
@@ -348,7 +383,7 @@ describe("PUT /api/tasks", () => {
         expect(response.body.success).toBe(true);
         expect(response.body.data).toMatchObject({
             id: taskIds[index],
-            isCompleted: true
+            isCompleted: true,
         });
     });
 
@@ -357,12 +392,12 @@ describe("PUT /api/tasks", () => {
         const numberOfTasks = 5;
         let postResponses = await createTasks(app, numberOfTasks);
 
-        const taskIds = postResponses.map(response => response.body.data.id);
+        const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
         const putEndpoint = `/api/tasks/${taskIds[index]}`;
         const requestBody = {
-            title: ""
-        }
+            title: "",
+        };
         // Apply
         const response = await request(app).put(putEndpoint).send(requestBody);
         // Assert
@@ -382,8 +417,8 @@ describe("PUT /api/tasks", () => {
         const invalidId = uuid();
         const putEndpoint = `/api/tasks/${invalidId}`;
         const requestBody = {
-            title: "updated title"
-        }
+            title: "updated title",
+        };
         // Apply
         const response = await request(app).put(putEndpoint).send(requestBody);
         // Assert
@@ -402,8 +437,8 @@ describe("PUT /api/tasks", () => {
         const invalidId = uuidv7();
         const putEndpoint = `/api/tasks/${invalidId}`;
         const requestBody = {
-            title: "updated title"
-        }
+            title: "updated title",
+        };
         // Apply
         const response = await request(app).put(putEndpoint).send(requestBody);
         // Assert
@@ -415,13 +450,12 @@ describe("PUT /api/tasks", () => {
 
 // checking Delete /api/tasks/:id
 describe("DELETE /api/tasks/:id", () => {
-
     test("delete with valid id", async () => {
         // Arrange
         const numberOfTasks = 5;
         let postResponses = await createTasks(app, numberOfTasks);
 
-        const taskIds = postResponses.map(response => response.body.data.id);
+        const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
         const deleteEndpoint = `/api/tasks/${taskIds[index]}`;
 

@@ -4,7 +4,7 @@ import {
     UpdateTaskPayload,
     TaskCounts,
     TaskQuery,
-    PaginatedTasks
+    PaginatedTasks,
 } from "./tasks.types.js";
 import { sanitizeText } from "../../utils/sanitize.js";
 import { type TaskRepo } from "./tasks.repository.js";
@@ -26,15 +26,16 @@ export type TaskService = {
 };
 
 export function createTaskService(repository: TaskRepo): TaskService {
-
     return {
         async addTask(input: NewTask): Promise<Task> {
             const { title, description, ...rest } = input;
 
             const newTask = await repository.addTask({
                 title: sanitizeText("title", title),
-                ...(description !== undefined && { description: sanitizeText("description", description) }),
-                ...rest
+                ...(description !== undefined && {
+                    description: sanitizeText("description", description),
+                }),
+                ...rest,
             });
             return newTask;
         },
@@ -58,8 +59,12 @@ export function createTaskService(repository: TaskRepo): TaskService {
 
             const updatedTask = await repository.updateTask({
                 ...rest,
-                ...(title !== undefined && { title: sanitizeText("title", title) }),
-                ...(description !== undefined && { description: sanitizeText("description", description) })
+                ...(title !== undefined && {
+                    title: sanitizeText("title", title),
+                }),
+                ...(description !== undefined && {
+                    description: sanitizeText("description", description),
+                }),
             } as UpdateTaskPayload);
             return updatedTask;
         },
@@ -87,8 +92,6 @@ export function createTaskService(repository: TaskRepo): TaskService {
 
         async bulkRestoreTasks(ids: string[]): Promise<number> {
             return await repository.bulkRestoreTasks(ids);
-        }
-    }
+        },
+    };
 }
-
-

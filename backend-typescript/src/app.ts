@@ -6,7 +6,6 @@ import { errorHandler } from "./middlewares/error-handler.js";
 import { type DB } from "./db/index.js";
 
 export function createApp(db: DB) {
-
     const app = express();
 
     // security middlewares

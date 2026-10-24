@@ -4,11 +4,15 @@ import config from "../../config.js";
 
 const startedAt = new Date().toISOString();
 
-export async function handleHealthCheck(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function handleHealthCheck(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> {
     const checks = {
         app: "ok",
         // db check
-    }
+    };
     // calculating if db and api service is ok or not.
     const allHealthy = Object.values(checks).every((value) => value === "ok");
 
@@ -26,15 +30,19 @@ export async function handleHealthCheck(req: Request, res: Response, next: NextF
             hostname: os.hostname(),
             platform: os.platform(),
             nodeVersion: process.version,
-            pid: process.pid
-        }
+            pid: process.pid,
+        },
     };
     res.status(allHealthy ? 200 : 503).json(responseBody);
 }
 
-export function handleLiveCheck(req: Request, res: Response, next: NextFunction): void {
+export function handleLiveCheck(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): void {
     res.status(200).json({
         status: "ok",
         timestamp: new Date().toISOString(),
-    })
-};
+    });
+}

@@ -12,7 +12,7 @@ export const ERROR_CODES = {
     INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
 } as const;
 
-export type ErrorCode = typeof ERROR_CODES[keyof typeof ERROR_CODES];
+export type ErrorCode = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
 
 export class AppError extends Error {
     constructor(
@@ -22,28 +22,38 @@ export class AppError extends Error {
     ) {
         super(message);
     }
-};
+}
 
 export class BadRequestError extends AppError {
     constructor(message: string) {
         super(ERROR_CODES.BAD_REQUEST, 400, message);
     }
-};
+}
 
 export class NotFoundError extends AppError {
     constructor(message: string) {
         super(ERROR_CODES.NOT_FOUND, 404, message);
     }
-};
+}
 
-export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
-
+export function errorHandler(
+    err: Error,
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) {
     if (err instanceof ZodError) {
-        const errors = err.issues.map(issue => ({
+        const errors = err.issues.map((issue) => ({
             field: issue.path.join("."),
-            message: issue.message
+            message: issue.message,
         }));
-        return sendError(res, 400, ERROR_CODES.VALIDATION, "validation failed!", errors);
+        return sendError(
+            res,
+            400,
+            ERROR_CODES.VALIDATION,
+            "validation failed!",
+            errors,
+        );
     }
 
     if (err instanceof AppError) {
@@ -52,5 +62,11 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
 
     // Internal Server Error Handling
     console.error(err);
-    return sendError(res, 500, "INTERNAL_SERVER_ERROR", "Something went wrong!", null);
-};
+    return sendError(
+        res,
+        500,
+        "INTERNAL_SERVER_ERROR",
+        "Something went wrong!",
+        null,
+    );
+}

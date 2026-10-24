@@ -11,7 +11,7 @@
         "noUncheckedIndexedAccess": true,
         "allowUnreachableCode": false,
         "lib": ["ESNext"],
-        "types": ["node"],
+        "types": ["node"]
     },
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules", "dist"]

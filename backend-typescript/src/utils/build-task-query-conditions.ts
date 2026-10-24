@@ -10,7 +10,7 @@ import {
     lte,
     or,
     sql,
-    SQL
+    SQL,
 } from "drizzle-orm";
 import { TaskQuery } from "../modules/tasks/tasks.types.js";
 import { tasks } from "../db/schema/tasks.js";
@@ -33,33 +33,25 @@ export function buildTaskQuery(query: TaskQuery): TaskQueryParts {
             or(
                 ilike(tasks.title, `%${query.search}%`),
                 ilike(tasks.description, `%${query.search}%`),
-                sql`${tasks.id}::text ILIKE ${`%${query.search}%`}`
-            )!
-        )
+                sql`${tasks.id}::text ILIKE ${`%${query.search}%`}`,
+            )!,
+        );
     }
     if (query.status?.length) {
-        where.push(
-            inArray(tasks.status, query.status)
-        );
+        where.push(inArray(tasks.status, query.status));
     }
     if (query.priority) {
-        where.push(
-            eq(tasks.priority, query.priority)
-        );
+        where.push(eq(tasks.priority, query.priority));
     }
     if (query.deadlineFrom) {
-        where.push(
-            gte(tasks.deadline, setDate("from", query.deadlineFrom))
-        );
+        where.push(gte(tasks.deadline, setDate("from", query.deadlineFrom)));
     }
     if (query.deadlineTo) {
-        where.push(
-            lte(tasks.deadline, setDate("to", query.deadlineTo))
-        );
+        where.push(lte(tasks.deadline, setDate("to", query.deadlineTo)));
     }
     where.push(
-        query.deleted ? isNotNull(tasks.deletedAt) : isNull(tasks.deletedAt)
-    )
+        query.deleted ? isNotNull(tasks.deletedAt) : isNull(tasks.deletedAt),
+    );
 
     // build task query sorting conditions
     const sortColumns = {
@@ -68,8 +60,11 @@ export function buildTaskQuery(query: TaskQuery): TaskQueryParts {
         deletedAt: tasks.deletedAt,
         deadline: tasks.deadline,
     } as const;
-    const sortcolumn = query.sortBy ? sortColumns[query.sortBy] : tasks.createdAt;
-    const orderBy = query.sortDirection === "asc" ? asc(sortcolumn) : desc(sortcolumn);
+    const sortcolumn = query.sortBy
+        ? sortColumns[query.sortBy]
+        : tasks.createdAt;
+    const orderBy =
+        query.sortDirection === "asc" ? asc(sortcolumn) : desc(sortcolumn);
 
     // build pagination
     const page = query.page ?? 1;
@@ -81,7 +76,6 @@ export function buildTaskQuery(query: TaskQuery): TaskQueryParts {
         orderBy,
         page,
         limit,
-        offset
+        offset,
     };
 }
-
