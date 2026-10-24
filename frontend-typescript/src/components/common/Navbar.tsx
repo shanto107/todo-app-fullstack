@@ -1,6 +1,7 @@
 import {
     LogOutIcon,
     Menu,
+    Plus,
     Settings2,
     User2Icon,
     UserRound
@@ -25,6 +26,7 @@ import ModeToggle from "../mode-toggle";
 import { Button } from "../ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebar } from "../ui/sidebar";
+import AddTaskDialog from "@/features/tasks/components/add-task-dialog";
 
 
 type UserMenuProps = {
@@ -53,7 +55,24 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                     )
                 }
             </div>
+
+
             <div className="flex items-center gap-4">
+                {
+                    !isMobile && (
+                        <AddTaskDialog
+                            trigger={
+                                <Button
+                                    size={"sm"}
+                                    className={"h-9 rounded-sm text-sm tracking-wide bg-primary/80 hover:bg-primary/100 dark:hover:bg-primary/50"}
+                                >
+                                    <Plus className="size-3.5 mr-1" />
+                                    <span>Add Task</span>
+                                </Button>
+                            }
+                        />
+                    )
+                }
                 <ModeToggle />
                 <DropdownMenu>
                     {/* user dropdown trigger */}

@@ -9,6 +9,8 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/server.js",
     "typecheck": "tsc -p tsconfig.json --watch",
+    "db:seed": "NODE_ENV=development tsx src/db/scripts/seed.ts",
+    "db:seed:clear": "NODE_ENV=development tsx src/db/scripts/clear-seed.ts",
     "test:integration": "vitest run --config vitest.integration.config.ts",
     "test:unit": "vitest run --config vitest.unit.config.ts",
     "test": "npm run test:unit && npm run test:integration",

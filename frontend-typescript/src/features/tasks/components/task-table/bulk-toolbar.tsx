@@ -1,0 +1,140 @@
+import { Button } from "@/components/ui/button";
+import type { BulkTasksAction, Task, TaskTableView } from "../../types/task.types"
+import { useBulkTasks } from "../../hooks/use-bulk-tasks";
+import { Spinner } from "@/components/ui/spinner";
+import { useState } from "react";
+
+type BulkToolbarProps = {
+    selectedTasks: Task[];
+    view: TaskTableView;
+    onClearSelection: () => void;
+}
+
+export default function BulkToolbar({
+    selectedTasks,
+    view,
+    onClearSelection
+}: BulkToolbarProps) {
+    const [pendingAction, setPendingAction] = useState<BulkTasksAction | null>(null);
+    const mutation = useBulkTasks();
+
+    if (!selectedTasks.length) {
+        return null;
+    };
+    const ids = selectedTasks.map(task => task.id);
+    
+    async function handleAction(action: BulkTasksAction) {
+        setPendingAction(action);
+        try {
+            await mutation.mutateAsync({
+                action,
+                ids
+            });
+            onClearSelection();
+        }
+        finally {
+            setPendingAction(null)
+        }
+    }
+
+    return (
+
+        <div className="flex items-center justify-between rounded-sm border bg-accent/10 px-4 py-3">
+            <p className="text-sm font-medium">
+                {selectedTasks.length} task{selectedTasks.length > 1 ? "s" : ""} selected
+            </p>
+
+            <div className="flex gap-2">
+                {
+                    view === "inbox" && (
+                        <div className="flex gap-2">
+                            <Button
+                                size="sm"
+                                onClick={() => handleAction("complete")}
+                                disabled={mutation.isPending}
+                                className={"rounded-sm text-green-700 bg-green-200 hover:bg-green-300"}
+                            >
+                                {
+                                    pendingAction === "complete"
+                                        ? <span className="flex items-center gap-1"><Spinner data-icon="inline-start" /> Completing</span>
+                                        : <span>Mark as Complete</span>
+                                }
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => handleAction("delete")}
+                                disabled={mutation.isPending}
+                                className={"rounded-sm"}
+                            >
+                                {
+                                    pendingAction === "delete"
+                                        ? <span className="flex items-center gap-1"><Spinner data-icon="inline-start" /> Deleting</span>
+                                        : <span>Delete</span>
+                                }
+                            </Button>
+                        </div>
+                    )
+                }
+                {
+                    view === "completed" && (
+                        <div className="flex gap-2">
+                            <Button
+                                size="sm"
+                                onClick={() => handleAction("activate")}
+                                disabled={mutation.isPending}
+                                className={"rounded-sm bg-accent/80 hover:bg-accent"}
+                            >
+                                {
+                                    pendingAction === "activate"
+                                        ? <span className="flex items-center gap-1"><Spinner data-icon="inline-start" /> Activating</span>
+                                        : <span>Activate</span>
+                                }
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => handleAction("delete")}
+                                disabled={mutation.isPending}
+                                className={"rounded-sm"}
+                            >
+                                {
+                                    pendingAction === "delete"
+                                        ? <span className="flex items-center gap-1"><Spinner data-icon="inline-start" /> Deleting</span>
+                                        : <span>Delete</span>
+                                }
+                            </Button>
+                        </div>
+                    )
+                }
+                {
+                    view === "deleted" && (
+                        <div className="flex gap-2">
+                            <Button
+                                size="sm"
+                                onClick={() => handleAction("restore")}
+                                disabled={mutation.isPending}
+                                className={"rounded-sm text-yellow-600 bg-yellow-200 hover:bg-yellow-300"}
+                            >
+                                {
+                                    pendingAction === "restore"
+                                        ? <span className="flex items-center gap-1"><Spinner data-icon="inline-start" /> Restoring</span>
+                                        : <span>Restore</span>
+                                }
+                            </Button>
+                        </div>
+                    )
+                }
+                <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={onClearSelection}
+                    disabled={mutation.isPending}
+                    className={"rounded-sm"}
+                >
+                    Clear
+                </Button>
+            </div>
+        </div>
+    );
+}

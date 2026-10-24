@@ -1,0 +1,70 @@
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import type { ActiveKey, MenubarGroup } from "./menubar.types"
+import type { Editor } from "@tiptap/react"
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
+
+type MenubarDropdownProps = {
+    group: MenubarGroup;
+    editor: Editor;
+    isActive: (key: ActiveKey) => boolean;
+}
+
+export default function MenubarDropdown({ group, editor, isActive }: MenubarDropdownProps) {
+
+    const activeItem = group.items.find((item) => item.activeKey && isActive(item.activeKey));
+
+    const TriggerIcon = (activeItem && group.label !== "Text") ? activeItem.icon : group.icon;
+    const activeStyles = "bg-muted text-accent dark:text-chart-1";
+
+    return (
+        <DropdownMenu>
+            <Tooltip>
+                <TooltipTrigger
+                    render={
+                        <DropdownMenuTrigger
+                            render={
+                                <Button
+                                    variant={"outline"}
+                                    size={"icon"}
+                                    className={`h-6 w-7 rounded-sm hover:text-accent dark:hover:text-chart-1 ${activeItem ? activeStyles : ""}`}
+                                    onMouseDown={(event) => event.preventDefault()}
+                                    data-editor-ui
+                                />
+                            }
+                        >
+                            <TriggerIcon className={`size-3 mr-0.5`} />
+                            <ChevronDown className="size-2" />
+                        </DropdownMenuTrigger>
+                    }
+                />
+                <TooltipContent>{group.label}</TooltipContent>
+            </Tooltip>
+
+            <DropdownMenuContent
+                align="start"
+                className={"rounded-sm"}
+            >
+                {
+                    group.items.map((item) => (
+                        <DropdownMenuItem
+                            key={item.key}
+                            disabled={item.isDisabled?.(editor)}
+                            onClick={() => item.action?.(editor)}
+                            className={(item.activeKey && isActive(item.activeKey)) ? activeStyles : ""}
+                            onMouseDown={(event) => event.preventDefault()}
+                            data-editor-ui
+                        >
+                            <item.icon className="size-4 mr-2" />
+                            {
+                                item.tooltip
+                            }
+                        </DropdownMenuItem>
+                    ))
+                }
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}

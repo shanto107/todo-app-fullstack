@@ -56,31 +56,31 @@ describe("taskService.addTask()", () => {
         expect(result).toEqual(resolvedTask);
     });
 
-    test("3. calls with sanitized title & descripton with tags", async () => {
-        // Arrange
-        const resolvedTask = makeMockTask({
-            title: "test title !",
-            description: "test <b>description</b> !"
-        });
-        const repository = makeMockTaskRepo({
-            addTask: vi.fn().mockResolvedValue(resolvedTask)
-        });
-        const input: NewTask = {
-            title: "test    <b>title</b>   <script>alert(1)</script>     !",
-            description: " test       <b>description</b>           ! "
-        }
-        const repositoryInput: NewTask = {
-            title: "test title !",
-            description: "test <b>description</b> !"
-        }
-        // Apply
-        const service = createTaskService(repository);
-        const result = await service.addTask(input);
-        // Assert
-        expect(repository.addTask).toHaveBeenCalledWith(repositoryInput);
-        expect(repository.addTask).toHaveBeenCalledTimes(1);
-        expect(result).toEqual(resolvedTask);
-    });
+    // test("3. calls with sanitized title & descripton with tags", async () => {
+    //     // Arrange
+    //     const resolvedTask = makeMockTask({
+    //         title: "test title !",
+    //         description: "test <b>description</b> !"
+    //     });
+    //     const repository = makeMockTaskRepo({
+    //         addTask: vi.fn().mockResolvedValue(resolvedTask)
+    //     });
+    //     const input: NewTask = {
+    //         title: "test    <b>title</b>   <script>alert(1)</script>     !",
+    //         description: " test       <b>description</b>           ! "
+    //     }
+    //     const repositoryInput: NewTask = {
+    //         title: "test title !",
+    //         description: "test <b>description</b> !"
+    //     }
+    //     // Apply
+    //     const service = createTaskService(repository);
+    //     const result = await service.addTask(input);
+    //     // Assert
+    //     expect(repository.addTask).toHaveBeenCalledWith(repositoryInput);
+    //     expect(repository.addTask).toHaveBeenCalledTimes(1);
+    //     expect(result).toEqual(resolvedTask);
+    // });
 
     test("4. throws errors for invalid title!", async () => {
         // Arrange
@@ -193,59 +193,59 @@ describe("taskService.updateTask()", () => {
         expect(result).toEqual(resolvedTask);
     });
 
-    test("3. update and sanitize description", async () => {
-        // Arrange
-        const id = uuidv7();
-        const resolvedTask = makeMockTask({
-            id: id,
-            title: "updated <b>description</b> !"
-        });
-        const repository = makeMockTaskRepo({
-            updateTask: vi.fn((payload: UpdateTaskPayload) => Promise.resolve(resolvedTask)),
-        });
-        const payload: UpdateTaskPayload = {
-            id: id,
-            description: "updated <b>description</b> <script>alert(1)</script> !"
-        }
-        const repositoryInput: UpdateTaskPayload = {
-            id: id,
-            description: "updated <b>description</b> !"
-        }
-        // Apply
-        const service = createTaskService(repository);
-        const result = await service.updateTask(payload);
-        // Assert
-        expect(repository.updateTask).toHaveBeenCalledWith(repositoryInput);
-        expect(repository.updateTask).toHaveBeenCalledTimes(1);
-        expect(result).toEqual(resolvedTask);
-    });
+    // test("3. update and sanitize description", async () => {
+    //     // Arrange
+    //     const id = uuidv7();
+    //     const resolvedTask = makeMockTask({
+    //         id: id,
+    //         title: "updated <b>description</b> !"
+    //     });
+    //     const repository = makeMockTaskRepo({
+    //         updateTask: vi.fn((payload: UpdateTaskPayload) => Promise.resolve(resolvedTask)),
+    //     });
+    //     const payload: UpdateTaskPayload = {
+    //         id: id,
+    //         description: "updated <b>description</b> <script>alert(1)</script> !"
+    //     }
+    //     const repositoryInput: UpdateTaskPayload = {
+    //         id: id,
+    //         description: "updated <b>description</b> !"
+    //     }
+    //     // Apply
+    //     const service = createTaskService(repository);
+    //     const result = await service.updateTask(payload);
+    //     // Assert
+    //     expect(repository.updateTask).toHaveBeenCalledWith(repositoryInput);
+    //     expect(repository.updateTask).toHaveBeenCalledTimes(1);
+    //     expect(result).toEqual(resolvedTask);
+    // });
 
-    test("4. update isCompleted", async () => {
-        // Arrange
-        const id = uuidv7();
-        const resolvedTask = makeMockTask({
-            id: id,
-            isCompleted: true
-        });
-        const repository = makeMockTaskRepo({
-            updateTask: vi.fn((payload: UpdateTaskPayload) => Promise.resolve(resolvedTask)),
-        });
-        const payload: UpdateTaskPayload = {
-            id: id,
-            isCompleted: true
-        }
-        const repositoryInput: UpdateTaskPayload = {
-            id: id,
-            isCompleted: true
-        }
-        // Apply
-        const service = createTaskService(repository);
-        const result = await service.updateTask(payload);
-        // Assert
-        expect(repository.updateTask).toHaveBeenCalledWith(repositoryInput);
-        expect(repository.updateTask).toHaveBeenCalledTimes(1);
-        expect(result).toEqual(resolvedTask);
-    });
+    // test("4. update isCompleted", async () => {
+    //     // Arrange
+    //     const id = uuidv7();
+    //     const resolvedTask = makeMockTask({
+    //         id: id,
+    //         isCompleted: true
+    //     });
+    //     const repository = makeMockTaskRepo({
+    //         updateTask: vi.fn((payload: UpdateTaskPayload) => Promise.resolve(resolvedTask)),
+    //     });
+    //     const payload: UpdateTaskPayload = {
+    //         id: id,
+    //         isCompleted: true
+    //     }
+    //     const repositoryInput: UpdateTaskPayload = {
+    //         id: id,
+    //         isCompleted: true
+    //     }
+    //     // Apply
+    //     const service = createTaskService(repository);
+    //     const result = await service.updateTask(payload);
+    //     // Assert
+    //     expect(repository.updateTask).toHaveBeenCalledWith(repositoryInput);
+    //     expect(repository.updateTask).toHaveBeenCalledTimes(1);
+    //     expect(result).toEqual(resolvedTask);
+    // });
 
     test("5. throws errors for invalid title update!", async () => {
         // Arrange

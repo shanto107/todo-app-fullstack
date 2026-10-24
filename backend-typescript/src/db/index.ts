@@ -6,8 +6,9 @@ import config from "../config.js";
 
 const migrationClient = postgres(config.db.url, { max: 1 });
 await migrate(drizzle(migrationClient), config.db.migrationConfig);
+await migrationClient.end();
 
-const connection = postgres(config.db.url);
+export const connection = postgres(config.db.url);
 export const db = drizzle(connection, { schema });
 
 export type DB = typeof db;
