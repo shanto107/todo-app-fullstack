@@ -1,9 +1,10 @@
-import express from "express";
 import cors from "cors";
+import express from "express";
 import helmet from "helmet";
-import { createApiRouter } from "./routes/index.js";
-import { errorHandler } from "./middlewares/error-handler.js";
+
 import { type DB } from "./db/index.js";
+import { errorHandler } from "./middlewares/error-handler.js";
+import { createApiRouter } from "./routes/index.js";
 
 export function createApp(db: DB) {
     const app = express();

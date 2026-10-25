@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
+
 import { sendError } from "../shared/http-response.js";
 
 export const ERROR_CODES = {
@@ -40,7 +41,7 @@ export function errorHandler(
     err: Error,
     req: Request,
     res: Response,
-    next: NextFunction,
+    _next: NextFunction,
 ) {
     if (err instanceof ZodError) {
         const errors = err.issues.map((issue) => ({

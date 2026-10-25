@@ -1,3 +1,5 @@
+import { loadEnvFile } from "node:process";
+
 import {
     taskPriorityValues,
     taskStatusValues,
@@ -5,8 +7,6 @@ import {
 import { connection, db } from "../index.js";
 import { tasks } from "../schema/tasks.js";
 import { MOCK_TASK_MARKER, mockTasks } from "./mock-tasks.js";
-
-import { loadEnvFile } from "node:process";
 loadEnvFile(".env");
 
 async function seed() {

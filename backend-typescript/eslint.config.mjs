@@ -2,10 +2,17 @@ import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 import eslintConfigPrettier from "eslint-config-prettier";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 
 export default [
     {
-        ignores: ["node_modules/", "dist/", "coverage/", "drizzle/meta/"],
+        ignores: [
+            "node_modules/",
+            "dist/",
+            "coverage/",
+            "drizzle/meta/",
+            "tests/",
+        ],
     },
 
     js.configs.recommended,
@@ -26,6 +33,9 @@ export default [
             },
         },
 
+        plugins: {
+            "simple-import-sort": simpleImportSort,
+        },
         rules: {
             "no-unused-vars": "off",
 
@@ -49,7 +59,10 @@ export default [
             "no-unneeded-ternary": ["error", { defaultAssignment: false }],
             "prefer-const": "error",
 
-            "no-console": ["warn", { allow: ["warn", "error"] }],
+            "no-console": ["warn", { allow: ["log", "warn", "error"] }],
+
+            "simple-import-sort/imports": "error",
+            "simple-import-sort/exports": "error",
         },
     },
 

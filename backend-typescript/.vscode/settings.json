@@ -1,0 +1,9 @@
+{
+    "js/ts.preferences.importModuleSpecifier": "non-relative",
+    "js/ts.preferences.autoImportFileExcludePatterns": ["**/dist/**"],
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    }
+}

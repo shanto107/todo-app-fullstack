@@ -1,4 +1,5 @@
 import sanitizeHtml from "sanitize-html";
+
 import { BadRequestError } from "../middlewares/error-handler.js";
 
 export function sanitizeText(type: "title" | "description", text: string) {

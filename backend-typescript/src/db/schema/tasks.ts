@@ -1,9 +1,9 @@
 import {
-    pgTable,
-    uuid,
-    timestamp,
-    varchar,
     pgEnum,
+    pgTable,
+    timestamp,
+    uuid,
+    varchar,
 } from "drizzle-orm/pg-core";
 import { uuidv7 } from "uuidv7";
 

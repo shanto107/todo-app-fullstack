@@ -1,20 +1,30 @@
 # node modules
 node_modules/
 **/node_modules/
+
 #.env files
 .env
 backend/.env
 backend/.env.*
 frontend/.env
+
 #build files
 .vite/
 frontend/dist/
 frontend/.vite/
 dist/
 build/
+
 #OS files
 .DS_Store
 Thumbs.db
+
+# Editor-specific personal files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
 
 # Terraform
 **/.terraform/

@@ -1,27 +1,28 @@
-import { Request, NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+
+import { attempt } from "../../shared/attempt.js";
+import { sendSuccess } from "../../shared/http-response.js";
+import { SUCCESS_CODES, successMessage } from "./task.messages.js";
 import { TaskService } from "./tasks.service.js";
 import {
     AddTaskRequest,
-    BulkTaskActionRequst,
-    DeleteTaskRequst,
+    BulkTaskActionRequest,
+    DeleteTaskRequest,
     GetTaskRequest,
     GetTasksRequest,
-    RestoreTaskRequst,
+    RestoreTaskRequest,
     TaskFilters,
     UpdateTaskPayload,
     UpdateTaskRequest,
 } from "./tasks.types.js";
-import { attempt } from "../../shared/attempt.js";
-import { sendSuccess } from "../../shared/http-response.js";
-import { SUCCESS_CODES, successMessage } from "./task.messages.js";
 
 export function createTaskControllers(service: TaskService) {
     return {
-        async addTaskHandler(
+        addTaskHandler: async (
             req: AddTaskRequest,
             res: Response,
             next: NextFunction,
-        ): Promise<void> {
+        ): Promise<void> => {
             const { body } = req;
             const [task, error] = await attempt(service.addTask(body));
             if (error) {
@@ -36,11 +37,11 @@ export function createTaskControllers(service: TaskService) {
             );
         },
 
-        async getTasksHandler(
+        getTasksHandler: async (
             _req: GetTasksRequest,
             res: Response<any, { query: TaskFilters }>,
             next: NextFunction,
-        ): Promise<void> {
+        ): Promise<void> => {
             const query = res.locals.query;
             const [tasks, error] = await attempt(service.getTasks(query));
             if (error) {
@@ -55,11 +56,11 @@ export function createTaskControllers(service: TaskService) {
             );
         },
 
-        async getTaskByIdHandler(
+        getTaskByIdHandler: async (
             req: GetTaskRequest,
             res: Response,
             next: NextFunction,
-        ): Promise<void> {
+        ): Promise<void> => {
             const { id } = req.params;
             const [task, error] = await attempt(service.getTaskById(id));
             if (error) {
@@ -74,11 +75,11 @@ export function createTaskControllers(service: TaskService) {
             );
         },
 
-        async getTaskCountsHandler(
+        getTaskCountsHandler: async (
             _req: Request,
             res: Response,
             next: NextFunction,
-        ): Promise<void> {
+        ): Promise<void> => {
             const [task, error] = await attempt(service.getTaskCounts());
             if (error) {
                 return next(error);
@@ -92,11 +93,11 @@ export function createTaskControllers(service: TaskService) {
             );
         },
 
-        async updateTasksHandler(
+        updateTasksHandler: async (
             req: UpdateTaskRequest,
             res: Response,
             next: NextFunction,
-        ): Promise<void> {
+        ): Promise<void> => {
             const { id } = req.params;
             const { body } = req;
             const payload: UpdateTaskPayload = {
@@ -116,11 +117,11 @@ export function createTaskControllers(service: TaskService) {
             );
         },
 
-        async deleteTaskHandler(
-            req: DeleteTaskRequst,
+        deleteTaskHandler: async (
+            req: DeleteTaskRequest,
             res: Response,
             next: NextFunction,
-        ): Promise<void> {
+        ): Promise<void> => {
             const { id } = req.params;
             const [task, error] = await attempt(service.deleteTask(id));
             if (error) {
@@ -135,11 +136,11 @@ export function createTaskControllers(service: TaskService) {
             );
         },
 
-        async restoreTaskHandler(
-            req: RestoreTaskRequst,
+        restoreTaskHandler: async (
+            req: RestoreTaskRequest,
             res: Response,
             next: NextFunction,
-        ): Promise<void> {
+        ): Promise<void> => {
             const { id } = req.params;
             const [task, error] = await attempt(service.restoreTask(id));
             if (error) {
@@ -155,11 +156,11 @@ export function createTaskControllers(service: TaskService) {
         },
 
         // bulk actions
-        async bulkCompleteTasksHandler(
-            req: BulkTaskActionRequst,
+        bulkCompleteTasksHandler: async (
+            req: BulkTaskActionRequest,
             res: Response,
             next: NextFunction,
-        ) {
+        ): Promise<void> => {
             const { ids } = req.body;
             const [count, error] = await attempt(
                 service.bulkCompleteTasks(ids),
@@ -176,11 +177,11 @@ export function createTaskControllers(service: TaskService) {
             );
         },
 
-        async bulkActivateTasksHandler(
-            req: BulkTaskActionRequst,
+        bulkActivateTasksHandler: async (
+            req: BulkTaskActionRequest,
             res: Response,
             next: NextFunction,
-        ) {
+        ): Promise<void> => {
             const { ids } = req.body;
             const [count, error] = await attempt(
                 service.bulkActivateTasks(ids),
@@ -197,11 +198,11 @@ export function createTaskControllers(service: TaskService) {
             );
         },
 
-        async bulkDeleteTasksHandler(
-            req: BulkTaskActionRequst,
+        bulkDeleteTasksHandler: async (
+            req: BulkTaskActionRequest,
             res: Response,
             next: NextFunction,
-        ) {
+        ): Promise<void> => {
             const { ids } = req.body;
             const [count, error] = await attempt(service.bulkDeleteTasks(ids));
             if (error) {
@@ -216,11 +217,11 @@ export function createTaskControllers(service: TaskService) {
             );
         },
 
-        async bulkRestoreTasksHandler(
-            req: BulkTaskActionRequst,
+        bulkRestoreTasksHandler: async (
+            req: BulkTaskActionRequest,
             res: Response,
             next: NextFunction,
-        ) {
+        ): Promise<void> => {
             const { ids } = req.body;
             const [count, error] = await attempt(service.bulkRestoreTasks(ids));
             if (error) {

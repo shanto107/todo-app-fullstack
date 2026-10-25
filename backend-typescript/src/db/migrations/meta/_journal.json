@@ -1,34 +1,41 @@
 {
-    "version": "7",
-    "dialect": "postgresql",
-    "entries": [
-        {
-            "idx": 0,
-            "version": "7",
-            "when": 1778522544432,
-            "tag": "0000_keen_black_widow",
-            "breakpoints": true
-        },
-        {
-            "idx": 1,
-            "version": "7",
-            "when": 1778793791023,
-            "tag": "0001_rainy_phil_sheldon",
-            "breakpoints": true
-        },
-        {
-            "idx": 2,
-            "version": "7",
-            "when": 1782656223220,
-            "tag": "0002_panoramic_secret_warriors",
-            "breakpoints": true
-        },
-        {
-            "idx": 3,
-            "version": "7",
-            "when": 1784645405702,
-            "tag": "0003_bouncy_hex",
-            "breakpoints": true
-        }
-    ]
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1778522544432,
+      "tag": "0000_keen_black_widow",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778793791023,
+      "tag": "0001_rainy_phil_sheldon",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782656223220,
+      "tag": "0002_panoramic_secret_warriors",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1784645405702,
+      "tag": "0003_bouncy_hex",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792958534043,
+      "tag": "0004_blue_quasimodo",
+      "breakpoints": true
+    }
+  ]
 }

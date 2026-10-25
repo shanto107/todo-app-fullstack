@@ -296,7 +296,7 @@ describe("PUT /api/tasks", () => {
     test("update task - 1 (title, description, isCompleted)", async () => {
         // Arrange
         const numberOfTasks = 5;
-        let postResponses = await createTasks(app, numberOfTasks);
+        const postResponses = await createTasks(app, numberOfTasks);
 
         const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
@@ -322,7 +322,7 @@ describe("PUT /api/tasks", () => {
     test("update task - 2 (only title)", async () => {
         // Arrange
         const numberOfTasks = 5;
-        let postResponses = await createTasks(app, numberOfTasks);
+        const postResponses = await createTasks(app, numberOfTasks);
 
         const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
@@ -345,7 +345,7 @@ describe("PUT /api/tasks", () => {
     test("update task - 3 (only description)", async () => {
         // Arrange
         const numberOfTasks = 5;
-        let postResponses = await createTasks(app, numberOfTasks);
+        const postResponses = await createTasks(app, numberOfTasks);
 
         const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
@@ -368,7 +368,7 @@ describe("PUT /api/tasks", () => {
     test("update task - 4 (only isCompleted)", async () => {
         // Arrange
         const numberOfTasks = 5;
-        let postResponses = await createTasks(app, numberOfTasks);
+        const postResponses = await createTasks(app, numberOfTasks);
 
         const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
@@ -390,7 +390,7 @@ describe("PUT /api/tasks", () => {
     test("update task - 5 (invalid title)", async () => {
         // Arrange
         const numberOfTasks = 5;
-        let postResponses = await createTasks(app, numberOfTasks);
+        const postResponses = await createTasks(app, numberOfTasks);
 
         const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);
@@ -453,7 +453,7 @@ describe("DELETE /api/tasks/:id", () => {
     test("delete with valid id", async () => {
         // Arrange
         const numberOfTasks = 5;
-        let postResponses = await createTasks(app, numberOfTasks);
+        const postResponses = await createTasks(app, numberOfTasks);
 
         const taskIds = postResponses.map((response) => response.body.data.id);
         const index = Math.floor(Math.random() * 5);

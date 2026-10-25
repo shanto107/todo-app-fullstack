@@ -1,8 +1,7 @@
-import { taskStatusValues } from "../../modules/tasks/tasks.validation.js";
+import { loadEnvFile } from "node:process";
+
 import { connection, db } from "../index.js";
 import { tasks } from "../schema/tasks.js";
-
-import { loadEnvFile } from "node:process";
 loadEnvFile(".env");
 
 async function clearMockTasks() {

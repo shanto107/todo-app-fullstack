@@ -1,4 +1,5 @@
 import { MigrationConfig } from "drizzle-orm/migrator";
+
 import loadEnvVariable from "./utils/load-env-variables.js";
 
 type APIConfig = {
@@ -11,9 +12,16 @@ type DBConfig = {
     migrationConfig: MigrationConfig;
 };
 
+type AuthConfig = {
+    url: string;
+    frontendUrl: string;
+    secret: string;
+};
+
 type Config = {
     api: APIConfig;
     db: DBConfig;
+    auth: AuthConfig;
 };
 
 const config: Config = {
@@ -26,6 +34,11 @@ const config: Config = {
         migrationConfig: {
             migrationsFolder: "./src/db/migrations",
         },
+    },
+    auth: {
+        url: loadEnvVariable("BETTER_AUTH_URL"),
+        frontendUrl: loadEnvVariable("FRONTEND_URL"),
+        secret: loadEnvVariable("BETTER_AUTH_SECRET"),
     },
 };
 

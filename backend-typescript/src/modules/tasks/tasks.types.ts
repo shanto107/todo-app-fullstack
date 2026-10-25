@@ -1,5 +1,7 @@
 import z from "zod";
+
 import { tasks } from "../../db/schema/tasks.js";
+import type { TypedRequest } from "../../shared/http.types.js";
 import {
     bulkTaskActionSchema,
     createTaskSchema,
@@ -7,7 +9,6 @@ import {
     idInParamsSchema,
     updateTaskSchema,
 } from "./tasks.validation.js";
-import { TypedRequest } from "../../shared/http.types.js";
 
 export type AtleastOne<T> = {
     [key in keyof T]-?: Required<Pick<T, key>> & Partial<Omit<T, key>>;
@@ -29,14 +30,21 @@ export type TaskFilters = Omit<TaskQuery, "sortBy" | "sortDirection">;
 export type TaskFilterKeys = keyof TaskFilters;
 export type BulkTaskActionBody = z.infer<typeof bulkTaskActionSchema>;
 
-// http request types for controllers
-export type AddTaskRequest = TypedRequest<{}, AddTaskBody, {}>;
-export type GetTasksRequest = TypedRequest<{}, {}, TaskFilters>;
+// HTTP request types for controllers
+export type AddTaskRequest = TypedRequest<Record<string, never>, AddTaskBody>;
+export type GetTasksRequest = TypedRequest<
+    Record<string, never>,
+    unknown,
+    TaskFilters
+>;
 export type GetTaskRequest = TypedRequest<IdInParams>;
-export type UpdateTaskRequest = TypedRequest<IdInParams, UpdateTaskBody, {}>;
-export type DeleteTaskRequst = TypedRequest<IdInParams>;
-export type RestoreTaskRequst = TypedRequest<IdInParams>;
-export type BulkTaskActionRequst = TypedRequest<{}, BulkTaskActionBody, {}>;
+export type UpdateTaskRequest = TypedRequest<IdInParams, UpdateTaskBody>;
+export type DeleteTaskRequest = TypedRequest<IdInParams>;
+export type RestoreTaskRequest = TypedRequest<IdInParams>;
+export type BulkTaskActionRequest = TypedRequest<
+    Record<string, never>,
+    BulkTaskActionBody
+>;
 
 export type PaginatedTasks = {
     items: Task[];

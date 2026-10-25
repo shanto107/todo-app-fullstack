@@ -1,14 +1,16 @@
-import { Request, Response, NextFunction } from "express";
-import os, { platform } from "node:os";
+import os from "node:os";
+
+import { NextFunction,Request, Response } from "express";
+
 import config from "../../config.js";
 
 const startedAt = new Date().toISOString();
 
-export async function handleHealthCheck(
-    req: Request,
+export function handleHealthCheck(
+    _req: Request,
     res: Response,
-    next: NextFunction,
-): Promise<void> {
+    _next: NextFunction,
+) {
     const checks = {
         app: "ok",
         // db check
@@ -37,9 +39,9 @@ export async function handleHealthCheck(
 }
 
 export function handleLiveCheck(
-    req: Request,
+    _req: Request,
     res: Response,
-    next: NextFunction,
+    _next: NextFunction,
 ): void {
     res.status(200).json({
         status: "ok",

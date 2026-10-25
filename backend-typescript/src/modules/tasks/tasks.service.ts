@@ -1,13 +1,13 @@
-import {
-    Task,
-    NewTask,
-    UpdateTaskPayload,
-    TaskCounts,
-    TaskQuery,
-    PaginatedTasks,
-} from "./tasks.types.js";
 import { sanitizeText } from "../../utils/sanitize.js";
 import { type TaskRepo } from "./tasks.repository.js";
+import {
+    NewTask,
+    PaginatedTasks,
+    Task,
+    TaskCounts,
+    TaskQuery,
+    UpdateTaskPayload,
+} from "./tasks.types.js";
 
 export type TaskService = {
     addTask: (input: NewTask) => Promise<Task>;

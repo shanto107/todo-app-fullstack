@@ -5,7 +5,7 @@ export async function createTasks(app: Express, numberOfTasks: number) {
     const postEndpoint = "/api/tasks";
     const responses = await Promise.all(
         Array.from({ length: numberOfTasks }, (_, index) => {
-            let requestBody = {
+            const requestBody = {
                 title: `title ${index + 1}`,
                 description: `description ${index + 1}`,
             };

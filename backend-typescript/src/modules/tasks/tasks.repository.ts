@@ -8,19 +8,20 @@ import {
     isNull,
     lte,
 } from "drizzle-orm";
+
 import { type DB } from "../../db/index.js";
 import { tasks } from "../../db/schema/tasks.js";
-import {
-    Task,
-    NewTask,
-    TaskQuery,
-    TaskCounts,
-    type UpdateTaskPayload,
-    PaginatedTasks,
-} from "./tasks.types.js";
 import { NotFoundError } from "../../middlewares/error-handler.js";
-import setDate from "../../utils/set-date.js";
 import { buildTaskQuery } from "../../utils/build-task-query-conditions.js";
+import setDate from "../../utils/set-date.js";
+import {
+    NewTask,
+    PaginatedTasks,
+    Task,
+    TaskCounts,
+    TaskQuery,
+    type UpdateTaskPayload,
+} from "./tasks.types.js";
 
 export type TaskRepo = {
     addTask: (newTask: NewTask) => Promise<Task>;

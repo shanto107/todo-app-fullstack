@@ -1,7 +1,6 @@
 import {
     boolean,
     pgTable,
-    text,
     timestamp,
     uuid,
     varchar,
@@ -14,7 +13,6 @@ export const officeCategories = pgTable("office_categories", {
         .$defaultFn(() => uuidv7()),
     code: varchar("code", { length: 50 }).notNull().unique(),
     name: varchar("name", { length: 150 }).notNull(),
-    description: text("description").notNull().default(""),
     isActive: boolean("is_active").notNull().default(true),
     createdAt: timestamp("created_at", { mode: "date", withTimezone: true })
         .notNull()

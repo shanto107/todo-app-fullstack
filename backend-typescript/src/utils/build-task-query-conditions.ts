@@ -9,11 +9,12 @@ import {
     isNull,
     lte,
     or,
-    sql,
     SQL,
+    sql,
 } from "drizzle-orm";
-import { TaskQuery } from "../modules/tasks/tasks.types.js";
+
 import { tasks } from "../db/schema/tasks.js";
+import { TaskQuery } from "../modules/tasks/tasks.types.js";
 import setDate from "./set-date.js";
 
 type TaskQueryParts = {
