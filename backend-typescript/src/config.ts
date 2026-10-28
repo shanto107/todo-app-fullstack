@@ -18,10 +18,16 @@ type AuthConfig = {
     secret: string;
 };
 
+type EmailConfig = {
+    apiKey: string;
+    from: string;
+};
+
 type Config = {
     api: APIConfig;
     db: DBConfig;
     auth: AuthConfig;
+    email: EmailConfig;
 };
 
 const config: Config = {
@@ -39,6 +45,10 @@ const config: Config = {
         url: loadEnvVariable("BETTER_AUTH_URL"),
         frontendUrl: loadEnvVariable("FRONTEND_URL"),
         secret: loadEnvVariable("BETTER_AUTH_SECRET"),
+    },
+    email: {
+        apiKey: loadEnvVariable("RESEND_API_KEY"),
+        from: loadEnvVariable("EMAIL_FROM"),
     },
 };
 

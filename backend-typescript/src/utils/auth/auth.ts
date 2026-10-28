@@ -7,17 +7,17 @@ import { db } from "#src/db/index.js";
 
 
 export const auth = betterAuth({
-    appName: "Office Ticketing App",
+    appName: "DPDC Ticketing App",
 
     emailAndPassword: {
         enabled: true,
-        requireEmailVerification: true,
+        requireEmailVerification: false,
     },
 
-    emailVerification: {
-        autoSignInAfterVerification: true,
-        sendOnSignUp: true,
-    },
+    // emailVerification: {
+    //     autoSignInAfterVerification: true,
+    //     sendOnSignUp: true,
+    // },
 
     session: {
         cookieCache: {

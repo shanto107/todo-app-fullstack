@@ -1,20 +1,23 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "module": "nodenext",
+        "target": "ESNext",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
         "strict": true,
-        "moduleResolution": "nodenext",
         "esModuleInterop": true,
         "skipLibCheck": true,
         "noUncheckedIndexedAccess": true,
         "allowUnreachableCode": false,
         "lib": ["ESNext"],
         "types": ["node"],
-        "noEmit": true
+        "noEmit": true,
+        "jsx": "react-jsx"
     },
     "include": [
         "src/**/*.ts",
+        "src/**/*.tsx",
         "tests/**/*.ts",
+        "tests/**/*.tsx",
         "drizzle.config.ts",
         "vitest.integration.config.ts",
         "vitest.unit.config.ts"
