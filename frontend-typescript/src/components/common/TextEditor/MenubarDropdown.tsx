@@ -34,13 +34,13 @@ export default function MenubarDropdown({ group, editor, isActive }: MenubarDrop
                                 <Button
                                     variant={"outline"}
                                     size={"icon"}
-                                    className={`h-6 w-7 rounded-sm hover:text-accent dark:hover:text-chart-1 ${activeItem ? activeStyles : ""}`}
+                                    className={`hover:text-accent dark:hover:text-chart-1 h-6 w-7 rounded-sm ${activeItem ? activeStyles : ""}`}
                                     onMouseDown={(event) => event.preventDefault()}
                                     data-editor-ui
                                 />
                             }
                         >
-                            <TriggerIcon className={`size-3 mr-0.5`} />
+                            <TriggerIcon className={`mr-0.5 size-3`} />
                             <ChevronDown className="size-2" />
                         </DropdownMenuTrigger>
                     }
@@ -58,7 +58,7 @@ export default function MenubarDropdown({ group, editor, isActive }: MenubarDrop
                         onMouseDown={(event) => event.preventDefault()}
                         data-editor-ui
                     >
-                        <item.icon className="size-4 mr-2" />
+                        <item.icon className="mr-2 size-4" />
                         {item.tooltip}
                     </DropdownMenuItem>
                 ))}

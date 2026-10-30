@@ -69,13 +69,13 @@ export default function DataTable<TData>({
             })}
             <div className="overflow-hidden md:min-w-3xl">
                 <Table>
-                    <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+                    <TableHeader className="bg-muted/50 supports-[backdrop-filter]:bg-background/70 sticky top-0 backdrop-blur">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => (
                                     <TableHead
                                         key={header.id}
-                                        className="h-11 py-4 text-xs uppercase tracking-widest text-muted-foreground font-semibold"
+                                        className="text-muted-foreground h-11 py-4 text-xs font-semibold tracking-widest uppercase"
                                     >
                                         {header.isPlaceholder
                                             ? null

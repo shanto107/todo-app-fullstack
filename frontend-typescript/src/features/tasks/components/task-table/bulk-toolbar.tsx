@@ -37,7 +37,7 @@ export default function BulkToolbar({ selectedTasks, view, onClearSelection }: B
     }
 
     return (
-        <div className="flex items-center justify-between rounded-sm border bg-accent/10 px-4 py-3">
+        <div className="bg-accent/10 flex items-center justify-between rounded-sm border px-4 py-3">
             <p className="text-sm font-medium">
                 {selectedTasks.length} task{selectedTasks.length > 1 ? "s" : ""} selected
             </p>
@@ -49,7 +49,7 @@ export default function BulkToolbar({ selectedTasks, view, onClearSelection }: B
                             size="sm"
                             onClick={() => void handleAction("complete")}
                             disabled={mutation.isPending}
-                            className={"rounded-sm text-green-700 bg-green-200 hover:bg-green-300"}
+                            className={"rounded-sm bg-green-200 text-green-700 hover:bg-green-300"}
                         >
                             {pendingAction === "complete" ? (
                                 <span className="flex items-center gap-1">
@@ -82,7 +82,7 @@ export default function BulkToolbar({ selectedTasks, view, onClearSelection }: B
                             size="sm"
                             onClick={() => void handleAction("activate")}
                             disabled={mutation.isPending}
-                            className={"rounded-sm bg-accent/80 hover:bg-accent"}
+                            className={"bg-accent/80 hover:bg-accent rounded-sm"}
                         >
                             {pendingAction === "activate" ? (
                                 <span className="flex items-center gap-1">
@@ -116,7 +116,7 @@ export default function BulkToolbar({ selectedTasks, view, onClearSelection }: B
                             onClick={() => void handleAction("restore")}
                             disabled={mutation.isPending}
                             className={
-                                "rounded-sm text-yellow-600 bg-yellow-200 hover:bg-yellow-300"
+                                "rounded-sm bg-yellow-200 text-yellow-600 hover:bg-yellow-300"
                             }
                         >
                             {pendingAction === "restore" ? (

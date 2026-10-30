@@ -69,13 +69,13 @@ export default function LinkPopover({ editor, isActive, tooltip }: LinkPopoverPr
 
             {/* popover content */}
             <PopoverContent
-                className={"p-3 rounded-sm"}
+                className={"rounded-sm p-3"}
                 sideOffset={15}
                 align="start"
                 data-editor-ui
             >
                 <div className="flex flex-col gap-4">
-                    <p className="text-xs font-semibold text-muted-foreground tracking-wider">
+                    <p className="text-muted-foreground text-xs font-semibold tracking-wider">
                         Insert Link
                     </p>
                     <Input
@@ -83,9 +83,9 @@ export default function LinkPopover({ editor, isActive, tooltip }: LinkPopoverPr
                         value={linkURL}
                         onChange={(event) => setLinkURL(event.target.value)}
                         onKeyDown={handleKeyDown}
-                        className="h-10 text-sm md:text-sm rounded-sm p-4"
+                        className="h-10 rounded-sm p-4 text-sm md:text-sm"
                     />
-                    <div className="flex justify-between align-center">
+                    <div className="align-center flex justify-between">
                         <Button
                             size={"sm"}
                             variant={"destructive"}

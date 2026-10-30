@@ -52,8 +52,8 @@ export default function TaskDeadlineFilter({ filters, updateFilters }: TaskDeadl
     }
 
     return (
-        <AccordionItem value="deadline" className="px-4 data-open:bg-sidebar-accent">
-            <AccordionTrigger className={"text-sm text-muted-foreground tracking-wide"}>
+        <AccordionItem value="deadline" className="data-open:bg-sidebar-accent px-4">
+            <AccordionTrigger className={"text-muted-foreground text-sm tracking-wide"}>
                 Deadline
             </AccordionTrigger>
             <AccordionContent>
@@ -67,7 +67,7 @@ export default function TaskDeadlineFilter({ filters, updateFilters }: TaskDeadl
                                         <Button
                                             type="button"
                                             variant={"outline"}
-                                            className="rounded-sm h-7 text-xs tracking-wide"
+                                            className="h-7 rounded-sm text-xs tracking-wide"
                                         />
                                     }
                                 >
@@ -94,7 +94,7 @@ export default function TaskDeadlineFilter({ filters, updateFilters }: TaskDeadl
                                         <Button
                                             type="button"
                                             variant={"outline"}
-                                            className="rounded-sm h-7 text-xs tracking-wide"
+                                            className="h-7 rounded-sm text-xs tracking-wide"
                                         />
                                     }
                                 >

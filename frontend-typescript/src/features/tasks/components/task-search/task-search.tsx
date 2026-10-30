@@ -85,12 +85,7 @@ export default function TaskSearch({
     return (
         <div ref={containerRef} className="relative w-full max-w-xl">
             <Command
-                className="
-                    relative 
-                    overflow-visible
-                    rounded-sm
-                    bg-background
-                "
+                className="bg-background relative overflow-visible rounded-sm"
                 shouldFilter={false}
             >
                 <div className="relative">
@@ -121,16 +116,7 @@ export default function TaskSearch({
                         }}
                     />
 
-                    <div
-                        className="
-                        absolute
-                        right-1
-                        top-1/2
-                        flex
-                        -translate-y-1/2
-                        items-center
-                    "
-                    >
+                    <div className="absolute top-1/2 right-1 flex -translate-y-1/2 items-center">
                         {value && (
                             <Button
                                 type="button"
@@ -140,43 +126,23 @@ export default function TaskSearch({
                                 onClick={handleClear}
                                 aria-label="Clear search"
                             >
-                                <CircleX className="size-4 text-muted-foreground" />
+                                <CircleX className="text-muted-foreground size-4" />
                             </Button>
                         )}
-                        {isSearching && (
-                            <Spinner
-                                className="
-                                        mr-2 
-                                        size-4 
-                                        text-muted-foreground
-                                    "
-                            />
-                        )}
+                        {isSearching && <Spinner className="text-muted-foreground mr-2 size-4" />}
                     </div>
                 </div>
 
                 {open && (
-                    <CommandList
-                        className="
-                            absolute 
-                            top-full 
-                            z-50 
-                            mt-1 
-                            w-full 
-                            rounded-sm 
-                            border 
-                            bg-background 
-                            shadow-md
-                        "
-                    >
+                    <CommandList className="bg-background absolute top-full z-50 mt-1 w-full rounded-sm border shadow-md">
                         <CommandEmpty>
                             {isSearching ? (
-                                <div className="flex items-center gap-2 p-2 text-sm text-muted-foreground">
+                                <div className="text-muted-foreground flex items-center gap-2 p-2 text-sm">
                                     <Spinner className="size-4" />
                                     Searching...
                                 </div>
                             ) : (
-                                <div className="flex items-center gap-2 p-2 text-sm text-muted-foreground">
+                                <div className="text-muted-foreground flex items-center gap-2 p-2 text-sm">
                                     <SearchCheck className="size-4" />
                                     No results found.
                                 </div>
@@ -190,9 +156,9 @@ export default function TaskSearch({
                                         value={task.title}
                                         onSelect={() => handleSelect(task)}
                                     >
-                                        <Search className="mr-2 size-4 text-muted-foreground" />
+                                        <Search className="text-muted-foreground mr-2 size-4" />
                                         <span className="truncate"> {task.title} </span>
-                                        <span className="ml-auto text-xs text-primary/80 dark:text-chart-1">
+                                        <span className="text-primary/80 dark:text-chart-1 ml-auto text-xs">
                                             {task.id.slice(0, 8).toUpperCase()}
                                         </span>
                                     </CommandItem>
@@ -200,7 +166,7 @@ export default function TaskSearch({
                                 <CommandItem
                                     value="search-all"
                                     onSelect={handleSearch}
-                                    className="border-t text-muted-foreground"
+                                    className="text-muted-foreground border-t"
                                 >
                                     Search all tasks for &quot;{value.trim()}
                                     &quot;

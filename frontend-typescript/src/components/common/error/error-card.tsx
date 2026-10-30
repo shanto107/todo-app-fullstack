@@ -13,23 +13,23 @@ export function ErrorCard({ error }: ErrorCardProps) {
 
     return (
         <div className="flex min-h-[70vh] items-center justify-center p-6">
-            <Card className="w-full max-w-md rounded-md border-1 border-destructive">
+            <Card className="border-destructive w-full max-w-md rounded-md border-1">
                 <CardHeader>
-                    <div className="flex items-center gap-2 text-destructive">
+                    <div className="text-destructive flex items-center gap-2">
                         <AlertTriangle className="size-5" />
 
                         <CardTitle>{apiError?.code ?? "UNKNOWN_ERROR"}</CardTitle>
                     </div>
                 </CardHeader>
 
-                <CardContent className="text-sm tracking-wide font-light text-red-400 dark:text-red-200">
+                <CardContent className="text-sm font-light tracking-wide text-red-400 dark:text-red-200">
                     <p>{error.message}</p>
                 </CardContent>
 
-                <CardFooter className="flex justify-between items-center">
+                <CardFooter className="flex items-center justify-between">
                     <Button
                         variant="outline"
-                        className="rounded-sm text-sm flex-1 text-background bg-accent/80 dark:text-foreground"
+                        className="text-background bg-accent/80 dark:text-foreground flex-1 rounded-sm text-sm"
                         onClick={() => window.location.reload()}
                     >
                         <RefreshCcw className="mr-2 size-4" />

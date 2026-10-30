@@ -5,10 +5,16 @@ import TaskPage from "@/features/tasks/pages/task-page";
 import { taskPages } from "@/features/tasks/pages/task-pages-config";
 
 import AppLayout from "../layouts/app-layout";
+import SignInPage from "@/features/users/pages/sign-in-page";
 
 export default function AppRouter() {
     return (
         <BrowserRouter>
+            <Routes>
+                <Route path="/auth">
+                    <Route path="login" element={<SignInPage />} />
+                </Route>
+            </Routes>
             <Routes>
                 <Route element={<AppLayout />}>
                     <Route index element={<Navigate to={"/tasks/inbox"} replace />} />

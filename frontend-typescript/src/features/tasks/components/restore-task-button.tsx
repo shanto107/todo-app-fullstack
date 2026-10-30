@@ -22,7 +22,7 @@ export default function RestoreTaskButton({ taskId }: RestoreTaskButtonProps) {
             disabled={restoreMutation.isPending}
             onClick={handleRestore}
             className={
-                "rounded-sm text-yellow-600 bg-yellow-200 dark:text-yellow-200 dark:bg-yellow-600 hover:bg-yellow-300 mt-1"
+                "mt-1 rounded-sm bg-yellow-200 text-yellow-600 hover:bg-yellow-300 dark:bg-yellow-600 dark:text-yellow-200"
             }
         >
             {restoreMutation.isPending ? (

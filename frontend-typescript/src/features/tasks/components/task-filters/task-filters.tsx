@@ -53,13 +53,13 @@ export default function TaskFilters({ filters, onChange }: TaskFiltersProps) {
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
                 render={
-                    <Button variant="outline" size="sm" className="flex-1 rounded-sm px-2 h-8" />
+                    <Button variant="outline" size="sm" className="h-8 flex-1 rounded-sm px-2" />
                 }
             >
                 <Filter />
                 <span className="">Filters</span>
                 {filterCount > 0 && (
-                    <span className="ml-1 flex size-5 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
+                    <span className="bg-primary text-primary-foreground ml-1 flex size-5 items-center justify-center rounded-full text-[10px]">
                         {filterCount}
                     </span>
                 )}
@@ -73,7 +73,7 @@ export default function TaskFilters({ filters, onChange }: TaskFiltersProps) {
                             {filterCount > 0 && (
                                 <Button
                                     variant={"destructive"}
-                                    className={"rounded-sm h-7 "}
+                                    className={"h-7 rounded-sm"}
                                     onClick={clearAll}
                                 >
                                     <Trash2 />

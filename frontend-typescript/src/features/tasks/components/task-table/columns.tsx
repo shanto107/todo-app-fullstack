@@ -36,7 +36,7 @@ export function titleColumn() {
         cell: (info) => (
             <Link
                 to={`/tasks/${info.row.original.id}`}
-                className="font-light text-xs md:text-sm tracking-tight hover:underline hover:underline-offset-4"
+                className="text-xs font-light tracking-tight hover:underline hover:underline-offset-4 md:text-sm"
             >
                 {info.getValue()}
             </Link>
@@ -55,7 +55,7 @@ export function priorityColumn() {
 
             return (
                 <Badge className={`rounded-sm p-0 ${taskPriority.color}`} variant={"ghost"}>
-                    <taskPriority.icon className="size-3.5 mr-1" />
+                    <taskPriority.icon className="mr-1 size-3.5" />
                     <span>{taskPriority.label}</span>
                 </Badge>
             );
@@ -71,7 +71,7 @@ export function statusColumn() {
             if (!taskStatus) return null;
             return (
                 <Badge className={`rounded-sm p-0 ${taskStatus.color}`} variant={"ghost"}>
-                    <taskStatus.icon className="size-3.5 mr-1" />
+                    <taskStatus.icon className="mr-1 size-3.5" />
                     <span>{taskStatus.label}</span>
                 </Badge>
             );

@@ -19,7 +19,7 @@ export default function EditorMenubar({ editor }: EditorMenubarProps) {
 
     return (
         <TooltipProvider delay={200}>
-            <div className="flex items-center flex-wrap gap-2 p-1 bg-card border-b border-border">
+            <div className="bg-card border-border flex flex-wrap items-center gap-2 border-b p-1">
                 {MENUBAR_GROUPS.map((group, index) => {
                     if (group.type === "separator") {
                         return (

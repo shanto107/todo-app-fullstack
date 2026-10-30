@@ -6,14 +6,16 @@ import { useFormContext } from "../hooks";
 export function FormSubmitButton({ label }: { label: string }) {
     const form = useFormContext();
     return (
-        <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+        <form.Subscribe
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+        >
             {([canSubmit, isSubmitting]) => (
                 <Button
                     type="submit"
                     size={"sm"}
                     disabled={!canSubmit}
                     className={
-                        "h-8 rounded-sm text-sm tracking-wide bg-primary/80 dark:bg-primary/80 hover:bg-primary/100 dark:hover:bg-primary/50"
+                        "bg-primary/80 dark:bg-primary/80 hover:bg-primary/100 dark:hover:bg-primary/50 h-8 rounded-sm text-sm tracking-wide"
                     }
                 >
                     {isSubmitting ? (

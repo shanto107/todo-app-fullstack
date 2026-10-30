@@ -61,7 +61,7 @@ export default function AddTaskForm({ onSuccess }: AddTaskFormProps) {
                             variant="default"
                             placeholder="Check office email."
                             autoFocus
-                            className="h-10 rounded-sm text-sm md:text-sm font-medium border-none tracking-wider dark:bg-transparent"
+                            className="h-10 rounded-sm border-none text-sm font-medium tracking-wider md:text-sm dark:bg-transparent"
                         />
                     )}
                 </form.AppField>
@@ -69,7 +69,7 @@ export default function AddTaskForm({ onSuccess }: AddTaskFormProps) {
                     {(field) => <field.TextEditor variant="bare" />}
                 </form.AppField>
 
-                <div className="flex flex-wrap items-center gap-4 mt-2 mb-6 md:mb-2">
+                <div className="mt-2 mb-6 flex flex-wrap items-center gap-4 md:mb-2">
                     <form.AppField name="deadline">{(field) => <field.DatePicker />}</form.AppField>
 
                     <form.AppField name="priority">
@@ -84,7 +84,7 @@ export default function AddTaskForm({ onSuccess }: AddTaskFormProps) {
 
                 {/* Button section */}
 
-                <div className="flex justify-between md:justify-end items-center gap-4">
+                <div className="flex items-center justify-between gap-4 md:justify-end">
                     <Button
                         type="button"
                         variant={"outline"}

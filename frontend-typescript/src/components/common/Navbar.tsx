@@ -34,9 +34,9 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                         variant={"ghost"}
                         size={"icon"}
                         onClick={toggleSidebar}
-                        className={"h-9 w-9 group"}
+                        className={"group h-9 w-9"}
                     >
-                        <Menu className="text-muted-foreground size-5 group-hover:text-foreground" />
+                        <Menu className="text-muted-foreground group-hover:text-foreground size-5" />
                     </Button>
                 )}
             </div>
@@ -48,10 +48,10 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                             <Button
                                 size={"sm"}
                                 className={
-                                    "h-9 rounded-sm text-sm tracking-wide bg-primary/80 hover:bg-primary/100 dark:hover:bg-primary/50"
+                                    "bg-primary/80 hover:bg-primary/100 dark:hover:bg-primary/50 h-9 rounded-sm text-sm tracking-wide"
                                 }
                             >
-                                <Plus className="size-3.5 mr-1" />
+                                <Plus className="mr-1 size-3.5" />
                                 <span>Add Task</span>
                             </Button>
                         }
@@ -60,10 +60,10 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                 <ModeToggle />
                 <DropdownMenu>
                     {/* user dropdown trigger */}
-                    <DropdownMenuTrigger render={<Avatar className={"cursor-pointer h-9 w-9"} />}>
+                    <DropdownMenuTrigger render={<Avatar className={"h-9 w-9 cursor-pointer"} />}>
                         <AvatarImage src={avatarURL} alt={name ?? "Guest User"} />
                         <AvatarFallback>
-                            <UserRound className="h-5 w-5 text-muted-foreground" />
+                            <UserRound className="text-muted-foreground h-5 w-5" />
                         </AvatarFallback>
                     </DropdownMenuTrigger>
 
@@ -75,7 +75,7 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                     >
                         <DropdownMenuGroup>
                             <DropdownMenuLabel>
-                                <p className="font-medium text-xs tracking-widest">
+                                <p className="text-xs font-medium tracking-widest">
                                     {name ?? "Guest User"}
                                 </p>
                             </DropdownMenuLabel>

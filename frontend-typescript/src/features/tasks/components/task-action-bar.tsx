@@ -17,7 +17,7 @@ export default function TaskActionBar({ form, updateTaskMutation }: TaskActionBa
             })}
         >
             {({ isDirty, isSubmitting }) => (
-                <div className="mt-4 md:mt-8 flex justify-between md:justify-end md:gap-8">
+                <div className="mt-4 flex justify-between md:mt-8 md:justify-end md:gap-8">
                     <Button
                         type="button"
                         variant="outline"

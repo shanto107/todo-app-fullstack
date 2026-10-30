@@ -16,11 +16,11 @@ export default function ModeToggle() {
             size={"icon"}
             onClick={handleClick}
             className={
-                "rounded-full h-9 w-9 hover:bg-accent-foreground hover:dark:bg-foreground/50"
+                "hover:bg-accent-foreground hover:dark:bg-foreground/50 h-9 w-9 rounded-full"
             }
         >
-            <SunMedium className="text-amber-500 fill-amber-500 h-9 w-9 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 !size-6" />
-            <MoonStar className="text-chart-1 fill-chart-2 absolute h-9 w-9 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <SunMedium className="!size-6 h-9 w-9 scale-100 rotate-0 fill-amber-500 text-amber-500 transition-all dark:scale-0 dark:-rotate-90" />
+            <MoonStar className="text-chart-1 fill-chart-2 absolute h-9 w-9 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
         </Button>
     );
 }

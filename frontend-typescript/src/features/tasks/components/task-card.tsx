@@ -15,13 +15,13 @@ export default function TaskCard({ task }: TaskCardType) {
     const taskPriority = PRIORITY_OPTIONS.find((priority) => priority.value === task.priority);
 
     return (
-        <Card className="rounded-sm max-w-md shadow-sm dark:border-1 dark:border-accent/20 md:max-w-xl">
+        <Card className="dark:border-accent/20 max-w-md rounded-sm shadow-sm md:max-w-xl dark:border-1">
             <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                    <div className="text-sm tracking-wider font-medium truncate min-w-0">
+                <div className="flex items-center justify-between">
+                    <div className="min-w-0 truncate text-sm font-medium tracking-wider">
                         {task.title}
                     </div>
-                    <div className="text-xs text-muted-foreground font-light tracking-tight shrink-0 ml-6">
+                    <div className="text-muted-foreground ml-6 shrink-0 text-xs font-light tracking-tight">
                         {task.id}
                     </div>
                 </div>
@@ -37,16 +37,16 @@ export default function TaskCard({ task }: TaskCardType) {
                     </Badge>
                     {taskPriority && (
                         <Badge className={`rounded-sm p-3 ${taskPriority.color}`} variant={"ghost"}>
-                            <taskPriority.icon className="size-3.5 mr-1" />
+                            <taskPriority.icon className="mr-1 size-3.5" />
                             <span>{taskPriority.label}</span>
                         </Badge>
                     )}
                     {taskStatus && (
                         <Badge
-                            className={`rounded-sm bg-accent/10 p-3 ${taskStatus.color}`}
+                            className={`bg-accent/10 rounded-sm p-3 ${taskStatus.color}`}
                             variant={"ghost"}
                         >
-                            <taskStatus.icon className="size-3.5 mr-1" />
+                            <taskStatus.icon className="mr-1 size-3.5" />
                             <span>{taskStatus.label}</span>
                         </Badge>
                     )}

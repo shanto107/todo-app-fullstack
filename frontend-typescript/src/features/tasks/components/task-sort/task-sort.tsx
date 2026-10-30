@@ -40,7 +40,7 @@ export default function TaskSort({ pageKey, sortBy, sortDirection, onChange }: T
         >
             <SelectTrigger
                 size="sm"
-                className="flex-1 !rounded-sm !h-8 min-w-36"
+                className="!h-8 min-w-36 flex-1 !rounded-sm"
                 aria-label="Sort tasks"
             >
                 <SelectValue placeholder="Sort">

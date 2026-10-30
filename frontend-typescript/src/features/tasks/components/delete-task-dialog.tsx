@@ -29,7 +29,7 @@ export default function DeleteTaskDialog({ taskId }: DeleteTaskDialogProps) {
         <AlertDialog>
             <AlertDialogTrigger
                 render={
-                    <Button variant="destructive" className={"rounded-sm mt-1"}>
+                    <Button variant="destructive" className={"mt-1 rounded-sm"}>
                         {isMobile ? (
                             <Trash2Icon />
                         ) : (
@@ -40,9 +40,9 @@ export default function DeleteTaskDialog({ taskId }: DeleteTaskDialogProps) {
                     </Button>
                 }
             />
-            <AlertDialogContent size="sm" className={"rounded-md fixed md:left-[50%] md:top-[30%]"}>
+            <AlertDialogContent size="sm" className={"fixed rounded-md md:top-[30%] md:left-[50%]"}>
                 <AlertDialogHeader>
-                    <AlertDialogMedia className="rounded-sm bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
+                    <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive rounded-sm">
                         <Trash2Icon />
                     </AlertDialogMedia>
                     <AlertDialogTitle>Delete Task?</AlertDialogTitle>

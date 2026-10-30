@@ -12,8 +12,8 @@ type MetaRowProps = {
 
 function MetaRow({ label, value }: MetaRowProps) {
     return (
-        <div className="grid grid-cols-2 h-12 items-center">
-            <p className="text-sm font-medium text-muted-foreground">{label}</p>
+        <div className="grid h-12 grid-cols-2 items-center">
+            <p className="text-muted-foreground text-sm font-medium">{label}</p>
 
             <div>{value}</div>
         </div>
@@ -30,7 +30,7 @@ export default function TaskMetaCard({ task, form }: TaskMetaCardProps) {
     return (
         <Card className="rounded-sm">
             <CardHeader>
-                <CardTitle className="tracking-wider text-[1rem]">Details</CardTitle>
+                <CardTitle className="text-[1rem] tracking-wider">Details</CardTitle>
             </CardHeader>
             <CardContent className="text-sm">
                 <MetaRow

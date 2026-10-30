@@ -18,7 +18,7 @@ export default function AddTaskDialog({ trigger, className }: AddTaskDialogProp)
             <DialogTrigger render={trigger} />
             <DialogContent
                 className={cn(
-                    "max-w-md w-[calc(100%-2rem)] sm:max-w-2xl pt-4 pb-0 px-0 rounded-sm top-[40%] md:top-[25%]",
+                    "top-[40%] w-[calc(100%-2rem)] max-w-md rounded-sm px-0 pt-4 pb-0 sm:max-w-2xl md:top-[25%]",
                     className,
                 )}
             >

@@ -150,7 +150,7 @@ export default function TaskListPage({
     return (
         <div className="m-4 space-y-4">
             <h1 className="text-3xl font-bold tracking-tight">{pageTitle}</h1>
-            <div className="flex justify-between items-center gap-2">
+            <div className="flex items-center justify-between gap-2">
                 <TaskSearch
                     value={searchInput}
                     suggestions={suggestions}
@@ -185,7 +185,7 @@ export default function TaskListPage({
                 </div>
             )}
 
-            <div className="rounded-sm border bg-background overflow-hidden">
+            <div className="bg-background overflow-hidden rounded-sm border">
                 <TaskTable tasks={tasks} view={tableView} />
             </div>
 

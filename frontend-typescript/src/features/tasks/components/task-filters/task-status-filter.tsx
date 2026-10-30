@@ -21,8 +21,8 @@ export default function TaskStatusFilter({ filters, updateFilters }: TaskStatusF
         });
     }
     return (
-        <AccordionItem value="status" className="px-4 border-t data-open:bg-sidebar-accent">
-            <AccordionTrigger className={"text-sm text-muted-foreground tracking-wide"}>
+        <AccordionItem value="status" className="data-open:bg-sidebar-accent border-t px-4">
+            <AccordionTrigger className={"text-muted-foreground text-sm tracking-wide"}>
                 Status
             </AccordionTrigger>
             <AccordionContent className={"space-y-0.5"}>
@@ -31,12 +31,12 @@ export default function TaskStatusFilter({ filters, updateFilters }: TaskStatusF
                     return (
                         <label
                             key={option.value}
-                            className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 hover:bg-muted"
+                            className="hover:bg-muted flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5"
                         >
                             <Checkbox
                                 checked={checked}
                                 onCheckedChange={() => toggleStatus(option.value)}
-                                className={"rounded-xs size-4.5 border-foreground"}
+                                className={"border-foreground size-4.5 rounded-xs"}
                             />
                             <span className={`font-semibold tracking-wide`}>{option.label}</span>
                         </label>

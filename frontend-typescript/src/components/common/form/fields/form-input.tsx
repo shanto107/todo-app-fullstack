@@ -9,14 +9,16 @@ type FormInputProps = FormControlProps & {
     variant: "default" | "bare";
     autoFocus?: boolean;
     className?: string;
+    labelClassName?: string;
     disabled?: boolean;
 };
 
-export default function FormInput({
+export function FormInput({
     placeholder,
     variant,
     autoFocus,
     className,
+    labelClassName,
     disabled = false,
     ...props
 }: FormInputProps) {
@@ -24,7 +26,7 @@ export default function FormInput({
     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
     return (
-        <FormBase variant={variant} {...props}>
+        <FormBase variant={variant} {...props} labelClassName={labelClassName}>
             <Input
                 id={field.name}
                 name={field.name}
@@ -37,7 +39,7 @@ export default function FormInput({
                 disabled={disabled}
                 className={cn(
                     variant === "bare" &&
-                        "border-none bg-transparent shadow-none px-0 text-base font-medium focus-visible:ring-0",
+                        "border-none bg-transparent px-0 text-base font-medium shadow-none focus-visible:ring-0",
                     className,
                 )}
             />

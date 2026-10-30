@@ -42,12 +42,12 @@ export function FormPopoverPicker<T extends string>({
             disabled={disabled}
             onBlur={field.handleBlur}
             aria-invalid={isInvalid}
-            className={"h-8 rounded-sm text-xs text-muted-foreground tracking-wide"}
+            className={"text-muted-foreground h-8 rounded-sm text-xs tracking-wide"}
         >
             {Icon ? (
-                <Icon className={`size-3.5 mr-1 ${selectedOption?.color}`} />
+                <Icon className={`mr-1 size-3.5 ${selectedOption?.color}`} />
             ) : (
-                <Flag className={`size-3.5 mr-1`} />
+                <Flag className={`mr-1 size-3.5`} />
             )}
             {<span className={selectedOption?.color}>{selectedOption?.label ?? placeholder}</span>}
         </Button>
@@ -58,7 +58,7 @@ export function FormPopoverPicker<T extends string>({
             type="button"
             variant={"ghost"}
             size={"sm"}
-            className="size-6 rounded-sm text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground size-6 rounded-sm"
             onClick={(e) => {
                 e.stopPropagation();
                 field.handleChange(undefined);
@@ -79,16 +79,16 @@ export function FormPopoverPicker<T extends string>({
                 field.handleChange(option.value);
                 setOpenPopover(false);
             }}
-            className={`rounded-sm justify-start text-xs tracking-wide ${option.color}`}
+            className={`justify-start rounded-sm text-xs tracking-wide ${option.color}`}
         >
-            {option.icon && <option.icon className={`size-3.5 mr-1 ${option?.color}`} />}
+            {option.icon && <option.icon className={`mr-1 size-3.5 ${option?.color}`} />}
             {<span className={option.color}>{option.label}</span>}
         </Button>
     ));
 
     return (
         <FormBase {...props} variant={"compact"}>
-            <div className="flex items-center rounded-sm border bg-background dark:bg-input/30">
+            <div className="bg-background dark:bg-input/30 flex items-center rounded-sm border">
                 <Popover
                     open={!disabled ? openPopover : false}
                     onOpenChange={(open) => {
@@ -99,7 +99,7 @@ export function FormPopoverPicker<T extends string>({
                 >
                     <PopoverTrigger render={trigger} />
 
-                    <PopoverContent className="w-full p-0 rounded-sm" align="start">
+                    <PopoverContent className="w-full rounded-sm p-0" align="start">
                         <div className="flex flex-col">{content}</div>
                     </PopoverContent>
                 </Popover>

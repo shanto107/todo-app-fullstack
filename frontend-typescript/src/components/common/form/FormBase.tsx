@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/field";
 
 import { useFieldContext } from "./hooks";
+import { cn } from "@/lib/utils";
 
 export type FormControlProps = {
     label?: string;
@@ -20,6 +21,7 @@ type FormBaseProps = FormControlProps & {
     childrenFirst?: boolean;
     variant?: "default" | "bare" | "compact";
     children: ReactNode;
+    labelClassName?: string;
 };
 
 export function FormBase({
@@ -29,18 +31,23 @@ export function FormBase({
     childrenFirst,
     variant,
     children,
+    labelClassName,
 }: FormBaseProps) {
     const field = useFieldContext();
     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
     const labelElement = label ? (
         <>
-            <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+            <FieldLabel htmlFor={field.name} className={cn(labelClassName)}>
+                {label}
+            </FieldLabel>
             {description && <FieldDescription>{description}</FieldDescription>}
         </>
     ) : null;
 
-    const errorElement = isInvalid && <FieldError errors={field.state.meta.errors} />;
+    const errorElement = isInvalid && (
+        <FieldError errors={field.state.meta.errors} />
+    );
 
     if (variant === "bare") {
         return (
@@ -53,7 +60,10 @@ export function FormBase({
 
     if (variant === "compact") {
         return (
-            <div data-invalid={isInvalid} className="inline-flex flex-col gap-1">
+            <div
+                data-invalid={isInvalid}
+                className="inline-flex flex-col gap-1"
+            >
                 {children}
                 {errorElement}
             </div>
@@ -61,7 +71,10 @@ export function FormBase({
     }
 
     return (
-        <Field data-invalid={isInvalid} orientation={horizontal ? "horizontal" : undefined}>
+        <Field
+            data-invalid={isInvalid}
+            orientation={horizontal ? "horizontal" : undefined}
+        >
             {childrenFirst ? (
                 <>
                     {children}

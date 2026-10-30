@@ -88,25 +88,25 @@ export default function AppSidebar({ Applogo }: SidebarProps) {
     return (
         <Sidebar collapsible="icon">
             <SidebarHeader className="mt-2">
-                <div className="flex justify-between items-center">
+                <div className="flex items-center justify-between">
                     {isMobile ? (
                         <Button
                             variant={"ghost"}
                             size={"icon"}
                             onClick={toggleSidebar}
-                            className={"h-9 w-9 group"}
+                            className={"group h-9 w-9"}
                         >
-                            <Menu className="text-muted-foreground size-5 group-hover:text-foreground" />
+                            <Menu className="text-muted-foreground group-hover:text-foreground size-5" />
                         </Button>
                     ) : (
-                        <SidebarTrigger className="h-9 w-9 [&>svg]:!h-6 [&>svg]:!w-6 text-muted-foreground" />
+                        <SidebarTrigger className="text-muted-foreground h-9 w-9 [&>svg]:!h-6 [&>svg]:!w-6" />
                     )}
 
                     {(isMobile || state === "expanded") && (
                         <Avatar>
                             <AvatarImage src={Applogo} alt="App Logo" />
                             <AvatarFallback className={"bg-foreground-100"}>
-                                <Notebook className="h-5 w-5 text-accent dark:text-chart-1" />
+                                <Notebook className="text-accent dark:text-chart-1 h-5 w-5" />
                             </AvatarFallback>
                         </Avatar>
                     )}
@@ -124,29 +124,14 @@ export default function AppSidebar({ Applogo }: SidebarProps) {
                                         trigger={
                                             <TooltipTrigger
                                                 render={
-                                                    <SidebarMenuButton
-                                                        className="
-                                                            overflow-visible
-                                                            px-0
-                                                            group-data-[collapsible=icon]:!px-0
-                                                            mt-0
-                                                            mb-2
-                                                            rounded-sm
-                                                            hover:bg-accent/10
-                                                            dark:hover:bg-accent/20
-                                                            hover:[&_svg]:text-background
-                                                            hover:[&_svg]:fill-accent/80
-                                                            dark:hover:[&_svg]:text-background
-                                                            dark:hover:[&_svg]:fill-chart-1
-                                                        "
-                                                    />
+                                                    <SidebarMenuButton className="hover:bg-accent/10 dark:hover:bg-accent/20 hover:[&_svg]:text-background hover:[&_svg]:fill-accent/80 dark:hover:[&_svg]:text-background dark:hover:[&_svg]:fill-chart-1 mt-0 mb-2 overflow-visible rounded-sm px-0 group-data-[collapsible=icon]:!px-0" />
                                                 }
                                             >
                                                 <CirclePlus
                                                     strokeWidth={1.5}
                                                     className="!size-8 transition-colors"
                                                 />
-                                                <span className="font-medium text-sm tracking-wider">
+                                                <span className="text-sm font-medium tracking-wider">
                                                     Add Task
                                                 </span>
                                             </TooltipTrigger>
@@ -164,7 +149,7 @@ export default function AppSidebar({ Applogo }: SidebarProps) {
                                         tooltip={navItem.title}
                                         isActive={location.pathname === navItem.url}
                                         render={<NavLink to={navItem.url} />}
-                                        className={`overflow-visible px-1 mt-2 flex items-center justify-between rounded-sm ${navItem.hover}`}
+                                        className={`mt-2 flex items-center justify-between overflow-visible rounded-sm px-1 ${navItem.hover}`}
                                     >
                                         <div className="flex items-center gap-4">
                                             <navItem.icon
@@ -172,7 +157,7 @@ export default function AppSidebar({ Applogo }: SidebarProps) {
                                                 strokeWidth={1.8}
                                             />
                                             <span
-                                                className={`text-sm tracking-wider font-light ${location.pathname === navItem.url && navItem.active}`}
+                                                className={`text-sm font-light tracking-wider ${location.pathname === navItem.url && navItem.active}`}
                                             >
                                                 {navItem.title}
                                             </span>

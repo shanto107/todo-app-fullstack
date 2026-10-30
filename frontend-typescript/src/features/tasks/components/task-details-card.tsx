@@ -11,15 +11,15 @@ type TaskDetailsCardProps = {
 export default function TaskDetailsCard({ form, task }: TaskDetailsCardProps) {
     const isDeleted = !!task.deletedAt;
     return (
-        <div className="rounded-sm space-y-2 md:space-y-4 md:bg-transparent">
-            <div className="flex justify-between items-center gap-1">
+        <div className="space-y-2 rounded-sm md:space-y-4 md:bg-transparent">
+            <div className="flex items-center justify-between gap-1">
                 <form.AppField name="title">
                     {(field) => (
                         <field.Input
                             variant="default"
                             placeholder="Check office email."
                             disabled={isDeleted}
-                            className="h-auto rounded-sm text-xl md:text-xl font-medium border-none tracking-tight dark:bg-transparent"
+                            className="h-auto rounded-sm border-none text-xl font-medium tracking-tight md:text-xl dark:bg-transparent"
                         />
                     )}
                 </form.AppField>
@@ -31,7 +31,7 @@ export default function TaskDetailsCard({ form, task }: TaskDetailsCardProps) {
             </div>
 
             <section className="p-2">
-                <h3 className="mb-2 text-sm font-medium text-muted-foreground tracking-wide">
+                <h3 className="text-muted-foreground mb-2 text-sm font-medium tracking-wide">
                     Description
                 </h3>
                 <form.AppField name="description">

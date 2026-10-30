@@ -7,7 +7,7 @@ type TaskCardListProps = {
 
 export default function TaskCardList({ tasks }: TaskCardListProps) {
     return (
-        <div className="max-w-6xl grid grid-cols-1 gap-6">
+        <div className="grid max-w-6xl grid-cols-1 gap-6">
             {tasks.map((task) => (
                 <TaskCard key={task.id} task={task} />
             ))}

@@ -83,8 +83,8 @@ export function FormTextEditor({
                 <div
                     data-invalid={isInvalid}
                     className={cn(
-                        "flex flex-col border rounded-sm overflow-hidden",
-                        disabled && "opacity-60 bg-muted",
+                        "flex flex-col overflow-hidden rounded-sm border",
+                        disabled && "bg-muted opacity-60",
                     )}
                     onFocusCapture={() => setIsFocused(true)}
                     onBlurCapture={(event) => {
@@ -112,7 +112,7 @@ export function FormTextEditor({
                         </BubbleMenu>
                     )}
 
-                    <div className="bg-transparent max-h-[300px] overflow-y-auto">
+                    <div className="max-h-[300px] overflow-y-auto bg-transparent">
                         <EditorContent editor={editor} className="px-2 py-1" />
                     </div>
                 </div>
@@ -124,7 +124,7 @@ export function FormTextEditor({
         <FormBase variant="bare" {...props}>
             <div
                 data-invalid={isInvalid}
-                className="flex flex-col border rounded-sm overflow-hidden"
+                className="flex flex-col overflow-hidden rounded-sm border"
                 onFocusCapture={() => setIsFocused(true)}
                 onBlurCapture={(event) => {
                     const nextTarget = event.relatedTarget as HTMLElement | null;
@@ -149,7 +149,7 @@ export function FormTextEditor({
                         <EditorMenubar editor={editor} />
                     </BubbleMenu>
                 )}
-                <div className="bg-transparent max-h-[300px] overflow-y-auto">
+                <div className="max-h-[300px] overflow-y-auto bg-transparent">
                     <EditorContent editor={editor} className="px-2 py-1" />
                 </div>
             </div>

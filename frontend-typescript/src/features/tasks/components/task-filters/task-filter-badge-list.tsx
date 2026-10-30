@@ -41,7 +41,7 @@ export default function TaskFilterBadgeList({ filters, updateFilters }: TaskFilt
     }
 
     return (
-        <div className="flex flex-wrap gap-1.5 mb-2 px-4">
+        <div className="mb-2 flex flex-wrap gap-1.5 px-4">
             {filters.status?.map((status) => {
                 const option = STATUS_OPTIONS.find((item) => item.value === status);
                 if (!option) return null;

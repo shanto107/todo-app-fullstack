@@ -29,7 +29,7 @@ export default function MenubarButton({
                     onPressedChange={() => onClick()}
                     onMouseDown={(event) => event.preventDefault()}
                     disabled={disabled}
-                    className="h-6 w-6 p-0 rounded-sm"
+                    className="h-6 w-6 rounded-sm p-0"
                     data-editor-ui
                     {...props}
                 >

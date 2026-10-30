@@ -65,7 +65,7 @@ export function DeadlineBadge({
     if (!date) {
         return (
             <div className="flex items-center">
-                <CalendarIcon className={`size-3.5 mr-1`} />
+                <CalendarIcon className={`mr-1 size-3.5`} />
                 <span>{defaultLabel || "Deadline"}</span>
             </div>
         );
@@ -73,7 +73,7 @@ export function DeadlineBadge({
     if (isToday(date)) {
         return (
             <div className="flex items-center">
-                <icons.today className={cn(`size-3.5 mr-1 ${colors.today}`, iconClassName)} />
+                <icons.today className={cn(`mr-1 size-3.5 ${colors.today}`, iconClassName)} />
                 <span className={cn(colors.today, labelClassName)}>Today</span>
             </div>
         );
@@ -81,7 +81,7 @@ export function DeadlineBadge({
     if (isTomorrow(date)) {
         return (
             <div className="flex items-center">
-                <icons.tomorrow className={cn(`size-3.5 mr-1 ${colors.tomorrow}`, iconClassName)} />
+                <icons.tomorrow className={cn(`mr-1 size-3.5 ${colors.tomorrow}`, iconClassName)} />
                 <span className={cn(colors.tomorrow, labelClassName)}>Tomorrow</span>
             </div>
         );
@@ -89,7 +89,7 @@ export function DeadlineBadge({
     if (isSameDay(date, nextSunday(new Date()))) {
         return (
             <div className="flex items-center">
-                <icons.nextWeek className={cn(`size-3.5 mr-1 ${colors.nextWeek}`, iconClassName)} />
+                <icons.nextWeek className={cn(`mr-1 size-3.5 ${colors.nextWeek}`, iconClassName)} />
                 <span className={cn(colors.nextWeek, labelClassName)}>Next week</span>
             </div>
         );
@@ -98,7 +98,7 @@ export function DeadlineBadge({
     return (
         <div className="flex items-center">
             <CalendarIcon
-                className={cn("size-3.5 mr-1 text-yellow-600 dark:text-yellow-400", iconClassName)}
+                className={cn("mr-1 size-3.5 text-yellow-600 dark:text-yellow-400", iconClassName)}
             />
             <span className={cn("text-yellow-600 dark:text-yellow-400", labelClassName)}>
                 {format(date, "MMM d")}
@@ -137,7 +137,7 @@ export function FormDatePicker({ disabled = false, ...props }: FormDatePickerPro
             disabled={disabled}
             onBlur={field.handleBlur}
             aria-invalid={isInvalid}
-            className={"h-8 rounded-sm text-xs text-muted-foreground tracking-wide"}
+            className={"text-muted-foreground h-8 rounded-sm text-xs tracking-wide"}
         >
             <DeadlineBadge date={field.state.value} />
         </Button>
@@ -148,7 +148,7 @@ export function FormDatePicker({ disabled = false, ...props }: FormDatePickerPro
             type="button"
             variant={"ghost"}
             size={"sm"}
-            className="size-6 rounded-sm text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground size-6 rounded-sm"
             onClick={(e) => {
                 e.stopPropagation();
                 field.handleChange(undefined);
@@ -159,7 +159,7 @@ export function FormDatePicker({ disabled = false, ...props }: FormDatePickerPro
     );
 
     const quickActions = (
-        <div className="space-y-1 mb-2">
+        <div className="mb-2 space-y-1">
             {quickDates.map((day) => (
                 <Button
                     key={day.label}
@@ -170,7 +170,7 @@ export function FormDatePicker({ disabled = false, ...props }: FormDatePickerPro
                         setOpenPopover(false);
                     }}
                 >
-                    <div className="flex gap-3 items-center">
+                    <div className="flex items-center gap-3">
                         <day.icon className={day.color} />
                         <span className="tracking-wider">{day.label}</span>
                     </div>
@@ -182,7 +182,7 @@ export function FormDatePicker({ disabled = false, ...props }: FormDatePickerPro
 
     return (
         <FormBase {...props} variant="compact">
-            <div className="flex items-center rounded-sm border bg-background dark:bg-input/30">
+            <div className="bg-background dark:bg-input/30 flex items-center rounded-sm border">
                 <Popover
                     open={!disabled ? openPopover : false}
                     onOpenChange={(open) => {
@@ -193,7 +193,7 @@ export function FormDatePicker({ disabled = false, ...props }: FormDatePickerPro
                 >
                     <PopoverTrigger render={calendarTrigger} />
                     <PopoverContent className={"w-55 rounded-sm p-0"} align="start">
-                        <div className="pt-2 border-b">{quickActions}</div>
+                        <div className="border-b pt-2">{quickActions}</div>
                         <Calendar
                             mode="single"
                             selected={field.state.value}
