@@ -1,11 +1,17 @@
-import { useAppForm } from "@/components/common/form/hooks";
-import type { Task } from "../types/task.types"
-import { updateTaskFormSchema, type UpdateTaskForm, type UpdateTaskRequest } from "../schemas/update-task-schema";
-import { useUpdateTask } from "./use-update-task";
-import { EDITABLE_FIELDS } from "../constants/tasks.form";
 import { toast } from "sonner";
-import { getUpdateToastMessage } from "@/lib/update-toast-messge";
+
+import { useAppForm } from "@/components/common/form/hooks";
 import { ApiError } from "@/lib/api/api-error";
+import { getUpdateToastMessage } from "@/lib/update-toast-messge";
+
+import { EDITABLE_FIELDS } from "../constants/tasks.form";
+import {
+    type UpdateTaskForm,
+    updateTaskFormSchema,
+    type UpdateTaskRequest,
+} from "../schemas/update-task-schema";
+import type { Task } from "../types/task.types";
+import { useUpdateTask } from "./use-update-task";
 
 export default function useEditTaskForm(task: Task) {
     const updateTaskMutation = useUpdateTask();
@@ -16,41 +22,36 @@ export default function useEditTaskForm(task: Task) {
         description: task.description ?? "",
         deadline: task.deadline ? new Date(task.deadline) : undefined,
         priority: task.priority,
-        status: task.status
-    }
+        status: task.status,
+    };
     const form = useAppForm({
         defaultValues,
         validators: {
             onSubmit: updateTaskFormSchema,
         },
         onSubmit: async ({ value, formApi }) => {
-            const dirtyFields = EDITABLE_FIELDS.filter((field) => formApi.getFieldMeta(field)?.isDirty);
+            const dirtyFields = EDITABLE_FIELDS.filter(
+                (field) => formApi.getFieldMeta(field)?.isDirty,
+            );
             const payload: UpdateTaskRequest = {
                 id: value.id,
-                ...Object.fromEntries(dirtyFields.map(field => [field, value[field]]))
+                ...Object.fromEntries(dirtyFields.map((field) => [field, value[field]])),
             };
             try {
-                const {
-                    id,
-                    title,
-                    description,
-                    deadline,
-                    priority,
-                    status
-                } = await updateTaskMutation.mutateAsync(payload);
+                const { id, title, description, deadline, priority, status } =
+                    await updateTaskMutation.mutateAsync(payload);
                 formApi.reset({
                     id,
                     title,
                     description: description ?? "",
                     deadline: deadline ? new Date(deadline) : undefined,
                     priority,
-                    status
+                    status,
                 });
                 toast.success("Task updated", {
                     description: getUpdateToastMessage(dirtyFields),
                 });
-            }
-            catch (error) {
+            } catch (error) {
                 console.log(error);
                 console.log(error instanceof ApiError);
 
@@ -60,14 +61,11 @@ export default function useEditTaskForm(task: Task) {
                     console.log(error.code);
                 }
             }
-
-        }
-    })
+        },
+    });
 
     return {
         form,
-        updateTaskMutation
-    }
+        updateTaskMutation,
+    };
 }
-
-

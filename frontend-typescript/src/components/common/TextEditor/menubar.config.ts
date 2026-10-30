@@ -1,26 +1,26 @@
 import {
+    AlignCenter,
+    AlignJustify,
+    AlignLeft,
+    AlignRight,
     Bold,
-    Italic,
-    Underline,
-    Strikethrough,
     Code2,
+    Heading,
     Heading1,
     Heading2,
     Heading3,
+    History,
+    Italic,
+    Link2,
     List,
     ListOrdered,
     ListTodo,
     Quote,
-    AlignLeft,
-    AlignCenter,
-    AlignRight,
-    AlignJustify,
-    Undo2,
     Redo2,
-    Link2,
+    Strikethrough,
     Type,
-    Heading,
-    History,
+    Underline,
+    Undo2,
 } from "lucide-react";
 
 import type { MenubarConfig } from "./menubar.types";
@@ -107,7 +107,6 @@ export const MENUBAR_GROUPS: MenubarConfig[] = [
         ],
     },
 
-
     {
         type: "group",
         label: "Lists",
@@ -134,10 +133,9 @@ export const MENUBAR_GROUPS: MenubarConfig[] = [
                 icon: ListTodo,
                 activeKey: "taskList",
                 action: (editor) => editor.chain().focus().toggleTaskList().run(),
-            }
+            },
         ],
     },
-
 
     {
         type: "group",
@@ -176,7 +174,6 @@ export const MENUBAR_GROUPS: MenubarConfig[] = [
         ],
     },
 
-
     {
         type: "group",
         label: "Media",
@@ -187,9 +184,9 @@ export const MENUBAR_GROUPS: MenubarConfig[] = [
                 key: "link",
                 tooltip: "Add link",
                 icon: Link2,
-                activeKey: "link"
-            }
-        ]
+                activeKey: "link",
+            },
+        ],
     },
 
     {

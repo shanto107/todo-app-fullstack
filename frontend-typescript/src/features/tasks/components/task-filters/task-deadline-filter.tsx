@@ -1,39 +1,37 @@
-import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import type { TaskFilterValues } from "../../types/task-query.types";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
-import stringToDate from "@/lib/string-to-date";
-import dateToString from "@/lib/date-to-string";
 import { useState } from "react";
 
+import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import dateToString from "@/lib/date-to-string";
+import stringToDate from "@/lib/string-to-date";
+
+import type { TaskFilterValues } from "../../types/task-query.types";
 
 type TaskDeadlineFilterProps = {
     filters: TaskFilterValues;
     updateFilters: (updates: Partial<TaskFilterValues>) => void;
 };
 
-export default function TaskDeadlineFilter({
-    filters,
-    updateFilters
-}: TaskDeadlineFilterProps) {
+export default function TaskDeadlineFilter({ filters, updateFilters }: TaskDeadlineFilterProps) {
     const [deadlineFromOpen, setDeadlineFromOpen] = useState(false);
     const [deadlineToOpen, setDeadlineToOpen] = useState(false);
-    const deadlineFromDate = stringToDate(filters.deadlineFrom);
-    const deadlineToDate = stringToDate(filters.deadlineTo);
+    const deadlineFromDate = filters.deadlineFrom ? stringToDate(filters.deadlineFrom) : undefined;
+    const deadlineToDate = filters.deadlineTo ? stringToDate(filters.deadlineTo) : undefined;
 
     function toggleDateFrom(date: Date | undefined) {
         const dateString = dateToString(date);
         if (dateString === filters.deadlineFrom) {
             updateFilters({
-                deadlineFrom: undefined
+                deadlineFrom: undefined,
             });
             setDeadlineFromOpen(false);
             return;
         }
         updateFilters({
-            deadlineFrom: dateString
+            deadlineFrom: dateString,
         });
         setDeadlineFromOpen(false);
     }
@@ -42,22 +40,19 @@ export default function TaskDeadlineFilter({
         const dateString = dateToString(date);
         if (dateString === filters.deadlineTo) {
             updateFilters({
-                deadlineTo: undefined
+                deadlineTo: undefined,
             });
             setDeadlineToOpen(false);
             return;
         }
         updateFilters({
-            deadlineTo: dateString
+            deadlineTo: dateString,
         });
         setDeadlineToOpen(false);
     }
 
     return (
-        <AccordionItem
-            value="deadline"
-            className="px-4 data-open:bg-sidebar-accent"
-        >
+        <AccordionItem value="deadline" className="px-4 data-open:bg-sidebar-accent">
             <AccordionTrigger className={"text-sm text-muted-foreground tracking-wide"}>
                 Deadline
             </AccordionTrigger>
@@ -65,13 +60,8 @@ export default function TaskDeadlineFilter({
                 <div className="space-y-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                            <span className="text-xs font-semibold tracking-wider">
-                                From
-                            </span>
-                            <Popover
-                                open={deadlineFromOpen}
-                                onOpenChange={setDeadlineFromOpen}
-                            >
+                            <span className="text-xs font-semibold tracking-wider">From</span>
+                            <Popover open={deadlineFromOpen} onOpenChange={setDeadlineFromOpen}>
                                 <PopoverTrigger
                                     render={
                                         <Button
@@ -81,17 +71,12 @@ export default function TaskDeadlineFilter({
                                         />
                                     }
                                 >
-                                    {
-                                        deadlineFromDate
-                                            ? format(deadlineFromDate, "MMM d, yyyy")
-                                            : "Pick a date"
-                                    }
+                                    {deadlineFromDate
+                                        ? format(deadlineFromDate, "MMM d, yyyy")
+                                        : "Pick a date"}
                                 </PopoverTrigger>
 
-                                <PopoverContent
-                                    align="start"
-                                    className="w-auto rounded-sm p-0"
-                                >
+                                <PopoverContent align="start" className="w-auto rounded-sm p-0">
                                     <Calendar
                                         mode="single"
                                         selected={deadlineFromDate}
@@ -102,13 +87,8 @@ export default function TaskDeadlineFilter({
                         </div>
 
                         <div className="flex items-center gap-2">
-                            <span className="text-xs font-semibold tracking-wider">
-                                To
-                            </span>
-                            <Popover
-                                open={deadlineToOpen}
-                                onOpenChange={setDeadlineToOpen}
-                            >
+                            <span className="text-xs font-semibold tracking-wider">To</span>
+                            <Popover open={deadlineToOpen} onOpenChange={setDeadlineToOpen}>
                                 <PopoverTrigger
                                     render={
                                         <Button
@@ -118,17 +98,12 @@ export default function TaskDeadlineFilter({
                                         />
                                     }
                                 >
-                                    {
-                                        deadlineToDate
-                                            ? format(deadlineToDate, "MMM d, yyyy")
-                                            : "Pick a date"
-                                    }
+                                    {deadlineToDate
+                                        ? format(deadlineToDate, "MMM d, yyyy")
+                                        : "Pick a date"}
                                 </PopoverTrigger>
 
-                                <PopoverContent
-                                    align="start"
-                                    className="w-auto rounded-sm p-0"
-                                >
+                                <PopoverContent align="start" className="w-auto rounded-sm p-0">
                                     <Calendar
                                         mode="single"
                                         selected={deadlineToDate}
@@ -141,5 +116,5 @@ export default function TaskDeadlineFilter({
                 </div>
             </AccordionContent>
         </AccordionItem>
-    )
+    );
 }

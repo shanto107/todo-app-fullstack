@@ -6,11 +6,9 @@ export default function queryBuilder(filters: TaskQuery) {
         if (value === undefined) continue;
         if (Array.isArray(value)) {
             if (value.length > 0) {
-
                 params.set(key, value.join(","));
             }
-        }
-        else {
+        } else {
             params.set(key, String(value));
         }
     }

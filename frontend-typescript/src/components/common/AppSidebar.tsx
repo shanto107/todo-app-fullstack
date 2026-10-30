@@ -1,5 +1,24 @@
+import {
+    CalendarClock,
+    CalendarDays,
+    CircleCheckBig,
+    CirclePlus,
+    Inbox,
+    Menu,
+    Notebook,
+    Trash2,
+} from "lucide-react";
+import { NavLink, useLocation } from "react-router";
+
+import AddTaskDialog from "@/features/tasks/components/add-task-dialog";
+import { useTaskCounts } from "@/features/tasks/hooks/use-task-counts";
+import type { AppSidebarItem } from "@/features/tasks/types/task.types";
 import { useIsMobile } from "@/hooks/use-mobile";
+
 import { Avatar, AvatarFallback } from "../ui/avatar";
+import { AvatarImage } from "../ui/avatar";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 import {
     Sidebar,
     SidebarContent,
@@ -10,27 +29,10 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarTrigger,
-    useSidebar
+    useSidebar,
 } from "../ui/sidebar";
-import { Button } from "../ui/button";
-import {
-    CalendarClock,
-    CalendarDays,
-    CircleCheckBig,
-    CirclePlus,
-    Inbox,
-    Menu,
-    Notebook,
-    Trash2
-} from "lucide-react";
-import { AvatarImage } from "../ui/avatar";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { NavLink, useLocation } from "react-router";
-import AddTaskDialog from "@/features/tasks/components/add-task-dialog";
-import { Badge } from "../ui/badge";
-import { useTaskCounts } from "@/features/tasks/hooks/use-task-counts";
-import type { AppSidebarItem } from "@/features/tasks/types/task.types";
 import { Spinner } from "../ui/spinner";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 const sidebarNavItems: AppSidebarItem[] = [
     {
@@ -39,7 +41,7 @@ const sidebarNavItems: AppSidebarItem[] = [
         count: "inbox",
         icon: Inbox,
         active: "text-accent dark:text-chart-1",
-        hover: "hover:text-accent hover:dark:text-chart-1"
+        hover: "hover:text-accent hover:dark:text-chart-1",
     },
     {
         title: "Today",
@@ -47,7 +49,7 @@ const sidebarNavItems: AppSidebarItem[] = [
         count: "today",
         icon: CalendarDays,
         active: "text-accent dark:text-chart-1",
-        hover: "hover:text-accent dark:hover:text-chart-1"
+        hover: "hover:text-accent dark:hover:text-chart-1",
     },
     {
         title: "Upcoming",
@@ -55,69 +57,59 @@ const sidebarNavItems: AppSidebarItem[] = [
         count: "upcoming",
         icon: CalendarClock,
         active: "text-accent dark:text-chart-1",
-        hover: "hover:text-accent dark:hover:text-chart-1"
+        hover: "hover:text-accent dark:hover:text-chart-1",
     },
     {
         title: "Completed",
         url: "/tasks/completed",
         icon: CircleCheckBig,
         active: "text-green-600 dark:text-green-300",
-        hover: "hover:text-green-600 dark:hover:text-green-300"
+        hover: "hover:text-green-600 dark:hover:text-green-300",
     },
     {
         title: "Trash",
         url: "/tasks/deleted",
         icon: Trash2,
         active: "text-red-600 dark:text-red-400",
-        hover: "hover:text-red-600 dark:hover:text-red-400"
-    }
-]
-
+        hover: "hover:text-red-600 dark:hover:text-red-400",
+    },
+];
 
 type SidebarProps = {
     Applogo?: string;
-}
+};
 
 export default function AppSidebar({ Applogo }: SidebarProps) {
     const { state, toggleSidebar } = useSidebar();
     const isMobile = useIsMobile();
     const location = useLocation();
-    const {
-        data: counts,
-        isPending,
-        isError
-    } = useTaskCounts();
+    const { data: counts, isPending, isError } = useTaskCounts();
 
     return (
         <Sidebar collapsible="icon">
             <SidebarHeader className="mt-2">
                 <div className="flex justify-between items-center">
-                    {
-                        isMobile
-                            ? (
-                                <Button
-                                    variant={"ghost"}
-                                    size={"icon"}
-                                    onClick={toggleSidebar}
-                                    className={"h-9 w-9 group"}
-                                >
-                                    <Menu className="text-muted-foreground size-5 group-hover:text-foreground" />
-                                </Button>
-                            )
-                            : (
-                                <SidebarTrigger className="h-9 w-9 [&>svg]:!h-6 [&>svg]:!w-6 text-muted-foreground" />
-                            )
-                    }
+                    {isMobile ? (
+                        <Button
+                            variant={"ghost"}
+                            size={"icon"}
+                            onClick={toggleSidebar}
+                            className={"h-9 w-9 group"}
+                        >
+                            <Menu className="text-muted-foreground size-5 group-hover:text-foreground" />
+                        </Button>
+                    ) : (
+                        <SidebarTrigger className="h-9 w-9 [&>svg]:!h-6 [&>svg]:!w-6 text-muted-foreground" />
+                    )}
 
-                    {
-                        (isMobile || state === "expanded") &&
+                    {(isMobile || state === "expanded") && (
                         <Avatar>
                             <AvatarImage src={Applogo} alt="App Logo" />
                             <AvatarFallback className={"bg-foreground-100"}>
                                 <Notebook className="h-5 w-5 text-accent dark:text-chart-1" />
                             </AvatarFallback>
                         </Avatar>
-                    }
+                    )}
                 </div>
             </SidebarHeader>
             {/* Sidebar Navigation Items */}
@@ -125,7 +117,6 @@ export default function AppSidebar({ Applogo }: SidebarProps) {
                 <SidebarGroup>
                     <SidebarGroupContent>
                         <SidebarMenu>
-
                             {/* Sidebar Add task button */}
                             <SidebarMenuItem>
                                 <Tooltip>
@@ -161,69 +152,57 @@ export default function AppSidebar({ Applogo }: SidebarProps) {
                                             </TooltipTrigger>
                                         }
                                     />
-                                    <TooltipContent side="right">
-                                        Add Task
-                                    </TooltipContent>
+                                    <TooltipContent side="right">Add Task</TooltipContent>
                                 </Tooltip>
                             </SidebarMenuItem>
 
                             {/* Nav Links */}
 
-                            {
-                                sidebarNavItems.map((navItem) => (
-                                    <SidebarMenuItem key={navItem.title}>
-                                        <SidebarMenuButton
-                                            tooltip={navItem.title}
-                                            isActive={location.pathname === navItem.url}
-                                            render={
-                                                <NavLink
-                                                    to={navItem.url}
-                                                />
-                                            }
-                                            className={`overflow-visible px-1 mt-2 flex items-center justify-between rounded-sm ${navItem.hover}`}
-                                        >
-                                            <div className="flex items-center gap-4">
-                                                <navItem.icon
-                                                    className={`!size-5 ${location.pathname === navItem.url && navItem.active}`}
-                                                    strokeWidth={1.8}
-                                                />
-                                                <span className={`text-sm tracking-wider font-light ${location.pathname === navItem.url && navItem.active}`}>
-                                                    {
-                                                        navItem.title
-                                                    }
-                                                </span>
-                                            </div>
-                                            <div>
-                                                {
-                                                    (isMobile || state === "expanded") && navItem.count && (
-                                                        <div>
-                                                            {
-                                                                isPending
-                                                                    ? <Spinner />
-                                                                    : (!isError)
-                                                                        ? <Badge
-                                                                            variant={"secondary"}
-                                                                            className="h-5 min-w-5 rounded-full px-1.5 text-[10px] font-medium"
-                                                                        >
-                                                                            {
-                                                                                counts[navItem.count] > 20 ? "20+" : counts[navItem.count]
-                                                                            }
-                                                                        </Badge>
-                                                                        : null
-                                                            }
-                                                        </div>
-                                                    )
-                                                }
-                                            </div>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                ))
-                            }
+                            {sidebarNavItems.map((navItem) => (
+                                <SidebarMenuItem key={navItem.title}>
+                                    <SidebarMenuButton
+                                        tooltip={navItem.title}
+                                        isActive={location.pathname === navItem.url}
+                                        render={<NavLink to={navItem.url} />}
+                                        className={`overflow-visible px-1 mt-2 flex items-center justify-between rounded-sm ${navItem.hover}`}
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <navItem.icon
+                                                className={`!size-5 ${location.pathname === navItem.url && navItem.active}`}
+                                                strokeWidth={1.8}
+                                            />
+                                            <span
+                                                className={`text-sm tracking-wider font-light ${location.pathname === navItem.url && navItem.active}`}
+                                            >
+                                                {navItem.title}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            {(isMobile || state === "expanded") &&
+                                                navItem.count && (
+                                                    <div>
+                                                        {isPending && <Spinner />}
 
+                                                        {!isPending && !isError && (
+                                                            <Badge
+                                                                variant="secondary"
+                                                                className="h-5 min-w-5 rounded-full px-1.5 text-[10px] font-medium"
+                                                            >
+                                                                {counts[navItem.count] > 20
+                                                                    ? "20+"
+                                                                    : counts[navItem.count]}
+                                                            </Badge>
+                                                        )}
+                                                    </div>
+                                                )}
+                                        </div>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            ))}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
         </Sidebar>
-    )
+    );
 }

@@ -1,6 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
+
 import { Toggle } from "../../ui/toggle";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 
 type ToolbarButtonProps = ComponentProps<typeof Toggle> & {
     onClick: () => void;
@@ -8,7 +9,7 @@ type ToolbarButtonProps = ComponentProps<typeof Toggle> & {
     disabled?: boolean;
     tooltip: string;
     children?: ReactNode;
-}
+};
 
 export default function MenubarButton({
     onClick,
@@ -39,5 +40,5 @@ export default function MenubarButton({
                 <p>{tooltip}</p>
             </TooltipContent>
         </Tooltip>
-    )
+    );
 }

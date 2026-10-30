@@ -1,7 +1,7 @@
 export type ApiErrorObject = {
     message: string;
     field?: string;
-}
+};
 
 export type ApiResponse<T> = {
     success: boolean;
@@ -9,4 +9,4 @@ export type ApiResponse<T> = {
     message: string;
     data: T | null;
     errors: ApiErrorObject[] | null;
-}
+};

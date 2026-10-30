@@ -1,4 +1,4 @@
-import { Circle, CircleDot, CheckCircle2, XCircle } from "lucide-react";
+import { CheckCircle2, Circle, CircleDot, XCircle } from "lucide-react";
 
 export const STATUS_OPTIONS = [
     {

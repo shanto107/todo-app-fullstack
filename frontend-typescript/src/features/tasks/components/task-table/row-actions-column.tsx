@@ -1,4 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
+
 import type { Task, TaskTableView } from "../../types/task.types";
 import RowActions from "./row-actions-dropdown";
 
@@ -8,14 +9,9 @@ export function rowActionsColumn(view: TaskTableView) {
     return columnHelper.display({
         id: "actions",
         header: "",
-        cell: ({row}) => (
-            <RowActions 
-                task={row.original}
-                view={view}
-            />
-        ),
+        cell: ({ row }) => <RowActions task={row.original} view={view} />,
         size: 40,
         enableSorting: false,
-        enableHiding: false
-    })
+        enableHiding: false,
+    });
 }

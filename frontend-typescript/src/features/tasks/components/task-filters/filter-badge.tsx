@@ -1,19 +1,15 @@
-import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 type FilterBadgeProps = {
     label: string;
     handleClear: () => void;
-}
-export default function FilterBadge({
-    label,
-    handleClear
-}: FilterBadgeProps) {
+};
+export default function FilterBadge({ label, handleClear }: FilterBadgeProps) {
     return (
         <span className="inline-flex items-center rounded-sm border pl-3 text-xs">
-            {
-                label
-            }
+            {label}
             <Button
                 type="button"
                 variant={"ghost"}
@@ -24,5 +20,5 @@ export default function FilterBadge({
                 <X className="size-3" />
             </Button>
         </span>
-    )
+    );
 }

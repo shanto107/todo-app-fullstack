@@ -32,18 +32,18 @@ export function parseSearchParams(queryParams: URLSearchParams) {
     }
 
     const page = Number(queryParams.get("page"));
-    if(Number.isInteger(page) && page > 0) {
-        query.page = page
+    if (Number.isInteger(page) && page > 0) {
+        query.page = page;
     }
 
     const sortBy = queryParams.get("sortBy");
-    if(sortBy) {
+    if (sortBy) {
         query.sortBy = sortBy as TaskQuery["sortBy"];
     }
 
     const sortDirection = queryParams.get("sortDirection");
-    if(sortDirection) {
-        query.sortDirection = sortDirection as TaskQuery["sortDirection"]
+    if (sortDirection) {
+        query.sortDirection = sortDirection as TaskQuery["sortDirection"];
     }
 
     return query;

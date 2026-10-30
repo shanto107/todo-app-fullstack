@@ -1,8 +1,8 @@
-import { useEditorState, type Editor } from "@tiptap/react";
+import { type Editor, useEditorState } from "@tiptap/react";
+
 import type { ActiveKey } from "./menubar.types";
 
 export function useMenubar(editor: Editor | null) {
-
     const state = useEditorState({
         editor,
         selector: (ctx) => ({

@@ -1,33 +1,31 @@
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
 import { FormBase, type FormControlProps } from "../FormBase";
 import { useFieldContext } from "../hooks";
-import { cn } from "@/lib/utils";
 
 type FormInputProps = FormControlProps & {
     placeholder?: string;
     variant: "default" | "bare";
     autoFocus?: boolean;
     className?: string;
-    disabled?: boolean
-}
+    disabled?: boolean;
+};
 
-export default function FormInput ({
+export default function FormInput({
     placeholder,
     variant,
     autoFocus,
     className,
-    disabled=false,
+    disabled = false,
     ...props
 }: FormInputProps) {
     const field = useFieldContext<string>();
     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
     return (
-        <FormBase
-            variant={variant}
-            {...props}
-        >
-            <Input 
+        <FormBase variant={variant} {...props}>
+            <Input
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
@@ -40,9 +38,9 @@ export default function FormInput ({
                 className={cn(
                     variant === "bare" &&
                         "border-none bg-transparent shadow-none px-0 text-base font-medium focus-visible:ring-0",
-                    className
+                    className,
                 )}
             />
         </FormBase>
-    )
+    );
 }

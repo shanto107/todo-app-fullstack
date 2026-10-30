@@ -1,18 +1,11 @@
-import {
-    LogOutIcon,
-    Menu,
-    Plus,
-    Settings2,
-    User2Icon,
-    UserRound
-} from "lucide-react";
+import { LogOutIcon, Menu, Plus, Settings2, User2Icon, UserRound } from "lucide-react";
 
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage
-} from "../ui/avatar";
+import AddTaskDialog from "@/features/tasks/components/add-task-dialog";
+import { useIsMobile } from "@/hooks/use-mobile";
 
+import ModeToggle from "../mode-toggle";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -20,20 +13,15 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuTrigger
+    DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import ModeToggle from "../mode-toggle";
-import { Button } from "../ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebar } from "../ui/sidebar";
-import AddTaskDialog from "@/features/tasks/components/add-task-dialog";
-
 
 type UserMenuProps = {
     avatarURL?: string;
     name?: string;
     email?: string;
-}
+};
 
 export default function Navbar({ avatarURL, name }: UserMenuProps) {
     const isMobile = useIsMobile();
@@ -41,38 +29,34 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
     return (
         <nav className="flex items-center justify-between">
             <div>
-                {
-                    isMobile &&
-                    (
-                        <Button
-                            variant={"ghost"}
-                            size={"icon"}
-                            onClick={toggleSidebar}
-                            className={"h-9 w-9 group"}
-                        >
-                            <Menu className="text-muted-foreground size-5 group-hover:text-foreground" />
-                        </Button>
-                    )
-                }
+                {isMobile && (
+                    <Button
+                        variant={"ghost"}
+                        size={"icon"}
+                        onClick={toggleSidebar}
+                        className={"h-9 w-9 group"}
+                    >
+                        <Menu className="text-muted-foreground size-5 group-hover:text-foreground" />
+                    </Button>
+                )}
             </div>
 
-
             <div className="flex items-center gap-4">
-                {
-                    !isMobile && (
-                        <AddTaskDialog
-                            trigger={
-                                <Button
-                                    size={"sm"}
-                                    className={"h-9 rounded-sm text-sm tracking-wide bg-primary/80 hover:bg-primary/100 dark:hover:bg-primary/50"}
-                                >
-                                    <Plus className="size-3.5 mr-1" />
-                                    <span>Add Task</span>
-                                </Button>
-                            }
-                        />
-                    )
-                }
+                {!isMobile && (
+                    <AddTaskDialog
+                        trigger={
+                            <Button
+                                size={"sm"}
+                                className={
+                                    "h-9 rounded-sm text-sm tracking-wide bg-primary/80 hover:bg-primary/100 dark:hover:bg-primary/50"
+                                }
+                            >
+                                <Plus className="size-3.5 mr-1" />
+                                <span>Add Task</span>
+                            </Button>
+                        }
+                    />
+                )}
                 <ModeToggle />
                 <DropdownMenu>
                     {/* user dropdown trigger */}
@@ -84,10 +68,16 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                     </DropdownMenuTrigger>
 
                     {/* user dropdown content */}
-                    <DropdownMenuContent sideOffset={10} align="center" className={"w-36 rounded-md"}>
+                    <DropdownMenuContent
+                        sideOffset={10}
+                        align="center"
+                        className={"w-36 rounded-md"}
+                    >
                         <DropdownMenuGroup>
                             <DropdownMenuLabel>
-                                <p className="font-medium text-xs tracking-widest">{name ?? "Guest User"}</p>
+                                <p className="font-medium text-xs tracking-widest">
+                                    {name ?? "Guest User"}
+                                </p>
                             </DropdownMenuLabel>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
@@ -109,5 +99,5 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                 </DropdownMenu>
             </div>
         </nav>
-    )
+    );
 }

@@ -1,10 +1,4 @@
-import type {
-    SortDirection,
-    TaskSortBy,
-    TaskPriority,
-    TaskStatus,
-    Task
-} from "./task.types"
+import type { SortDirection, Task, TaskPriority, TaskSortBy, TaskStatus } from "./task.types";
 
 export type TaskQuery = {
     search?: string;
@@ -17,7 +11,7 @@ export type TaskQuery = {
     sortDirection?: SortDirection;
     page?: number;
     limit?: number;
-}
+};
 
 export type TaskSearchSuggestion = {
     id: string;
@@ -29,12 +23,12 @@ export type TaskPagination = {
     limit: number;
     total: number;
     totalPages: number;
-}
+};
 
 export type PaginatedTasks = {
     items: Task[];
     pagination: TaskPagination;
-}
+};
 
 export type TaskFilterValues = {
     status?: TaskStatus[];

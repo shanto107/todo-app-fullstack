@@ -1,16 +1,18 @@
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Editor } from "@tiptap/react"
-import { useState, type KeyboardEvent } from "react"
-import MenubarButton from "./MenubarButton"
-import { Link } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Editor } from "@tiptap/react";
+import { Link } from "lucide-react";
+import { type KeyboardEvent, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
+import MenubarButton from "./MenubarButton";
 
 type LinkPopoverProps = {
     editor: Editor;
     isActive: boolean;
-    tooltip: string
-}
+    tooltip: string;
+};
 
 export default function LinkPopover({ editor, isActive, tooltip }: LinkPopoverProps) {
     const [linkPopoverOpen, setLinkPopoverOpen] = useState(false);
@@ -18,8 +20,10 @@ export default function LinkPopover({ editor, isActive, tooltip }: LinkPopoverPr
 
     function handleOpen(nextPopoverOpenState: boolean) {
         if (nextPopoverOpenState) {
-            const existingLink = editor.getAttributes("link").href;
-            setLinkURL(existingLink ?? "");
+            const attributes = editor.getAttributes("link") as {
+                href?: string | null;
+            };
+            setLinkURL(attributes.href ?? "");
         }
         setLinkPopoverOpen(nextPopoverOpenState);
     }
@@ -48,17 +52,14 @@ export default function LinkPopover({ editor, isActive, tooltip }: LinkPopoverPr
     }
 
     return (
-        <Popover
-            open={linkPopoverOpen}
-            onOpenChange={handleOpen}
-        >
+        <Popover open={linkPopoverOpen} onOpenChange={handleOpen}>
             {/* popover trigger using MenubarButton */}
             <PopoverTrigger
                 render={
                     <MenubarButton
                         tooltip={tooltip}
                         isActive={isActive}
-                        onClick={() => setLinkPopoverOpen(prev => !prev)}
+                        onClick={() => setLinkPopoverOpen((prev) => !prev)}
                         onMouseDown={(event) => event.preventDefault()}
                     />
                 }
@@ -74,7 +75,9 @@ export default function LinkPopover({ editor, isActive, tooltip }: LinkPopoverPr
                 data-editor-ui
             >
                 <div className="flex flex-col gap-4">
-                    <p className="text-xs font-semibold text-muted-foreground tracking-wider">Insert Link</p>
+                    <p className="text-xs font-semibold text-muted-foreground tracking-wider">
+                        Insert Link
+                    </p>
                     <Input
                         placeholder="https://example.com"
                         value={linkURL}
@@ -106,5 +109,5 @@ export default function LinkPopover({ editor, isActive, tooltip }: LinkPopoverPr
                 </div>
             </PopoverContent>
         </Popover>
-    )
+    );
 }

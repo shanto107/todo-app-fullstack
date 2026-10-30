@@ -1,23 +1,14 @@
 import { AlertTriangle, RefreshCcw } from "lucide-react";
 
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ApiError } from "@/lib/api/api-error";
 
 type ErrorCardProps = {
     error: Error;
 };
 
-export function ErrorCard({
-    error,
-}: ErrorCardProps) {
+export function ErrorCard({ error }: ErrorCardProps) {
     const apiError = error instanceof ApiError ? error : null;
 
     return (
@@ -27,11 +18,8 @@ export function ErrorCard({
                     <div className="flex items-center gap-2 text-destructive">
                         <AlertTriangle className="size-5" />
 
-                        <CardTitle>
-                            {apiError?.code ?? "UNKNOWN_ERROR"}
-                        </CardTitle>
+                        <CardTitle>{apiError?.code ?? "UNKNOWN_ERROR"}</CardTitle>
                     </div>
-
                 </CardHeader>
 
                 <CardContent className="text-sm tracking-wide font-light text-red-400 dark:text-red-200">

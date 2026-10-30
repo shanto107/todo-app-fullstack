@@ -21,18 +21,18 @@ export type MenubarItem = {
     activeKey?: ActiveKey;
     isDisabled?: (editor: Editor) => boolean;
     action?: (editor: Editor) => void;
-}
+};
 
 export type MenubarGroup = {
-    type: "group",
+    type: "group";
     label: string;
     icon: LucideIcon;
     mode: "toggle" | "dropdown" | "popover";
-    items: Array<MenubarItem>
-}
+    items: Array<MenubarItem>;
+};
 
 export type MenubarSeparator = {
-    type: "separator"
-}
+    type: "separator";
+};
 
 export type MenubarConfig = MenubarGroup | MenubarSeparator;

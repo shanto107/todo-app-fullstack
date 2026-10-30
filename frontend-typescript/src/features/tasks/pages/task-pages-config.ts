@@ -1,4 +1,5 @@
 import { createTodayFilters, createUpcomingFilters } from "@/lib/create-filters";
+
 import type { TaskPagesKey } from "../types/task.types";
 import type { TaskListPageProps } from "./task-list-page";
 
@@ -18,8 +19,8 @@ export const taskPagesConfig: Record<TaskPagesKey, TaskListPageProps> = {
         query: {
             status: ["todo", "in_progress"],
             sortBy: "createdAt",
-            sortDirection: "dsc"
-        }
+            sortDirection: "dsc",
+        },
     },
     today: {
         pageKey: "today",
@@ -31,7 +32,7 @@ export const taskPagesConfig: Record<TaskPagesKey, TaskListPageProps> = {
         pageKey: "upcoming",
         pageTitle: TASK_PAGE_TITLES.upcoming,
         tableView: "inbox",
-        query: createUpcomingFilters()
+        query: createUpcomingFilters(),
     },
     completed: {
         pageKey: "completed",
@@ -40,7 +41,7 @@ export const taskPagesConfig: Record<TaskPagesKey, TaskListPageProps> = {
         query: {
             status: ["done"],
             sortBy: "updatedAt",
-            sortDirection: "dsc"
+            sortDirection: "dsc",
         },
     },
     deleted: {
@@ -50,9 +51,11 @@ export const taskPagesConfig: Record<TaskPagesKey, TaskListPageProps> = {
         query: {
             deleted: true,
             sortBy: "deletedAt",
-            sortDirection: "dsc"
-        }
-    }
-}
+            sortDirection: "dsc",
+        },
+    },
+};
 
-export const taskPages = Object.entries(taskPagesConfig) as Array<[TaskPagesKey, TaskListPageProps]>;
+export const taskPages = Object.entries(taskPagesConfig) as Array<
+    [TaskPagesKey, TaskListPageProps]
+>;

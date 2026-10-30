@@ -8,10 +8,7 @@ export const addTaskSchema = z.object({
         .string()
         .min(10, "task title should have atleast 10 characters!")
         .max(200, "task title cannot have more than 200 characters"),
-    description: z
-        .string()
-        .max(2000, "description is too long!")
-        .optional(),
+    description: z.string().max(2000, "description is too long!").optional(),
     deadline: z.date().optional(),
     priority: z.enum(TASK_PRIORITIES).optional(),
 });
