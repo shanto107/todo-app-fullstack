@@ -6,7 +6,11 @@ import {
     text,
     timestamp,
     uniqueIndex,
+    uuid,
+    varchar,
 } from "drizzle-orm/pg-core";
+
+import { designations } from "./designations.js";
 
 export const user = pgTable("user", {
     id: text("id").primaryKey(),
@@ -14,6 +18,11 @@ export const user = pgTable("user", {
     email: text("email").notNull().unique(),
     emailVerified: boolean("email_verified").default(false).notNull(),
     image: text("image"),
+    employeeId: varchar("employee_id", { length: 5 }).unique(),
+    mobileNumber: varchar("mobile_number", { length: 14 }).unique(),
+    designationId: uuid("designation_id").references(() => designations.id, {
+        onDelete: "restrict",
+    }),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
         .defaultNow()
@@ -135,11 +144,15 @@ export const invitation = pgTable(
     ],
 );
 
-export const userRelations = relations(user, ({ many }) => ({
+export const userRelations = relations(user, ({ many, one }) => ({
     sessions: many(session),
     accounts: many(account),
     members: many(member),
     invitations: many(invitation),
+    designation: one(designations, {
+        fields: [user.designationId],
+        references: [designations.id],
+    }),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({

@@ -42,7 +42,7 @@ export default function SignInPage() {
                             to="/sign-up"
                             className="text-card-foreground ml-2 font-medium hover:underline"
                         >
-                            Create an account
+                            Sign Up
                         </Link>
                     </p>
                 </CardFooter>

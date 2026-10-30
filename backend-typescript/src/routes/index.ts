@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { type DB } from "../db/index.js";
 import healthRouter from "../modules/health/health.route.js";
+import signUpRouter from "../modules/sign-up/sign-up.routes.js";
 import { createTaskModule } from "../modules/tasks/tasks.module.js";
 import { createTaskRouter } from "../modules/tasks/tasks.routes.js";
 
@@ -13,6 +14,7 @@ export function createApiRouter(db: DB) {
 
     router.use("/health", healthRouter);
     router.use("/tasks", taskRouter);
+    router.use("/sign-up", signUpRouter);
 
     return router;
 }

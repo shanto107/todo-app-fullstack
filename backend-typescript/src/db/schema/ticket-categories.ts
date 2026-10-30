@@ -22,5 +22,6 @@ export const ticketCategories = pgTable("ticket_categories", {
         .defaultNow()
         .$onUpdate(() => new Date()),
 });
+
 export type TicketCategory = typeof ticketCategories.$inferSelect;
 export type NewTicketCategory = typeof ticketCategories.$inferInsert;

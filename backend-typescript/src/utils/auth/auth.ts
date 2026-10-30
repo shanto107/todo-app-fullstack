@@ -5,9 +5,28 @@ import { organization } from "better-auth/plugins";
 import config from "#src/config.js";
 import { db } from "#src/db/index.js";
 
-
 export const auth = betterAuth({
     appName: "DPDC Ticketing App",
+
+    user: {
+        additionalFields: {
+            employeeId: {
+                type: "string",
+                required: true,
+                input: true,
+            },
+            mobileNumber: {
+                type: "string",
+                required: true,
+                input: true,
+            },
+            designationId: {
+                type: "string",
+                required: true,
+                input: true,
+            },
+        },
+    },
 
     emailAndPassword: {
         enabled: true,

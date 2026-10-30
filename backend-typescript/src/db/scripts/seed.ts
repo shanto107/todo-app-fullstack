@@ -5,8 +5,10 @@ import {
     taskStatusValues,
 } from "../../modules/tasks/tasks.validation.js";
 import { connection, db } from "../index.js";
+import { designations } from "../schema/designations.js";
 import { tasks } from "../schema/tasks.js";
-import { MOCK_TASK_MARKER, mockTasks } from "./mock-tasks.js";
+import { designationSeeds } from "./designations.js";
+import { MOCK_TASK_MARKER, mockTasks } from "./tasks.js";
 loadEnvFile(".env");
 
 async function seed() {
@@ -56,3 +58,23 @@ seed()
     .finally(async () => {
         await connection.end();
     });
+
+async function seedDesignations() {
+    console.log("🚀 Seeding designations...");
+
+    const result = await db
+        .insert(designations)
+        .values([...designationSeeds])
+        .onConflictDoNothing({
+            target: designations.code,
+        })
+        .returning({
+            id: designations.id,
+            name: designations.name,
+            code: designations.code,
+        });
+
+    console.log(`✅ Created ${result.length} designations.`);
+}
+
+await seedDesignations();

@@ -11,8 +11,8 @@ export default function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/auth">
-                    <Route path="login" element={<SignInPage />} />
+                <Route path="/">
+                    <Route path="sign-in" element={<SignInPage />} />
                 </Route>
             </Routes>
             <Routes>
