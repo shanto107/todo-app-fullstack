@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 
 export default function SignInForm() {
     const navigate = useNavigate();
+    const { refetch } = authClient.useSession();
 
     const form = useAppForm({
         defaultValues: {
@@ -24,6 +25,7 @@ export default function SignInForm() {
                 });
                 return;
             }
+            await refetch();
             toast.success("Successfully signed in!");
             navigate("/tasks/inbox", { replace: true });
         },

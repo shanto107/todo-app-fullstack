@@ -24,7 +24,7 @@ export default function SignUpForm() {
         },
 
         onSubmit: async ({ value }) => {
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            // await new Promise((resolve) => setTimeout(resolve, 2000));
             const { error } = await authClient.signUp.email(value);
             if (error) {
                 toast.error("Account creation failed.", {
