@@ -32,7 +32,7 @@ export const designationSeeds = [
     {
         id: "10000000-0000-4000-8000-000000000004",
         name: "Executive Engineer",
-        code: "EE",
+        code: "XEN",
     },
     {
         id: "10000000-0000-4000-8000-000000000014",
@@ -58,6 +58,11 @@ export const designationSeeds = [
         id: "10000000-0000-4000-8000-000000000009",
         name: "General Manager",
         code: "GM",
+    },
+    {
+        id: "10000000-0000-4000-8000-000000000015",
+        name: "Executive Director",
+        code: "ED",
     },
     {
         id: "10000000-0000-4000-8000-000000000010",

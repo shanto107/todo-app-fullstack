@@ -1,6 +1,7 @@
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 
 import { FormAuthSubmitButton } from "./fields/form-auth-submit-button";
+import { FromCombobox } from "./fields/form-combobox";
 import { FormDatePicker } from "./fields/form-date-picker";
 import { FormInput } from "./fields/form-input";
 import { FormPasswordInput } from "./fields/form-password-input";
@@ -18,6 +19,7 @@ const { useAppForm } = createFormHook({
         DatePicker: FormDatePicker,
         PopoverPicker: FormPopoverPicker,
         PasswordInput: FormPasswordInput,
+        Combobox: FromCombobox,
     },
     formComponents: {
         SubmitButton: FormSubmitButton,

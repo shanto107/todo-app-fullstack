@@ -1,4 +1,11 @@
-import { LogOutIcon, Menu, Plus, Settings2, User2Icon, UserRound } from "lucide-react";
+import {
+    LogOutIcon,
+    Menu,
+    Plus,
+    Settings2,
+    User2Icon,
+    UserRound,
+} from "lucide-react";
 
 import AddTaskDialog from "@/features/tasks/components/add-task-dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -16,6 +23,8 @@ import {
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { useSidebar } from "../ui/sidebar";
+import { useBetterAuthLogout } from "@/features/auth/hooks/use-better-auth-logout";
+import { LoadingSwap } from "../ui/loading-swap";
 
 type UserMenuProps = {
     avatarURL?: string;
@@ -26,6 +35,8 @@ type UserMenuProps = {
 export default function Navbar({ avatarURL, name }: UserMenuProps) {
     const isMobile = useIsMobile();
     const { toggleSidebar } = useSidebar();
+    const { handleLogout, isLoggingOut } = useBetterAuthLogout();
+
     return (
         <nav className="flex items-center justify-between">
             <div>
@@ -60,8 +71,13 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                 <ModeToggle />
                 <DropdownMenu>
                     {/* user dropdown trigger */}
-                    <DropdownMenuTrigger render={<Avatar className={"h-9 w-9 cursor-pointer"} />}>
-                        <AvatarImage src={avatarURL} alt={name ?? "Guest User"} />
+                    <DropdownMenuTrigger
+                        render={<Avatar className={"h-9 w-9 cursor-pointer"} />}
+                    >
+                        <AvatarImage
+                            src={avatarURL}
+                            alt={name ?? "Guest User"}
+                        />
                         <AvatarFallback>
                             <UserRound className="text-muted-foreground h-5 w-5" />
                         </AvatarFallback>
@@ -84,15 +100,35 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
                                 <User2Icon className="text-accent dark:text-chart-2 mr-2" />
-                                <span className="text-sm tracking-widest">Profile</span>
+                                <span className="text-sm tracking-widest">
+                                    Profile
+                                </span>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <Settings2 className="text-accent dark:text-chart-2 mr-2" />
-                                <span className="text-sm tracking-widest">Settings</span>
+                                <span className="text-sm tracking-widest">
+                                    Settings
+                                </span>
                             </DropdownMenuItem>
-                            <DropdownMenuItem variant="destructive">
-                                <LogOutIcon className="text-accent mr-2" />
-                                <span className="text-sm tracking-widest">Log Out</span>
+                            <DropdownMenuItem
+                                variant="destructive"
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    void handleLogout();
+                                }}
+                                disabled={isLoggingOut}
+                            >
+                                <LoadingSwap
+                                    isLoading={isLoggingOut}
+                                    className="flex items-center"
+                                >
+                                    <LogOutIcon className="mr-4" />
+                                    <span className="text-sm tracking-widest">
+                                        {isLoggingOut
+                                            ? "Logging out"
+                                            : "Log Out"}
+                                    </span>
+                                </LoadingSwap>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                     </DropdownMenuContent>

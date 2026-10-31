@@ -8,6 +8,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import AddTaskDialog from "@/features/tasks/components/add-task-dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { authClient } from "@/services/auth-client";
 
 export default function AppLayout() {
     const cookie = document.cookie
@@ -16,12 +17,14 @@ export default function AppLayout() {
     const defaultOpen = cookie ? cookie.split("=")[1] === "true" : true;
     const isMobile = useIsMobile();
 
+    const { data: session } = authClient.useSession();
+
     return (
         <TooltipProvider>
             <SidebarProvider defaultOpen={defaultOpen}>
                 <AppSidebar />
                 <SidebarInset className="p-4">
-                    <Navbar />
+                    <Navbar name={session?.user.name ?? "Guest"} />
                     <main>
                         <Outlet />
                     </main>

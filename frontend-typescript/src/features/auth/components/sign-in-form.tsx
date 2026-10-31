@@ -1,8 +1,12 @@
 import { useAppForm } from "@/components/common/form/hooks";
 import { signInSchema, type SignInFormValues } from "../schemas/sign-in-schema";
 import { toast } from "sonner";
+import { authClient } from "@/services/auth-client";
+import { useNavigate } from "react-router";
 
 export default function SignInForm() {
+    const navigate = useNavigate();
+
     const form = useAppForm({
         defaultValues: {
             email: "",
@@ -12,10 +16,16 @@ export default function SignInForm() {
             onSubmit: signInSchema,
         },
         onSubmit: async ({ value }) => {
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-            toast.success("Successfully signed in!", {
-                description: `Welcome back, ${value.email} and your password is ${value.password}`,
-            });
+            // await new Promise((resolve) => setTimeout(resolve, 2000));
+            const { error } = await authClient.signIn.email(value);
+            if (error) {
+                toast.error("Sign in failed.", {
+                    description: error.message,
+                });
+                return;
+            }
+            toast.success("Successfully signed in!");
+            navigate("/tasks/inbox", { replace: true });
         },
     });
 
@@ -34,7 +44,7 @@ export default function SignInForm() {
                             label="Email"
                             variant="default"
                             placeholder="you@example.com"
-                            className="rounded-sm text-sm md:text-sm tracking-wider"
+                            className="rounded-sm text-sm tracking-wider md:text-sm"
                             labelClassName="text-sm md:text-sm tracking-wider"
                         />
                     )}
@@ -44,7 +54,7 @@ export default function SignInForm() {
                         <field.PasswordInput
                             label="Password"
                             placeholder="Enter your password"
-                            className="rounded-sm text-sm md:text-sm tracking-wider"
+                            className="rounded-sm text-sm tracking-wider md:text-sm"
                             labelClassName="text-sm md:text-sm tracking-wider"
                         />
                     )}

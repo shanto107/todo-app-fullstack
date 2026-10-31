@@ -40,7 +40,7 @@ export default function SignInPage() {
                         Don't have an account?{" "}
                         <Link
                             to="/sign-up"
-                            className="text-card-foreground ml-2 font-medium hover:underline"
+                            className="text-card-foreground ml-1 font-medium hover:underline"
                         >
                             Sign Up
                         </Link>
