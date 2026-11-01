@@ -1,4 +1,4 @@
-import { AppError } from "../middlewares/error-handler.js";
+import { AppError } from "#src/middlewares/error-handler.js";
 
 export async function attempt<T>(
     promise: Promise<T>,

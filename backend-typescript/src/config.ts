@@ -1,6 +1,6 @@
 import { MigrationConfig } from "drizzle-orm/migrator";
 
-import loadEnvVariable from "./utils/load-env-variables.js";
+import loadEnvVariable from "./utils/helper-functions/load-env-variables.js";
 
 type APIConfig = {
     port: number;

@@ -14,8 +14,9 @@ export async function apiFetch<T>(
 ): Promise<T> {
     let response: Response;
     const API_URL = BASE_API_URL + endpoint;
-    const fetchOptions = {
+    const fetchOptions: RequestInit = {
         ...options,
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
             ...options?.headers,

@@ -1,6 +1,6 @@
-import { sanitizeText } from "../../utils/sanitize.js";
+import { sanitizeText } from "../../utils/helper-functions/sanitize.js";
 import { type TaskRepo } from "./tasks.repository.js";
-import {
+import type {
     NewTask,
     PaginatedTasks,
     Task,

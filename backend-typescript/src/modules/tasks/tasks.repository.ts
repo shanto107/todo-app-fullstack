@@ -12,15 +12,15 @@ import {
 import { type DB } from "../../db/index.js";
 import { tasks } from "../../db/schema/tasks.js";
 import { NotFoundError } from "../../middlewares/error-handler.js";
-import { buildTaskQuery } from "../../utils/build-task-query-conditions.js";
-import setDate from "../../utils/set-date.js";
-import {
+import { buildTaskQuery } from "../../utils/helper-functions/build-task-query-conditions.js";
+import setDate from "../../utils/helper-functions/set-date.js";
+import type {
     NewTask,
     PaginatedTasks,
     Task,
     TaskCounts,
     TaskQuery,
-    type UpdateTaskPayload,
+    UpdateTaskPayload,
 } from "./tasks.types.js";
 
 export type TaskRepo = {

@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { db } from "#src/db/index.js";
 import { designations } from "#src/db/schema/designations.js";
-import { sendSuccess } from "#src/shared/http-response.js";
+import { sendSuccess } from "#src/utils/helper-functions/http-response.js";
 
 const router = Router();
 

@@ -1,6 +1,6 @@
 import sanitizeHtml from "sanitize-html";
 
-import { BadRequestError } from "../middlewares/error-handler.js";
+import { BadRequestError } from "../../middlewares/error-handler.js";
 
 export function sanitizeText(type: "title" | "description", text: string) {
     const maxLength = type === "title" ? 256 : 1000;

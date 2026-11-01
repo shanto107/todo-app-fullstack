@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 
-import { sendError } from "../shared/http-response.js";
+import { sendError } from "../utils/helper-functions/http-response.js";
 
 export const ERROR_CODES = {
     VALIDATION: "VALIDATION_ERROR",
@@ -48,26 +48,22 @@ export function errorHandler(
             field: issue.path.join("."),
             message: issue.message,
         }));
-        return sendError(
+        sendError(
             res,
             400,
             ERROR_CODES.VALIDATION,
             "validation failed!",
             errors,
         );
+        return;
     }
 
     if (err instanceof AppError) {
-        return sendError(res, err.statusCode, err.code, err.message, null);
+        sendError(res, err.statusCode, err.code, err.message, null);
+        return;
     }
 
     // Internal Server Error Handling
     console.error(err);
-    return sendError(
-        res,
-        500,
-        "INTERNAL_SERVER_ERROR",
-        "Something went wrong!",
-        null,
-    );
+    sendError(res, 500, "INTERNAL_SERVER_ERROR", "Something went wrong!", null);
 }

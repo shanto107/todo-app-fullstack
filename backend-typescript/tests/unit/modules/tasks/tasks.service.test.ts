@@ -5,7 +5,7 @@ import {
     type NewTask,
 } from "../../../../src/modules/tasks/tasks.types.js";
 import { makeMockTask, makeMockTaskRepo } from "../../../helpers/taskMocks.js";
-import * as sanitizeModule from "../../../../src/utils/sanitize.js";
+import * as sanitizeModule from "../../../../src/utils/helper-functions/sanitize.js";
 import { uuidv7 } from "uuidv7";
 
 // taskService.addTask()

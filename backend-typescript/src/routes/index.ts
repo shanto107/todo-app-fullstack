@@ -1,5 +1,7 @@
 import { Router } from "express";
 
+import { requireAuth } from "#src/middlewares/require-auth.js";
+
 import { type DB } from "../db/index.js";
 import healthRouter from "../modules/health/health.route.js";
 import signUpRouter from "../modules/sign-up/sign-up.routes.js";
@@ -13,7 +15,7 @@ export function createApiRouter(db: DB) {
     const taskRouter = createTaskRouter(taskControllers);
 
     router.use("/health", healthRouter);
-    router.use("/tasks", taskRouter);
+    router.use("/tasks", requireAuth, taskRouter);
     router.use("/sign-up", signUpRouter);
 
     return router;

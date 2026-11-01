@@ -1,7 +1,7 @@
 import z from "zod";
 
 import { tasks } from "../../db/schema/tasks.js";
-import type { TypedRequest } from "../../shared/http.types.js";
+import type { TypedRequest } from "../../types/http.types.js";
 import {
     bulkTaskActionSchema,
     createTaskSchema,
@@ -45,6 +45,10 @@ export type BulkTaskActionRequest = TypedRequest<
     Record<string, never>,
     BulkTaskActionBody
 >;
+
+export type GetTaskLocals = Express.Locals & {
+    query: TaskFilters;
+};
 
 export type PaginatedTasks = {
     items: Task[];
