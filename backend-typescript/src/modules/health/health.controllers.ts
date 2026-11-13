@@ -1,6 +1,6 @@
 import os from "node:os";
 
-import { NextFunction,Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import config from "../../config.js";
 

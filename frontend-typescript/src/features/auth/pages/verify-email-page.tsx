@@ -4,9 +4,9 @@ import { useLocation } from "react-router";
 import PageSpinner from "@/components/common/loading/page-spinner";
 import { authClient } from "@/services/auth-client";
 
-import EmailNotFoundCard from "../components/email-not-found-card";
-import UnverifiedEmailCard from "../components/unverified-email-card";
-import VerifiedEmailCard from "../components/verified-email-card";
+import EmailNotFoundCard from "../components/verify-email/email-not-found-card";
+import UnverifiedEmailCard from "../components/verify-email/unverified-email-card";
+import VerifiedEmailCard from "../components/verify-email/verified-email-card";
 import {
     PENDING_VERIFICATION_EMAIL_KEY,
     VERIFICATION_RESEND_AFTER_KEY,

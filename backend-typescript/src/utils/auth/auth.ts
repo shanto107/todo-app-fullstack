@@ -5,7 +5,10 @@ import { organization } from "better-auth/plugins";
 import config from "#src/config.js";
 import { db } from "#src/db/index.js";
 
-import { sendVerificationEmail } from "../emails/resend.js";
+import {
+    sendPasswordResetEmail,
+    sendVerificationEmail,
+} from "../emails/resend.js";
 
 export const auth = betterAuth({
     appName: "DPDC Ticketing App",
@@ -33,19 +36,29 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: false,
+        resetPasswordTokenExpiresIn: 60 * 15,
+        revokeSessionsOnPasswordReset: true,
+
+        sendResetPassword: async ({ user, url }) => {
+            await sendPasswordResetEmail({
+                to: user.email,
+                name: user.name,
+                url,
+            });
+        },
     },
 
     emailVerification: {
         autoSignInAfterVerification: true,
         sendOnSignUp: true,
         sendOnSignIn: true,
-        expiresIn: 60 * 10, // 10 minutes
+        expiresIn: 60 * 15, // 15 minutes
 
         sendVerificationEmail: async ({ user, url }) => {
             await sendVerificationEmail({
                 to: user.email,
                 name: user.name,
-                verificationUrl: url,
+                url,
             });
         },
     },

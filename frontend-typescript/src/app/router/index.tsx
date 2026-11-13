@@ -9,6 +9,8 @@ import TaskPage from "@/features/tasks/pages/task-page";
 import { taskPages } from "@/features/tasks/pages/task-pages-config";
 
 import AppLayout from "../layouts/app-layout";
+import ForgotPasswordPage from "@/features/auth/pages/forgot-password-page";
+import ResetPasswordPage from "@/features/auth/pages/reset-password-page";
 
 export default function AppRouter() {
     return (
@@ -18,6 +20,15 @@ export default function AppRouter() {
                     <Route path="sign-in" element={<SignInPage />} />
                     <Route path="sign-up" element={<SignUpPage />} />
                     <Route path="verify-email" element={<VerifyEmailPage />} />
+                    <Route
+                        path="forgot-password"
+                        element={<ForgotPasswordPage />}
+                    />
+
+                    <Route
+                        path="reset-password"
+                        element={<ResetPasswordPage />}
+                    />
 
                     <Route element={<ProtectedRoute />}>
                         <Route element={<AppLayout />}>

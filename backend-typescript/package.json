@@ -30,7 +30,8 @@
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
         "format": "prettier . --write",
-        "format:check": "prettier . --check"
+        "format:check": "prettier . --check",
+        "email:dev": "email dev --dir ./src/utils/emails/auth-emails --port 3001"
     },
     "keywords": [],
     "author": "",
@@ -45,6 +46,7 @@
         "postgres": "^3.4.9",
         "react": "^19.3.1",
         "react-dom": "^19.3.1",
+        "react-email": "6.11.12",
         "resend": "^6.35.0",
         "sanitize-html": "^2.17.4",
         "uuid": "^14.0.0",
@@ -53,6 +55,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
+        "@react-email/ui": "^6.11.12",
         "@testcontainers/postgresql": "^11.14.0",
         "@types/cors": "^2.8.19",
         "@types/express": "^5.0.6",
@@ -69,7 +72,6 @@
         "globals": "^17.13.0",
         "prettier": "^3.9.10",
         "prettier-plugin-tailwindcss": "^0.8.1",
-        "react-email": "^6.11.5",
         "supertest": "^7.2.2",
         "tsx": "^4.21.0",
         "typescript": "^6.0.3",

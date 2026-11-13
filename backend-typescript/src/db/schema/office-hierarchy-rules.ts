@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { uuidv7 } from "uuidv7";
 
-import { officeCategories } from "./office-categories.js"
+import { officeCategories } from "./office-categories.js";
 
 export const officeHierarchyRules = pgTable(
     "office_hierarchy_rules",

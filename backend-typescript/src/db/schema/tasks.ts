@@ -1,10 +1,4 @@
-import {
-    pgEnum,
-    pgTable,
-    timestamp,
-    uuid,
-    varchar,
-} from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { uuidv7 } from "uuidv7";
 
 export const taskPriorityEnum = pgEnum("task_priority", [

@@ -10,7 +10,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 
-import SignInForm from "../components/sign-in-form";
+import SignInForm from "../components/sign-in/sign-in-form";
 
 export default function SignInPage() {
     return (

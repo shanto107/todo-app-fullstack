@@ -1,10 +1,9 @@
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
 import { useAppForm } from "@/components/common/form/hooks";
 import { authClient } from "@/services/auth-client";
-
-import { signInSchema } from "../schemas/sign-in-schema";
+import { signInSchema } from "../../schemas/sign-in-schema";
 
 export default function SignInForm() {
     const navigate = useNavigate();
@@ -63,14 +62,20 @@ export default function SignInForm() {
                         />
                     )}
                 </form.AppField>
+                <form.AppForm>
+                    <form.AuthSubmitButton
+                        label="Sign in"
+                        loadingLabel="Signing in"
+                        className="bg-accent/80 dark:bg-chart-4 h-9 w-full rounded-md text-sm font-semibold"
+                    />
+                </form.AppForm>
+                <Link
+                    to="/forgot-password"
+                    className="flex w-full justify-end text-sm hover:underline"
+                >
+                    Forgot password?
+                </Link>
             </div>
-            <form.AppForm>
-                <form.AuthSubmitButton
-                    label="Sign in"
-                    loadingLabel="Signing in"
-                    className="bg-accent/80 dark:bg-chart-4 mt-6 h-9 w-full rounded-md text-sm font-semibold"
-                />
-            </form.AppForm>
         </form>
     );
 }

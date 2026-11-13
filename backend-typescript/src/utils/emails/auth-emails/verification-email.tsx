@@ -6,7 +6,7 @@ type VerificationEmailProps = {
     verificationUrl: string;
 };
 
-export function VerificationEmail({
+export default function VerificationEmail({
     name,
     verificationUrl,
 }: VerificationEmailProps) {
@@ -82,7 +82,7 @@ export function VerificationEmail({
                     overflowWrap: "anywhere",
                 }}
             >
-                Verify your email address
+                {verificationUrl}
             </Link>
 
             <Text

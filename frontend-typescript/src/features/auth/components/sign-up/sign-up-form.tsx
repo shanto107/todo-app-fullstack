@@ -8,8 +8,8 @@ import {
     EMAIL_VERIFICATION_COOLDOWN_SECONDS,
     PENDING_VERIFICATION_EMAIL_KEY,
     VERIFICATION_RESEND_AFTER_KEY,
-} from "../constants/email-verification";
-import { signUpSchema } from "../schemas/sign-up-schema";
+} from "../../constants/email-verification";
+import { signUpSchema } from "../../schemas/sign-up-schema";
 
 export default function SignUpForm() {
     const navigate = useNavigate();

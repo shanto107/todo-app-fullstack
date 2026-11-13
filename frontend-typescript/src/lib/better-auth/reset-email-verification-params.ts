@@ -20,5 +20,3 @@ export function resetEmailVerificationParams({
     );
     setRemainingCooldown(EMAIL_VERIFICATION_COOLDOWN_SECONDS);
 }
-
-
