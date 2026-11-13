@@ -1,3 +1,4 @@
+import { LogIn } from "lucide-react";
 import { Link } from "react-router";
 
 import {
@@ -8,7 +9,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { LogIn } from "lucide-react";
+
 import SignInForm from "../components/sign-in-form";
 
 export default function SignInPage() {

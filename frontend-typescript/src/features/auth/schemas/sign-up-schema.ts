@@ -28,7 +28,7 @@ export const signUpSchema = z.object({
         .string()
         .regex(/^\d{5}$/, "Employee ID must contain exactly 5 digits."),
     mobileNumber: BangladeshPhoneNumberSchema,
-    designationId: z.string().uuid("Please select a valid designation."),
+    // designationId: z.string().uuid("Please select a valid designation."),
     password: z.string().min(8, "Password must be at least 8 characters."),
 });
 

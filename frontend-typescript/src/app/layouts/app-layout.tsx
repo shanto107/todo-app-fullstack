@@ -5,9 +5,9 @@ import AppSidebar from "@/components/common/AppSidebar";
 import Navbar from "@/components/common/Navbar";
 import { Button } from "@/components/ui/button";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import AddTaskDialog from "@/features/tasks/components/add-task-dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { authClient } from "@/services/auth-client";
 
 export default function AppLayout() {

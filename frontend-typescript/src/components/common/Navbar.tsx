@@ -7,6 +7,7 @@ import {
     UserRound,
 } from "lucide-react";
 
+import { useBetterAuthLogout } from "@/features/auth/hooks/use-better-auth-logout";
 import AddTaskDialog from "@/features/tasks/components/add-task-dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -22,9 +23,8 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useSidebar } from "../ui/sidebar";
-import { useBetterAuthLogout } from "@/features/auth/hooks/use-better-auth-logout";
 import { LoadingSwap } from "../ui/loading-swap";
+import { useSidebar } from "../ui/sidebar";
 
 type UserMenuProps = {
     avatarURL?: string;

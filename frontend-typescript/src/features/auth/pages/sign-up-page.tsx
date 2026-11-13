@@ -1,3 +1,4 @@
+import { LucideUserRoundPlus } from "lucide-react";
 import { Link } from "react-router";
 
 import {
@@ -8,7 +9,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { LucideUserRoundPlus } from "lucide-react";
+
 import SignUpForm from "../components/sign-up-form";
 
 export default function SignUpPage() {

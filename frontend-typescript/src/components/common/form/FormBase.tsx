@@ -7,9 +7,9 @@ import {
     FieldError,
     FieldLabel,
 } from "@/components/ui/field";
+import { cn } from "@/lib/utils";
 
 import { useFieldContext } from "./hooks";
-import { cn } from "@/lib/utils";
 
 export type FormControlProps = {
     label?: string;

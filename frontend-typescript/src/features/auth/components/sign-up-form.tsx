@@ -1,13 +1,18 @@
-import { useAppForm } from "@/components/common/form/hooks";
-import { useDesignations } from "../hooks/use-designations";
-import { signUpSchema, type SignUpFormValues } from "../schemas/sign-up-schema";
-import { toast } from "sonner";
-import { authClient } from "@/services/auth-client";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
+
+import { useAppForm } from "@/components/common/form/hooks";
+import { authClient } from "@/services/auth-client";
+
+import {
+    EMAIL_VERIFICATION_COOLDOWN_SECONDS,
+    PENDING_VERIFICATION_EMAIL_KEY,
+    VERIFICATION_RESEND_AFTER_KEY,
+} from "../constants/email-verification";
+import { signUpSchema } from "../schemas/sign-up-schema";
 
 export default function SignUpForm() {
     const navigate = useNavigate();
-    const { data: designations, isPending, isError } = useDesignations();
 
     const form = useAppForm({
         defaultValues: {
@@ -15,32 +20,40 @@ export default function SignUpForm() {
             email: "",
             employeeId: "",
             mobileNumber: "",
-            designationId: "",
             password: "",
-        } as SignUpFormValues,
+        },
 
         validators: {
             onSubmit: signUpSchema,
         },
 
         onSubmit: async ({ value }) => {
-            // await new Promise((resolve) => setTimeout(resolve, 2000));
-            const { error } = await authClient.signUp.email(value);
+            const { error } = await authClient.signUp.email({
+                ...value,
+                callbackURL: `${window.location.origin}/verify-email?verified=1`,
+            });
             if (error) {
                 toast.error("Account creation failed.", {
                     description: error.message,
                 });
                 return;
             }
-            toast.success("Account created successfully!");
-            navigate("/tasks/inbox", { replace: true });
+            sessionStorage.setItem(PENDING_VERIFICATION_EMAIL_KEY, value.email);
+            const cooldownUntil =
+                Date.now() + EMAIL_VERIFICATION_COOLDOWN_SECONDS * 1000;
+            sessionStorage.setItem(
+                VERIFICATION_RESEND_AFTER_KEY,
+                String(cooldownUntil),
+            );
+            toast.success("Account created successfully!", {
+                description: "Please check your email to verify your account.",
+            });
+            navigate("/verify-email", {
+                replace: true,
+                state: { email: value.email },
+            });
         },
     });
-
-    const designationOptions = (designations ?? []).map((designation) => ({
-        value: designation.id,
-        label: designation.name,
-    }));
 
     return (
         <form
@@ -98,24 +111,6 @@ export default function SignUpForm() {
                         />
                     )}
                 </form.AppField>
-
-                <form.AppField name="designationId">
-                    {(field) => (
-                        <field.Combobox
-                            label="Designation"
-                            placeholder="Enter your designation"
-                            options={designationOptions}
-                            disabled={isPending || isError}
-                            labelClassName="text-sm md:text-sm tracking-wider"
-                        />
-                    )}
-                </form.AppField>
-
-                {isError && (
-                    <p className="text-destructive text-sm">
-                        Failed to load designations. Please refresh the page.
-                    </p>
-                )}
 
                 <form.AppField name="password">
                     {(field) => (

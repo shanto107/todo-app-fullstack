@@ -1,8 +1,10 @@
-import { useAppForm } from "@/components/common/form/hooks";
-import { signInSchema, type SignInFormValues } from "../schemas/sign-in-schema";
-import { toast } from "sonner";
-import { authClient } from "@/services/auth-client";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
+
+import { useAppForm } from "@/components/common/form/hooks";
+import { authClient } from "@/services/auth-client";
+
+import { signInSchema } from "../schemas/sign-in-schema";
 
 export default function SignInForm() {
     const navigate = useNavigate();
@@ -12,7 +14,7 @@ export default function SignInForm() {
         defaultValues: {
             email: "",
             password: "",
-        } as SignInFormValues,
+        },
         validators: {
             onSubmit: signInSchema,
         },
