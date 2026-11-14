@@ -59,7 +59,7 @@ export default [
             "no-unneeded-ternary": ["error", { defaultAssignment: false }],
             "prefer-const": "error",
 
-            "no-console": ["warn", { allow: ["log", "warn", "error"] }],
+            "no-console": ["warn", { allow: ["log", "warn", "error", "info"] }],
 
             "simple-import-sort/imports": "error",
             "simple-import-sort/exports": "error",

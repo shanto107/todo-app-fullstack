@@ -1,6 +1,6 @@
 import { Loader2, Mail, RefreshCw } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +14,33 @@ import {
 import { resetEmailVerificationParams } from "@/lib/better-auth/reset-email-verification-params";
 import { toast } from "sonner";
 import { authClient } from "@/services/auth-client";
+import {
+    PENDING_VERIFICATION_EMAIL_KEY,
+    VERIFICATION_RESEND_AFTER_KEY,
+} from "../../constants/email-verification";
+import type { StripEmptyObjects } from "better-auth";
+
+type Session = {
+    user: StripEmptyObjects<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        email: string;
+        emailVerified: boolean;
+        name: string;
+        image?: string | null | undefined;
+    }>;
+    session: StripEmptyObjects<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string;
+        expiresAt: Date;
+        token: string;
+        ipAddress?: string | null | undefined;
+        userAgent?: string | null | undefined;
+    }>;
+} | null;
 
 function formatTime(seconds: number) {
     const minutes = Math.floor(seconds / 60);
@@ -26,14 +53,18 @@ function formatTime(seconds: number) {
 
 export default function UnverifiedEmailCard({
     email,
+    session,
     remainingCooldown,
     setRemainingCooldown,
 }: {
     email: string;
+    session: Session;
     remainingCooldown: number;
     setRemainingCooldown: React.Dispatch<React.SetStateAction<number>>;
 }) {
+    const navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
+    const [isSwitchingAccount, setIsSwitchingAccount] = useState(false);
 
     async function handleResend() {
         if (remainingCooldown > 0 || isSending) return;
@@ -65,19 +96,48 @@ export default function UnverifiedEmailCard({
         }
     }
 
+    async function handleUseAnotherEmail() {
+        if (isSwitchingAccount) return;
+
+        setIsSwitchingAccount(true);
+        try {
+            if (session) {
+                const { error } = await authClient.signOut();
+                if (error) {
+                    toast.error("Unable to switch accounts.", {
+                        description: error.message,
+                    });
+                    return;
+                }
+            }
+            sessionStorage.removeItem(PENDING_VERIFICATION_EMAIL_KEY);
+            sessionStorage.removeItem(VERIFICATION_RESEND_AFTER_KEY);
+            setRemainingCooldown(0);
+            navigate("/sign-up", {
+                replace: true,
+            });
+        } catch {
+            toast.error("Something went wrong.", {
+                description: "Unable to switch accounts. Please try again.",
+            });
+        } finally {
+            setIsSwitchingAccount(false);
+        }
+    }
+
     return (
         <div className="bg-muted/30 flex min-h-screen items-center justify-center p-4">
             <Card className="w-full max-w-md rounded-sm">
                 <CardHeader className="items-center text-center">
                     <div className="bg-primary/10 mb-3 flex size-16 items-center justify-center rounded-full">
-                        <Mail className="text-primary size-8" />
+                        <Mail className="text-primary/80 dark:text-chart-2 size-8" />
                     </div>
 
                     <CardTitle className="text-2xl">Check your email</CardTitle>
 
                     <CardDescription className="max-w-sm">
-                        We've sent you a verification link. Please check your
-                        inbox to activate your account.
+                        If an account can be created with this email address,
+                        you'll receive a verification link.
                     </CardDescription>
                 </CardHeader>
 
@@ -97,9 +157,7 @@ export default function UnverifiedEmailCard({
 
                         <ol className="text-muted-foreground list-inside list-decimal space-y-2">
                             <li>Open your email inbox.</li>
-                            <li>
-                                Find the verification email.
-                            </li>
+                            <li>Find the verification email.</li>
                             <li>Click the Verify email address button.</li>
                         </ol>
                     </div>
@@ -138,16 +196,19 @@ export default function UnverifiedEmailCard({
                     </div>
                 </CardContent>
 
-                <CardFooter className="justify-center border-t pt-5">
-                    <p className="text-muted-foreground text-sm">
-                        Already verified?{" "}
-                        <Link
-                            to="/sign-in"
-                            className="text-foreground font-medium hover:underline"
-                        >
-                            Sign in
-                        </Link>
-                    </p>
+                <CardFooter className="flex flex-col justify-center gap-2 border-t pt-3">
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => void handleUseAnotherEmail()}
+                        className={"text-sm"}
+                        disabled={isSwitchingAccount}
+                    >
+                        {isSwitchingAccount
+                            ? "Switching account..."
+                            : "Sign up using different email"}
+                    </Button>
                 </CardFooter>
             </Card>
         </div>

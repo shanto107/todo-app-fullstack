@@ -45,8 +45,9 @@ export default function SignUpForm() {
                 VERIFICATION_RESEND_AFTER_KEY,
                 String(cooldownUntil),
             );
-            toast.success("Account created successfully!", {
-                description: "Please check your email to verify your account.",
+            toast.success("Request submitted", {
+                description:
+                    "If this email can be used to create an account, you'll receive a verification email.",
             });
             navigate("/verify-email", {
                 replace: true,

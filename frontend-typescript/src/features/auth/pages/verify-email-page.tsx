@@ -57,7 +57,7 @@ export default function VerifyEmailPage() {
             }
         }, 1000);
         return () => window.clearInterval(interval);
-    }, []);
+    }, [hasCooldown]);
 
     useEffect(() => {
         if (!isVerified) return;
@@ -83,6 +83,7 @@ export default function VerifyEmailPage() {
             email={email}
             remainingCooldown={remainingCooldown}
             setRemainingCooldown={setRemainingCooldown}
+            session={session}
         />
     );
 }

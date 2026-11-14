@@ -35,10 +35,34 @@ export const auth = betterAuth({
 
     emailAndPassword: {
         enabled: true,
-        requireEmailVerification: false,
+        requireEmailVerification: true,
         resetPasswordTokenExpiresIn: 60 * 15,
         revokeSessionsOnPasswordReset: true,
-
+        onExistingUserSignUp: ({ user }, request) => {
+            const requestUrl = request ? new URL(request.url) : null;
+            const signupAttempt = {
+                event: "auth.existing_user_signup_attempt",
+                timestamp: new Date().toISOString(),
+                existingUser: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    emailVerified: user.emailVerified,
+                },
+                request: request
+                    ? {
+                          method: request.method,
+                          path: requestUrl?.pathname,
+                          origin: request.headers.get("origin"),
+                          referer: request.headers.get("referer"),
+                          userAgent: request.headers.get("user-agent"),
+                          forwardedFor: request.headers.get("x-forwarded-for"),
+                      }
+                    : null,
+            };
+            console.info("[AUTH AUDIT]", signupAttempt);
+            return Promise.resolve();
+        },
         sendResetPassword: async ({ user, url }) => {
             await sendPasswordResetEmail({
                 to: user.email,

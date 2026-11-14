@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 
-import ProtectedRoute from "@/features/auth/components/protected-routes";
+import ProtectedRoute from "@/components/common/routes/protected-route";
 import SignInPage from "@/features/auth/pages/sign-in-page";
 import SignUpPage from "@/features/auth/pages/sign-up-page";
 import VerifyEmailPage from "@/features/auth/pages/verify-email-page";
@@ -11,20 +11,23 @@ import { taskPages } from "@/features/tasks/pages/task-pages-config";
 import AppLayout from "../layouts/app-layout";
 import ForgotPasswordPage from "@/features/auth/pages/forgot-password-page";
 import ResetPasswordPage from "@/features/auth/pages/reset-password-page";
+import GuestRoute from "@/components/common/routes/guest-route";
 
 export default function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/">
-                    <Route path="sign-in" element={<SignInPage />} />
-                    <Route path="sign-up" element={<SignUpPage />} />
-                    <Route path="verify-email" element={<VerifyEmailPage />} />
-                    <Route
-                        path="forgot-password"
-                        element={<ForgotPasswordPage />}
-                    />
+                    <Route element={<GuestRoute />}>
+                        <Route path="sign-in" element={<SignInPage />} />
+                        <Route path="sign-up" element={<SignUpPage />} />
+                        <Route
+                            path="forgot-password"
+                            element={<ForgotPasswordPage />}
+                        />
+                    </Route>
 
+                    <Route path="verify-email" element={<VerifyEmailPage />} />
                     <Route
                         path="reset-password"
                         element={<ResetPasswordPage />}
