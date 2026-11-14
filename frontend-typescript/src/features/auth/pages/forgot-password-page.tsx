@@ -57,11 +57,11 @@ export default function ForgotPasswordPage() {
     }
 
     return (
-        <div className="bg-muted/30 flex min-h-screen items-center justify-center p-4">
+        <div className="relative flex w-full items-center justify-center">
             <Card className="w-full max-w-md rounded-sm">
                 <CardHeader className="items-center space-y-2 text-center">
                     <div className="bg-primary/10 mb-3 flex size-16 items-center justify-center rounded-full">
-                        <KeyRoundIcon className="text-primary/80 dark:text-chart-3 size-8" />
+                        <KeyRoundIcon className="text-primary/80 dark:text-chart-2 size-8" />
                     </div>
 
                     <CardTitle className="text-2xl">Forgot password?</CardTitle>

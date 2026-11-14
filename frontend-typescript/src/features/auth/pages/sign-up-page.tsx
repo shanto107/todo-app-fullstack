@@ -14,8 +14,7 @@ import SignUpForm from "../components/sign-up/sign-up-form";
 
 export default function SignUpPage() {
     return (
-        <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10 sm:px-6 lg:px-8">
-            {/* Sign-in Card */}
+        <div className="relative flex w-full items-center justify-center">
             <Card className="relative z-10 w-full max-w-lg gap-6 rounded-md py-6">
                 <CardHeader className="gap-6 px-6">
                     {/* <Logo className="gap-3" /> */}
