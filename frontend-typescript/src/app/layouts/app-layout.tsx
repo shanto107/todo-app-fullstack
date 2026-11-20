@@ -18,13 +18,14 @@ export default function AppLayout() {
     const isMobile = useIsMobile();
 
     const { data: session } = authClient.useSession();
+    const avatarURL = `https://dpdc.org.bd/site/nocs/showPhoto/${session?.user?.employeeId}`;
 
     return (
         <TooltipProvider>
             <SidebarProvider defaultOpen={defaultOpen}>
                 <AppSidebar />
                 <SidebarInset className="p-4">
-                    <Navbar name={session?.user.name ?? "Guest"} />
+                    <Navbar name={session?.user.name ?? "Guest"} avatarURL={avatarURL} />
                     <main>
                         <Outlet />
                     </main>

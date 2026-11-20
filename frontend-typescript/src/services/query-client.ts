@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { getErrorMessage } from "@/lib/get-error-message";
+import { getErrorMessage } from "@/lib/api/get-error-message";
 
 export const queryClient = new QueryClient({
     defaultOptions: {

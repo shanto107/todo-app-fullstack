@@ -1,17 +1,9 @@
-import {
-    LogOutIcon,
-    Menu,
-    Plus,
-    Settings2,
-    User2Icon,
-    UserRound,
-} from "lucide-react";
+import { LogOutIcon, Menu, Moon, Plus, Settings, Sun } from "lucide-react";
 
 import { useBetterAuthLogout } from "@/features/auth/hooks/use-better-auth-logout";
 import AddTaskDialog from "@/features/tasks/components/add-task-dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-import ModeToggle from "../mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -19,12 +11,14 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { LoadingSwap } from "../ui/loading-swap";
 import { useSidebar } from "../ui/sidebar";
+import { useNavigate } from "react-router";
+import { useTheme } from "../theme-provider";
+import { getInitials, getLastName } from "@/features/settings/helpers/name";
 
 type UserMenuProps = {
     avatarURL?: string;
@@ -34,8 +28,13 @@ type UserMenuProps = {
 
 export default function Navbar({ avatarURL, name }: UserMenuProps) {
     const isMobile = useIsMobile();
+    const navigate = useNavigate();
+
     const { toggleSidebar } = useSidebar();
     const { handleLogout, isLoggingOut } = useBetterAuthLogout();
+
+    const { theme, setTheme } = useTheme();
+    const isDarkMode = theme === "dark";
 
     return (
         <nav className="flex items-center justify-between">
@@ -52,7 +51,7 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                 )}
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-10">
                 {!isMobile && (
                     <AddTaskDialog
                         trigger={
@@ -68,48 +67,76 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                         }
                     />
                 )}
-                <ModeToggle />
+                {/* <ModeToggle /> */}
+
                 <DropdownMenu>
                     {/* user dropdown trigger */}
                     <DropdownMenuTrigger
-                        render={<Avatar className={"h-9 w-9 cursor-pointer"} />}
+                        render={
+                            <Button
+                                variant="ghost"
+                                className="hover:bg-accent/10 focus:bg-accent/10 h-10 gap-2 rounded-sm px-2"
+                            />
+                        }
                     >
-                        <AvatarImage
-                            src={avatarURL}
-                            alt={name ?? "Guest User"}
-                        />
-                        <AvatarFallback>
-                            <UserRound className="text-muted-foreground h-5 w-5" />
-                        </AvatarFallback>
+                        <Avatar className="size-8">
+                            <AvatarImage src={avatarURL} alt={name ?? "User"} />
+                            <AvatarFallback className="font-serif text-xs font-semibold">
+                                {getInitials(name)}
+                            </AvatarFallback>
+                        </Avatar>
+                        <span className="max-w-28 truncate text-sm font-medium">
+                            {getLastName(name)}
+                        </span>
                     </DropdownMenuTrigger>
 
                     {/* user dropdown content */}
                     <DropdownMenuContent
                         sideOffset={10}
-                        align="center"
-                        className={"w-36 rounded-md"}
+                        align="end"
+                        className={"w-64 rounded-md"}
                     >
                         <DropdownMenuGroup>
-                            <DropdownMenuLabel>
-                                <p className="text-xs font-medium tracking-widest">
-                                    {name ?? "Guest User"}
-                                </p>
-                            </DropdownMenuLabel>
-                        </DropdownMenuGroup>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <User2Icon className="text-accent dark:text-chart-2 mr-2" />
-                                <span className="text-sm tracking-widest">
-                                    Profile
-                                </span>
+                            <DropdownMenuItem
+                                onClick={() => navigate("/settings/profile")}
+                                className={"text-sm font-light"}
+                            >
+                                <div className="flex items-center gap-4">
+                                    <Settings
+                                        strokeWidth={"1.5"}
+                                        className="size-4"
+                                    />
+                                    <span className="">Settings</span>
+                                </div>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Settings2 className="text-accent dark:text-chart-2 mr-2" />
-                                <span className="text-sm tracking-widest">
-                                    Settings
-                                </span>
+                            <DropdownMenuItem
+                                onClick={() =>
+                                    setTheme(isDarkMode ? "light" : "dark")
+                                }
+                                className={"text-sm font-light"}
+                            >
+                                <div className="flex items-center gap-4">
+                                    {isDarkMode ? (
+                                        <Sun
+                                            strokeWidth={"1.5"}
+                                            className="size-4"
+                                        />
+                                    ) : (
+                                        <Moon
+                                            strokeWidth={"1.5"}
+                                            className="size-4"
+                                        />
+                                    )}
+                                    <span>
+                                        {isDarkMode
+                                            ? "Light mode"
+                                            : "Dark mode"}
+                                    </span>
+                                </div>
                             </DropdownMenuItem>
+
+                            <DropdownMenuSeparator />
+
                             <DropdownMenuItem
                                 variant="destructive"
                                 onClick={(event) => {
@@ -117,17 +144,23 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                                     void handleLogout();
                                 }}
                                 disabled={isLoggingOut}
+                                className={"text-sm font-light"}
                             >
                                 <LoadingSwap
                                     isLoading={isLoggingOut}
                                     className="flex items-center"
                                 >
-                                    <LogOutIcon className="mr-4" />
-                                    <span className="text-sm tracking-widest">
-                                        {isLoggingOut
-                                            ? "Logging out"
-                                            : "Log Out"}
-                                    </span>
+                                    <div className="flex items-center gap-4">
+                                        <LogOutIcon
+                                            strokeWidth={"1.5"}
+                                            className="size-4"
+                                        />
+                                        <span>
+                                            {isLoggingOut
+                                                ? "Logging out"
+                                                : "Log Out"}
+                                        </span>
+                                    </div>
                                 </LoadingSwap>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>

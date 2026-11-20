@@ -16,7 +16,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
-import { getPages } from "@/lib/get-pages";
+import { getPages } from "@/lib/helpers/pagination/get-pages";
 
 import type { TaskPagination as TaskPaginationInfo } from "../../types/task-query.types";
 
@@ -25,7 +25,10 @@ type TaskPaginationProps = {
     onPageChange: (page: number) => void;
 };
 
-export default function TaskPagination({ pagination, onPageChange }: TaskPaginationProps) {
+export default function TaskPagination({
+    pagination,
+    onPageChange,
+}: TaskPaginationProps) {
     if (!pagination || pagination.totalPages <= 1) {
         return null;
     }
@@ -98,7 +101,9 @@ export default function TaskPagination({ pagination, onPageChange }: TaskPaginat
                                         onPageChange(pageNumber);
                                     }}
                                     aria-label={`Page ${pageNumber}`}
-                                    aria-current={pageNumber === page ? "page" : undefined}
+                                    aria-current={
+                                        pageNumber === page ? "page" : undefined
+                                    }
                                     className={`rounded-sm ${pageNumber === page ? "bg-primary text-primary-foreground" : ""}`}
                                 >
                                     {pageNumber}

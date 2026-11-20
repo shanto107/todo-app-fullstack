@@ -13,6 +13,11 @@ import ForgotPasswordPage from "@/features/auth/pages/forgot-password-page";
 import ResetPasswordPage from "@/features/auth/pages/reset-password-page";
 import GuestRoute from "@/components/common/routes/guest-route";
 import GuestLayout from "../layouts/guest-layout";
+import SettingsLayout from "../layouts/settings-layout";
+import ProfilePage from "@/features/settings/pages/profile-page";
+import SecurityPage from "@/features/settings/pages/security-page";
+import OrganizationPage from "@/features/settings/pages/organization-page";
+import PreferencesPage from "@/features/settings/pages/preferences-page";
 
 export default function AppRouter() {
     return (
@@ -37,6 +42,23 @@ export default function AppRouter() {
                     />
 
                     <Route element={<ProtectedRoute />}>
+                        <Route path="settings" element={<SettingsLayout />}>
+                            <Route
+                                index
+                                element={<Navigate to="profile" replace />}
+                            />
+                            <Route path="profile" element={<ProfilePage />} />
+                            <Route path="security" element={<SecurityPage />} />
+                            <Route
+                                path="organization"
+                                element={<OrganizationPage />}
+                            />
+                            <Route
+                                path="preferences"
+                                element={<PreferencesPage />}
+                            />
+                        </Route>
+
                         <Route element={<AppLayout />}>
                             <Route
                                 index

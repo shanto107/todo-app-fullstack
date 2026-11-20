@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-import stringToDate from "@/lib/string-to-date";
+import stringToDate from "@/lib/helpers/format-date/string-to-date";
 
 import { PRIORITY_OPTIONS } from "../../constants/tasks.priorities";
 import { STATUS_OPTIONS } from "../../constants/tasks.status";
@@ -13,10 +13,15 @@ type TaskFilterBadgeListType = {
     updateFilters: (updates: Partial<TaskFilterValues>) => void;
 };
 
-export default function TaskFilterBadgeList({ filters, updateFilters }: TaskFilterBadgeListType) {
+export default function TaskFilterBadgeList({
+    filters,
+    updateFilters,
+}: TaskFilterBadgeListType) {
     function clearStatus(status: TaskStatus) {
         const currentStatusArray = filters.status ?? [];
-        const nextStatusArray = currentStatusArray.filter((value) => value !== status);
+        const nextStatusArray = currentStatusArray.filter(
+            (value) => value !== status,
+        );
         updateFilters({
             status: nextStatusArray.length > 0 ? nextStatusArray : undefined,
         });
@@ -43,7 +48,9 @@ export default function TaskFilterBadgeList({ filters, updateFilters }: TaskFilt
     return (
         <div className="mb-2 flex flex-wrap gap-1.5 px-4">
             {filters.status?.map((status) => {
-                const option = STATUS_OPTIONS.find((item) => item.value === status);
+                const option = STATUS_OPTIONS.find(
+                    (item) => item.value === status,
+                );
                 if (!option) return null;
                 return (
                     <FilterBadge
@@ -56,7 +63,9 @@ export default function TaskFilterBadgeList({ filters, updateFilters }: TaskFilt
             {filters.priority && (
                 <FilterBadge
                     label={`Priority: ${
-                        PRIORITY_OPTIONS.find((item) => filters.priority === item.value)?.label
+                        PRIORITY_OPTIONS.find(
+                            (item) => filters.priority === item.value,
+                        )?.label
                     }`}
                     handleClear={clearPriority}
                 />

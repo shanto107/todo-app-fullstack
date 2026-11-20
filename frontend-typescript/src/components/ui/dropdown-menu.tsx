@@ -13,7 +13,9 @@ function DropdownMenuPortal({ ...props }: MenuPrimitive.Portal.Props) {
 }
 
 function DropdownMenuTrigger({ ...props }: MenuPrimitive.Trigger.Props) {
-    return <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
+    return (
+        <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />
+    );
 }
 
 function DropdownMenuContent({
@@ -24,7 +26,10 @@ function DropdownMenuContent({
     className,
     ...props
 }: MenuPrimitive.Popup.Props &
-    Pick<MenuPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) {
+    Pick<
+        MenuPrimitive.Positioner.Props,
+        "align" | "alignOffset" | "side" | "sideOffset"
+    >) {
     return (
         <MenuPrimitive.Portal>
             <MenuPrimitive.Positioner
@@ -62,7 +67,10 @@ function DropdownMenuLabel({
         <MenuPrimitive.GroupLabel
             data-slot="dropdown-menu-label"
             data-inset={inset}
-            className={cn("text-muted-foreground px-2 py-2 text-xs data-inset:pl-7", className)}
+            className={cn(
+                "text-muted-foreground px-2 py-2 text-xs data-inset:pl-7",
+                className,
+            )}
             {...props}
         />
     );
@@ -83,7 +91,23 @@ function DropdownMenuItem({
             data-inset={inset}
             data-variant={variant}
             className={cn(
-                "group/dropdown-menu-item focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:*:[svg]:text-destructive relative flex cursor-default items-center gap-2 rounded-none px-2 py-2 text-xs outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 data-inset:pl-7 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+                "group/dropdown-menu-item relative flex cursor-default items-center gap-2 rounded-none px-2 py-2 text-xs outline-hidden select-none",
+
+                // Light mode
+                "focus:bg-muted/60 focus:text-accent focus:**:text-accent",
+
+                // Dark mode
+                "dark:focus:text-chart-2 dark:focus:**:text-chart-2 dark:focus:bg-white/10",
+
+                // Destructive variant - Light and dark modes
+                "data-[variant=destructive]:text-destructive",
+                "data-[variant=destructive]:focus:bg-destructive/10",
+                "data-[variant=destructive]:focus:text-destructive",
+                "data-[variant=destructive]:focus:**:text-destructive",
+                "dark:data-[variant=destructive]:focus:bg-destructive/20",
+                "dark:data-[variant=destructive]:focus:text-destructive",
+                "dark:data-[variant=destructive]:focus:**:text-destructive",
+
                 className,
             )}
             {...props}
@@ -92,7 +116,9 @@ function DropdownMenuItem({
 }
 
 function DropdownMenuSub({ ...props }: MenuPrimitive.SubmenuRoot.Props) {
-    return <MenuPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
+    return (
+        <MenuPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />
+    );
 }
 
 function DropdownMenuSubTrigger({
@@ -177,7 +203,12 @@ function DropdownMenuCheckboxItem({
 }
 
 function DropdownMenuRadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props) {
-    return <MenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
+    return (
+        <MenuPrimitive.RadioGroup
+            data-slot="dropdown-menu-radio-group"
+            {...props}
+        />
+    );
 }
 
 function DropdownMenuRadioItem({
@@ -211,7 +242,10 @@ function DropdownMenuRadioItem({
     );
 }
 
-function DropdownMenuSeparator({ className, ...props }: MenuPrimitive.Separator.Props) {
+function DropdownMenuSeparator({
+    className,
+    ...props
+}: MenuPrimitive.Separator.Props) {
     return (
         <MenuPrimitive.Separator
             data-slot="dropdown-menu-separator"
@@ -221,7 +255,10 @@ function DropdownMenuSeparator({ className, ...props }: MenuPrimitive.Separator.
     );
 }
 
-function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<"span">) {
+function DropdownMenuShortcut({
+    className,
+    ...props
+}: React.ComponentProps<"span">) {
     return (
         <span
             data-slot="dropdown-menu-shortcut"
