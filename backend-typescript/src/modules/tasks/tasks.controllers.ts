@@ -139,7 +139,7 @@ export function createTaskControllers(service: TaskService) {
                 res,
                 200,
                 SUCCESS_CODES.TASK_DELETED,
-                successMessage.deleteTask(task.id),
+                successMessage.deleteTask(id),
                 task,
             );
         },

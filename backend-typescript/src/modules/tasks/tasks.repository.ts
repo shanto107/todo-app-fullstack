@@ -9,9 +9,10 @@ import {
     lte,
 } from "drizzle-orm";
 
+import { NotFoundError } from "#src/utils/errors/app-error.js";
+
 import { type DB } from "../../db/index.js";
 import { tasks } from "../../db/schema/tasks.js";
-import { NotFoundError } from "../../middlewares/error-handler.js";
 import { buildTaskQuery } from "../../utils/helper-functions/build-task-query-conditions.js";
 import setDate from "../../utils/helper-functions/set-date.js";
 import type {
@@ -41,7 +42,7 @@ export type TaskRepo = {
 
 export function createTaskRepo(db: DB): TaskRepo {
     return {
-        async addTask(newTask: NewTask): Promise<Task> {
+        addTask: async (newTask: NewTask): Promise<Task> => {
             const [result] = await db.insert(tasks).values(newTask).returning();
             if (!result) {
                 throw new Error("Failed to create new Task! Please try again!");
@@ -49,7 +50,7 @@ export function createTaskRepo(db: DB): TaskRepo {
             return result;
         },
 
-        async getTasks(query: TaskQuery): Promise<PaginatedTasks> {
+        getTasks: async (query: TaskQuery): Promise<PaginatedTasks> => {
             const { where, orderBy, page, limit, offset } =
                 buildTaskQuery(query);
 
@@ -84,7 +85,7 @@ export function createTaskRepo(db: DB): TaskRepo {
             };
         },
 
-        async getTaskById(id: string): Promise<Task> {
+        getTaskById: async (id: string): Promise<Task> => {
             const [result] = await db
                 .select()
                 .from(tasks)
@@ -95,7 +96,7 @@ export function createTaskRepo(db: DB): TaskRepo {
             return result;
         },
 
-        async getTaskCounts() {
+        getTaskCounts: async () => {
             const now = new Date();
             const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
             const endOfToday = setDate("to", now.toISOString());
@@ -162,7 +163,7 @@ export function createTaskRepo(db: DB): TaskRepo {
             };
         },
 
-        async updateTask(payload: UpdateTaskPayload): Promise<Task> {
+        updateTask: async (payload: UpdateTaskPayload): Promise<Task> => {
             const { id, ...updates } = payload;
             const [result] = await db
                 .update(tasks)
@@ -175,7 +176,7 @@ export function createTaskRepo(db: DB): TaskRepo {
             return result;
         },
 
-        async deleteTask(id: string): Promise<Task> {
+        deleteTask: async (id: string): Promise<Task> => {
             const [result] = await db
                 .update(tasks)
                 .set({
@@ -189,7 +190,7 @@ export function createTaskRepo(db: DB): TaskRepo {
             return result;
         },
 
-        async restoreTask(id: string): Promise<Task> {
+        restoreTask: async (id: string): Promise<Task> => {
             const [result] = await db
                 .update(tasks)
                 .set({
@@ -204,7 +205,7 @@ export function createTaskRepo(db: DB): TaskRepo {
         },
 
         // bulk actions
-        async bulkCompleteTasks(ids: string[]): Promise<number> {
+        bulkCompleteTasks: async (ids: string[]): Promise<number> => {
             const result = await db
                 .update(tasks)
                 .set({
@@ -215,7 +216,7 @@ export function createTaskRepo(db: DB): TaskRepo {
             return result.length;
         },
 
-        async bulkActivateTasks(ids: string[]): Promise<number> {
+        bulkActivateTasks: async (ids: string[]): Promise<number> => {
             const result = await db
                 .update(tasks)
                 .set({
@@ -226,7 +227,7 @@ export function createTaskRepo(db: DB): TaskRepo {
             return result.length;
         },
 
-        async bulkDeleteTasks(ids: string[]): Promise<number> {
+        bulkDeleteTasks: async (ids: string[]): Promise<number> => {
             const result = await db
                 .update(tasks)
                 .set({
@@ -237,7 +238,7 @@ export function createTaskRepo(db: DB): TaskRepo {
             return result.length;
         },
 
-        async bulkRestoreTasks(ids: string[]): Promise<number> {
+        bulkRestoreTasks: async (ids: string[]): Promise<number> => {
             const result = await db
                 .update(tasks)
                 .set({

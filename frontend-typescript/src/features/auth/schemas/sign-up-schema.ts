@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const BangladeshPhoneNumberSchema = z
+export const BDPhoneNumberSchema = z
     .string()
     .trim()
     .regex(
@@ -27,7 +27,7 @@ export const signUpSchema = z.object({
     employeeId: z
         .string()
         .regex(/^\d{5}$/, "Employee ID must contain exactly 5 digits."),
-    mobileNumber: BangladeshPhoneNumberSchema,
+    mobileNumber: BDPhoneNumberSchema,
     // designationId: z.string().uuid("Please select a valid designation."),
     password: z.string().min(8, "Password must be at least 8 characters."),
 });

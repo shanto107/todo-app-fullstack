@@ -1,10 +1,8 @@
 import { fromNodeHeaders } from "better-auth/node";
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 import { auth } from "#src/utils/auth/auth.js";
-import { sendError } from "#src/utils/helper-functions/http-response.js";
-
-import { ERROR_CODES } from "./error-handler.js";
+import { UnauthorizedError } from "#src/utils/errors/app-error.js";
 
 export async function requireAuth(
     req: Request,
@@ -17,14 +15,9 @@ export async function requireAuth(
         });
 
         if (!session) {
-            sendError(
-                res,
-                401,
-                ERROR_CODES.UNAUTHORIZED,
-                "Authorization failed!",
-                null,
+            throw new UnauthorizedError(
+                "Authorization failed! Please login first to access this resource.",
             );
-            return;
         }
 
         res.locals.auth = session;

@@ -30,6 +30,16 @@ export const auth = betterAuth({
                 required: false,
                 input: false,
             },
+            dateOfBirth: {
+                type: "date",
+                required: false,
+                input: false,
+            },
+            homeAddress: {
+                type: "string",
+                required: false,
+                input: false,
+            },
         },
     },
 

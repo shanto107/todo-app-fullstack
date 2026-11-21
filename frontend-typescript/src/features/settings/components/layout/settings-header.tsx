@@ -26,7 +26,7 @@ export default function SettingsHeader({
                         src={image ?? undefined}
                         alt={name ?? "Profile"}
                     />
-                    <AvatarFallback className="text-shadow-muted-foreground font-serif text-2xl font-semibold">
+                    <AvatarFallback className="text-foreground/60 bg-background/50 dark:bg-background/50 font-serif text-2xl font-semibold">
                         {getInitials(name)}
                     </AvatarFallback>
                 </Avatar>

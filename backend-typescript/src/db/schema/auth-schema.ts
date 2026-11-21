@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
     boolean,
+    date,
     index,
     pgTable,
     text,
@@ -23,6 +24,8 @@ export const user = pgTable("user", {
     designationId: uuid("designation_id").references(() => designations.id, {
         onDelete: "restrict",
     }),
+    dateOfBirth: date("date_of_birth", { mode: "date" }),
+    homeAddress: text("home_address"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
         .defaultNow()

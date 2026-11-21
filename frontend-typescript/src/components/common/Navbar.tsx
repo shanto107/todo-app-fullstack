@@ -81,7 +81,7 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                     >
                         <Avatar className="size-8">
                             <AvatarImage src={avatarURL} alt={name ?? "User"} />
-                            <AvatarFallback className="font-serif text-xs font-semibold">
+                            <AvatarFallback className="text-foreground/60 bg-background/50 dark:bg-background/50 font-serif text-xs font-semibold">
                                 {getInitials(name)}
                             </AvatarFallback>
                         </Avatar>
@@ -96,12 +96,12 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                         align="end"
                         className={"w-64 rounded-md"}
                     >
-                        <DropdownMenuGroup>
+                        <DropdownMenuGroup className={"mt-1 py-2"}>
                             <DropdownMenuItem
                                 onClick={() => navigate("/settings/profile")}
                                 className={"text-sm font-light"}
                             >
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-4 px-2">
                                     <Settings
                                         strokeWidth={"1.5"}
                                         className="size-4"
@@ -115,7 +115,7 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                                 }
                                 className={"text-sm font-light"}
                             >
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-4 px-2">
                                     {isDarkMode ? (
                                         <Sun
                                             strokeWidth={"1.5"}
@@ -134,9 +134,11 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                                     </span>
                                 </div>
                             </DropdownMenuItem>
+                        </DropdownMenuGroup>
 
-                            <DropdownMenuSeparator />
+                        <DropdownMenuSeparator />
 
+                        <DropdownMenuGroup>
                             <DropdownMenuItem
                                 variant="destructive"
                                 onClick={(event) => {
@@ -150,7 +152,7 @@ export default function Navbar({ avatarURL, name }: UserMenuProps) {
                                     isLoading={isLoggingOut}
                                     className="flex items-center"
                                 >
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-4 px-2">
                                         <LogOutIcon
                                             strokeWidth={"1.5"}
                                             className="size-4"
