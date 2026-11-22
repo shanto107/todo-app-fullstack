@@ -19,3 +19,5 @@ export type UpdateProfileRequest = TypedRequest<
     Record<string, never>,
     UpdateProfileBody
 >;
+
+

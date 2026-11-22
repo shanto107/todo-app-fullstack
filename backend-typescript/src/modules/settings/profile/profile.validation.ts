@@ -3,7 +3,7 @@ import { z } from "zod";
 export const BDPhoneNumberSchema = z
     .string()
     .trim()
-    .regex(/^\+8801[3-9]\d{8}$/, "Enter a valid BD mobile number");
+    .regex(/^(\+8801[3-9]\d{8})$/, "Enter a valid BD mobile number");
 
 export const updateProfileSchema = z
     .object({
@@ -13,7 +13,7 @@ export const updateProfileSchema = z
             .min(1, "Name is required!")
             .max(100, "Name is too long!")
             .optional(),
-        mobileNumber: BDPhoneNumberSchema,
+        mobileNumber: BDPhoneNumberSchema.optional(),
         designationId: z.uuid().nullable().optional(),
         dateOfBirth: z.iso.date().nullable().optional(),
         homeAddress: z

@@ -1,5 +1,5 @@
 export default function stringToDate(dateString: string): Date {
-    const [year, month, day] = dateString.split("-").map(Number);
+    const [year, month, day] = dateString.slice(0, 10).split("-").map(Number);
 
     if (year === undefined || month === undefined || day === undefined) {
         throw new Error(`Invalid date string: ${dateString}`);

@@ -1,7 +1,7 @@
+import { ENDPOINTS } from "@/constants/endpoints";
 import { apiFetch } from "@/lib/api/client";
 import queryBuilder from "@/lib/api/query-builder";
 
-import { ENDPOINTS } from "../constants/tasks.endpoints";
 import { taskCountsSchema } from "../schemas/get-task-counts";
 import {
     type BulkTasksAction,
@@ -14,7 +14,9 @@ import type { PaginatedTasks, TaskQuery } from "../types/task-query.types";
 
 export function getTasks(filters?: TaskQuery) {
     const query = filters ? queryBuilder(filters) : "";
-    const endpoint = query ? `${ENDPOINTS.api.tasks.root}?${query}` : ENDPOINTS.api.tasks.root;
+    const endpoint = query
+        ? `${ENDPOINTS.api.tasks.root}?${query}`
+        : ENDPOINTS.api.tasks.root;
     return apiFetch<PaginatedTasks>(endpoint);
 }
 
@@ -23,7 +25,11 @@ export function getTaskById(id: string) {
 }
 
 export function getTaskCounts() {
-    return apiFetch<TaskCounts>(ENDPOINTS.api.tasks.counts, undefined, taskCountsSchema);
+    return apiFetch<TaskCounts>(
+        ENDPOINTS.api.tasks.counts,
+        undefined,
+        taskCountsSchema,
+    );
 }
 
 export function createTask(payload: CreateTask) {
