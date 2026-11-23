@@ -1,0 +1,40 @@
+import { format } from "date-fns";
+
+type DateIconProps = {
+    date: Date;
+    className?: string;
+};
+
+export function DateIcon({ date, className }: DateIconProps) {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className ?? "size-5"}
+            aria-label={format(date, "MMMM d")}
+        >
+            {/* Calendar body */}
+            <rect x="3" y="5" width="18" height="16" rx="2" />
+
+            {/* Calendar header */}
+            <path d="M16 3v4M8 3v4M3 10h18" />
+
+            {/* Date number */}
+            <text
+                x="12"
+                y="18"
+                textAnchor="middle"
+                fill="currentColor"
+                stroke="none"
+                fontSize="8"
+                fontWeight="600"
+            >
+                {format(date, "d")}
+            </text>
+        </svg>
+    );
+}

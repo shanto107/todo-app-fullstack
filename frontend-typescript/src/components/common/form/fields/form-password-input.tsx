@@ -1,6 +1,6 @@
 import { PasswordInput } from "@/components/ui/password-input";
 
-import { FormBase, type FormControlProps } from "../FormBase";
+import { FormBase, type FormControlProps } from "../form-base";
 import { useFieldContext } from "../hooks";
 
 type FormPasswordInputProps = FormControlProps & {

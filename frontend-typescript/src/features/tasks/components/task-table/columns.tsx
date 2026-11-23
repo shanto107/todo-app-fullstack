@@ -1,26 +1,29 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Link } from "react-router";
 
-import { DeadlineBadge } from "@/components/common/form/fields/form-date-picker";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 import { PRIORITY_OPTIONS } from "../../constants/tasks.priorities";
 import { STATUS_OPTIONS } from "../../constants/tasks.status";
 import type { Task, TaskTableView } from "../../types/task.types";
+import { DateBadge } from "@/components/common/badge/date-badge";
 
 const columnHelper = createColumnHelper<Task>();
 
 export function idColumn(view: TaskTableView) {
     return columnHelper.accessor("id", {
-        header: () => <div className="text-sm font-semibold tracking-wide">Id</div>,
+        header: () => (
+            <div className="text-sm font-semibold tracking-wide">Id</div>
+        ),
         cell: (info) => (
             <Link
                 to={`/tasks/${info.getValue()}`}
                 className={cn(
                     "tracking-widest hover:underline hover:underline-offset-4",
                     view === "inbox" && "text-primary/80 dark:text-chart-1",
-                    view === "completed" && "text-green-600 dark:text-green-300",
+                    view === "completed" &&
+                        "text-green-600 dark:text-green-300",
                     view === "deleted" && "text-red-600 dark:text-red-400",
                 )}
             >
@@ -32,7 +35,9 @@ export function idColumn(view: TaskTableView) {
 
 export function titleColumn() {
     return columnHelper.accessor("title", {
-        header: () => <div className="text-sm font-semibold tracking-wide">Title</div>,
+        header: () => (
+            <div className="text-sm font-semibold tracking-wide">Title</div>
+        ),
         cell: (info) => (
             <Link
                 to={`/tasks/${info.row.original.id}`}
@@ -46,7 +51,9 @@ export function titleColumn() {
 
 export function priorityColumn() {
     return columnHelper.accessor("priority", {
-        header: () => <div className="text-sm font-semibold tracking-wide">Priority</div>,
+        header: () => (
+            <div className="text-sm font-semibold tracking-wide">Priority</div>
+        ),
         cell: (info) => {
             const taskPriority = PRIORITY_OPTIONS.find(
                 (priority) => priority.value === info.getValue(),
@@ -54,7 +61,10 @@ export function priorityColumn() {
             if (!taskPriority) return null;
 
             return (
-                <Badge className={`rounded-sm p-0 ${taskPriority.color}`} variant={"ghost"}>
+                <Badge
+                    className={`rounded-sm p-0 ${taskPriority.color}`}
+                    variant={"ghost"}
+                >
                     <taskPriority.icon className="mr-1 size-3.5" />
                     <span>{taskPriority.label}</span>
                 </Badge>
@@ -65,12 +75,19 @@ export function priorityColumn() {
 
 export function statusColumn() {
     return columnHelper.accessor("status", {
-        header: () => <div className="text-sm font-semibold tracking-wide">Status</div>,
+        header: () => (
+            <div className="text-sm font-semibold tracking-wide">Status</div>
+        ),
         cell: (info) => {
-            const taskStatus = STATUS_OPTIONS.find((status) => status.value === info.getValue());
+            const taskStatus = STATUS_OPTIONS.find(
+                (status) => status.value === info.getValue(),
+            );
             if (!taskStatus) return null;
             return (
-                <Badge className={`rounded-sm p-0 ${taskStatus.color}`} variant={"ghost"}>
+                <Badge
+                    className={`rounded-sm p-0 ${taskStatus.color}`}
+                    variant={"ghost"}
+                >
                     <taskStatus.icon className="mr-1 size-3.5" />
                     <span>{taskStatus.label}</span>
                 </Badge>
@@ -81,9 +98,11 @@ export function statusColumn() {
 
 export function deadlineColumn() {
     return columnHelper.accessor("deadline", {
-        header: () => <div className="text-sm font-semibold tracking-wide">Deadline</div>,
+        header: () => (
+            <div className="text-sm font-semibold tracking-wide">Deadline</div>
+        ),
         cell: (info) => (
-            <DeadlineBadge
+            <DateBadge
                 date={info.getValue()}
                 defaultLabel="No Deadline"
                 iconClassName="size-3.5 mr-2"
@@ -95,9 +114,11 @@ export function deadlineColumn() {
 
 export function completedAtColumn() {
     return columnHelper.accessor("updatedAt", {
-        header: () => <div className="text-sm font-semibold tracking-wide">Completed</div>,
+        header: () => (
+            <div className="text-sm font-semibold tracking-wide">Completed</div>
+        ),
         cell: (info) => (
-            <DeadlineBadge
+            <DateBadge
                 date={info.getValue()}
                 defaultLabel="-"
                 iconClassName="size-3.5 mr-2"
@@ -109,9 +130,11 @@ export function completedAtColumn() {
 
 export function deletedAtColumn() {
     return columnHelper.accessor("deletedAt", {
-        header: () => <div className="text-sm font-semibold tracking-wide">Deleted</div>,
+        header: () => (
+            <div className="text-sm font-semibold tracking-wide">Deleted</div>
+        ),
         cell: (info) => (
-            <DeadlineBadge
+            <DateBadge
                 date={info.getValue()}
                 defaultLabel="-"
                 iconClassName="size-3.5 mr-2"

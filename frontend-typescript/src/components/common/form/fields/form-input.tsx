@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-import { FormBase, type FormControlProps } from "../FormBase";
+import { FormBase, type FormControlProps } from "../form-base";
 import { useFieldContext } from "../hooks";
 
 type FormInputProps = FormControlProps & {

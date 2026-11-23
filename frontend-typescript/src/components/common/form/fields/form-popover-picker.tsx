@@ -2,9 +2,13 @@ import { Flag, type LucideIcon, X } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 
-import { FormBase, type FormControlProps } from "../FormBase";
+import { FormBase, type FormControlProps } from "../form-base";
 import { useFieldContext } from "../hooks";
 
 type PickerOption<T extends string> = {
@@ -30,7 +34,9 @@ export function FormPopoverPicker<T extends string>({
     const field = useFieldContext<T | undefined>();
     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
-    const selectedOption = options.find((option) => option.value === field.state.value);
+    const selectedOption = options.find(
+        (option) => option.value === field.state.value,
+    );
     const Icon = selectedOption?.icon;
 
     const trigger = (
@@ -42,14 +48,20 @@ export function FormPopoverPicker<T extends string>({
             disabled={disabled}
             onBlur={field.handleBlur}
             aria-invalid={isInvalid}
-            className={"text-muted-foreground h-8 rounded-sm text-xs tracking-wide"}
+            className={
+                "text-muted-foreground h-8 rounded-sm text-xs tracking-wide"
+            }
         >
             {Icon ? (
                 <Icon className={`mr-1 size-3.5 ${selectedOption?.color}`} />
             ) : (
                 <Flag className={`mr-1 size-3.5`} />
             )}
-            {<span className={selectedOption?.color}>{selectedOption?.label ?? placeholder}</span>}
+            {
+                <span className={selectedOption?.color}>
+                    {selectedOption?.label ?? placeholder}
+                </span>
+            }
         </Button>
     );
 
@@ -81,7 +93,9 @@ export function FormPopoverPicker<T extends string>({
             }}
             className={`justify-start rounded-sm text-xs tracking-wide ${option.color}`}
         >
-            {option.icon && <option.icon className={`mr-1 size-3.5 ${option?.color}`} />}
+            {option.icon && (
+                <option.icon className={`mr-1 size-3.5 ${option?.color}`} />
+            )}
             {<span className={option.color}>{option.label}</span>}
         </Button>
     ));
@@ -99,7 +113,10 @@ export function FormPopoverPicker<T extends string>({
                 >
                     <PopoverTrigger render={trigger} />
 
-                    <PopoverContent className="w-full rounded-sm p-0" align="start">
+                    <PopoverContent
+                        className="w-full rounded-sm p-0"
+                        align="start"
+                    >
                         <div className="flex flex-col">{content}</div>
                     </PopoverContent>
                 </Popover>

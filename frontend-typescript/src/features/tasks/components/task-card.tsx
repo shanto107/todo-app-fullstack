@@ -1,18 +1,22 @@
-import { DeadlineBadge } from "@/components/common/form/fields/form-date-picker";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
 import { PRIORITY_OPTIONS } from "../constants/tasks.priorities";
 import { STATUS_OPTIONS } from "../constants/tasks.status";
 import type { Task } from "../types/task.types";
+import { DateBadge } from "@/components/common/badge/date-badge";
 
 type TaskCardType = {
     task: Task;
 };
 
 export default function TaskCard({ task }: TaskCardType) {
-    const taskStatus = STATUS_OPTIONS.find((status) => status.value === task.status);
-    const taskPriority = PRIORITY_OPTIONS.find((priority) => priority.value === task.priority);
+    const taskStatus = STATUS_OPTIONS.find(
+        (status) => status.value === task.status,
+    );
+    const taskPriority = PRIORITY_OPTIONS.find(
+        (priority) => priority.value === task.priority,
+    );
 
     return (
         <Card className="dark:border-accent/20 max-w-md rounded-sm shadow-sm md:max-w-xl dark:border-1">
@@ -28,7 +32,7 @@ export default function TaskCard({ task }: TaskCardType) {
 
                 <div className="flex items-center justify-between">
                     <Badge className="p-0" variant={"ghost"}>
-                        <DeadlineBadge
+                        <DateBadge
                             date={task.deadline}
                             defaultLabel="No Deadline"
                             iconClassName="size-4 mr-2"
@@ -36,7 +40,10 @@ export default function TaskCard({ task }: TaskCardType) {
                         />
                     </Badge>
                     {taskPriority && (
-                        <Badge className={`rounded-sm p-3 ${taskPriority.color}`} variant={"ghost"}>
+                        <Badge
+                            className={`rounded-sm p-3 ${taskPriority.color}`}
+                            variant={"ghost"}
+                        >
                             <taskPriority.icon className="mr-1 size-3.5" />
                             <span>{taskPriority.label}</span>
                         </Badge>

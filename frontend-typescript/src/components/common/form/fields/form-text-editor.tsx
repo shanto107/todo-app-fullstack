@@ -13,7 +13,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
 import EditorMenubar from "../../TextEditor/EditorMenubar";
-import { FormBase, type FormControlProps } from "../FormBase";
+import { FormBase, type FormControlProps } from "../form-base";
 import { useFieldContext } from "../hooks";
 
 type FormTextEditorProps = FormControlProps & {
@@ -88,8 +88,12 @@ export function FormTextEditor({
                     )}
                     onFocusCapture={() => setIsFocused(true)}
                     onBlurCapture={(event) => {
-                        const nextTarget = event.relatedTarget as HTMLElement | null;
-                        if (nextTarget && event.currentTarget.contains(nextTarget)) {
+                        const nextTarget =
+                            event.relatedTarget as HTMLElement | null;
+                        if (
+                            nextTarget &&
+                            event.currentTarget.contains(nextTarget)
+                        ) {
                             return;
                         }
                         if (nextTarget?.closest("[data-editor-ui]")) {
@@ -99,13 +103,18 @@ export function FormTextEditor({
                         field.handleBlur();
                     }}
                 >
-                    {!disabled && isFocused && <EditorMenubar editor={editor} />}
+                    {!disabled && isFocused && (
+                        <EditorMenubar editor={editor} />
+                    )}
 
                     {!disabled && !isMobile && (
                         <BubbleMenu
                             editor={editor}
                             shouldShow={({ editor }) => {
-                                return editor.isFocused && !editor.state.selection.empty;
+                                return (
+                                    editor.isFocused &&
+                                    !editor.state.selection.empty
+                                );
                             }}
                         >
                             <EditorMenubar editor={editor} />
@@ -127,8 +136,12 @@ export function FormTextEditor({
                 className="flex flex-col overflow-hidden rounded-sm border"
                 onFocusCapture={() => setIsFocused(true)}
                 onBlurCapture={(event) => {
-                    const nextTarget = event.relatedTarget as HTMLElement | null;
-                    if (nextTarget && event.currentTarget.contains(nextTarget)) {
+                    const nextTarget =
+                        event.relatedTarget as HTMLElement | null;
+                    if (
+                        nextTarget &&
+                        event.currentTarget.contains(nextTarget)
+                    ) {
                         return;
                     }
                     if (nextTarget?.closest("[data-editor-ui]")) {
@@ -143,7 +156,10 @@ export function FormTextEditor({
                     <BubbleMenu
                         editor={editor}
                         shouldShow={({ editor }) => {
-                            return editor.isFocused && !editor.state.selection.empty;
+                            return (
+                                editor.isFocused &&
+                                !editor.state.selection.empty
+                            );
                         }}
                     >
                         <EditorMenubar editor={editor} />

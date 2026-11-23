@@ -70,7 +70,14 @@ export default function AddTaskForm({ onSuccess }: AddTaskFormProps) {
                 </form.AppField>
 
                 <div className="mt-2 mb-6 flex flex-wrap items-center gap-4 md:mb-2">
-                    <form.AppField name="deadline">{(field) => <field.DatePicker />}</form.AppField>
+                    <form.AppField name="deadline">
+                        {(field) => (
+                            <field.DatePicker
+                                variant={"compact"}
+                                defaultLabel="Deadline"
+                            />
+                        )}
+                    </form.AppField>
 
                     <form.AppField name="priority">
                         {(field) => (

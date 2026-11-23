@@ -7,7 +7,7 @@ import {
     ComboboxList,
 } from "@/components/ui/combobox";
 
-import { FormBase, type FormControlProps } from "../FormBase";
+import { FormBase, type FormControlProps } from "../form-base";
 import { useFieldContext } from "../hooks";
 
 type ComboboxOption = {
