@@ -3,11 +3,9 @@ import { z } from "zod";
 export const BDPhoneNumberSchema = z
     .string()
     .trim()
-    .refine(
-        (value) => value === "" || /^\+8801[3-9]\d{8}$/.test(value),
-        "Enter a valid BD mobile number",
-    );
-
+    .min(1, "Mobile number is required")
+    .regex(/^\+8801[3-9]\d{8}$/, "Enter a valid BD mobile number");
+    
 export const profileFormSchema = z.object({
     name: z
         .string()

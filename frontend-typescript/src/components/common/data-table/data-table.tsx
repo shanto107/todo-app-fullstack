@@ -51,7 +51,9 @@ export default function DataTable<TData>({
         getCoreRowModel: getCoreRowModel(),
     });
 
-    const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
+    const selectedRows = table
+        .getSelectedRowModel()
+        .rows.map((row) => row.original);
 
     const emptyMessages: Record<TaskTableView, string> = {
         inbox: "No task remaining!",
@@ -80,7 +82,8 @@ export default function DataTable<TData>({
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
-                                                  header.column.columnDef.header,
+                                                  header.column.columnDef
+                                                      .header,
                                                   header.getContext(),
                                               )}
                                     </TableHead>
@@ -94,14 +97,20 @@ export default function DataTable<TData>({
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
                                     key={row.id}
-                                    data-state={row.getIsSelected() && "selected"}
+                                    data-state={
+                                        row.getIsSelected() && "selected"
+                                    }
                                     className={cn(
-                                        view === "deleted" && "text-muted-foreground",
+                                        view === "deleted" &&
+                                            "text-muted-foreground",
                                         "h-14",
                                     )}
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id} className="py-2">
+                                        <TableCell
+                                            key={cell.id}
+                                            className="py-2"
+                                        >
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext(),
@@ -112,7 +121,10 @@ export default function DataTable<TData>({
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={columns.length} className="h-12 text-sm italic">
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-12 text-sm italic"
+                                >
                                     {emptyMessage}
                                 </TableCell>
                             </TableRow>

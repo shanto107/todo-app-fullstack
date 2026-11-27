@@ -7,6 +7,7 @@ import { FormInput } from "./fields/form-input";
 import { FormPasswordInput } from "./fields/form-password-input";
 import { FormPopoverPicker } from "./fields/form-popover-picker";
 import { FormSubmitButton } from "./fields/form-submit-button";
+import { FormTextarea } from "./fields/form-text-area";
 import { FormTextEditor } from "./fields/form-text-editor";
 
 const { fieldContext, formContext, useFieldContext, useFormContext } =
@@ -16,6 +17,7 @@ const { useAppForm } = createFormHook({
     fieldComponents: {
         Input: FormInput,
         TextEditor: FormTextEditor,
+        TextArea: FormTextarea,
         DatePicker: FormDatePicker,
         PopoverPicker: FormPopoverPicker,
         PasswordInput: FormPasswordInput,

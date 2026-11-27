@@ -9,6 +9,7 @@ import {
 
 import { FormBase, type FormControlProps } from "../form-base";
 import { useFieldContext } from "../hooks";
+import { cn } from "@/lib/utils";
 
 type ComboboxOption = {
     value: string;
@@ -19,16 +20,18 @@ type FormComboboxProps = FormControlProps & {
     options: ComboboxOption[];
     placeholder?: string;
     disabled?: boolean;
-    className?: string;
     labelClassName?: string;
+    inputClassName?: string;
+    listClassName?: string;
 };
 
 export function FromCombobox({
     options,
     placeholder,
     disabled = false,
-    className,
     labelClassName,
+    inputClassName,
+    listClassName,
     ...props
 }: FormComboboxProps) {
     const field = useFieldContext<string>();
@@ -51,7 +54,7 @@ export function FromCombobox({
                     placeholder={placeholder}
                     onBlur={field.handleBlur}
                     aria-invalid={isInvalid}
-                    className={"rounded-sm"}
+                    className={cn(inputClassName, "rounded-sm")}
                 />
 
                 <ComboboxContent className={"rounded-sm"}>
@@ -61,7 +64,7 @@ export function FromCombobox({
                             <ComboboxItem
                                 key={option.value}
                                 value={option.value}
-                                className={"text-sm tracking-wider"}
+                                className={cn(listClassName, "tracking-wide")}
                             >
                                 {option.label}
                             </ComboboxItem>

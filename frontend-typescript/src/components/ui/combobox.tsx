@@ -64,7 +64,7 @@ function ComboboxInput({
         <InputGroup className={cn("w-auto", className)}>
             <ComboboxPrimitive.Input
                 render={<InputGroupInput disabled={disabled} />}
-                className={"text-sm tracking-wider md:text-sm"}
+                className={"tracking-wide"}
                 {...props}
             />
             <InputGroupAddon align="inline-end">

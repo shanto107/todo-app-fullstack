@@ -105,8 +105,9 @@ export function deadlineColumn() {
             <DateBadge
                 date={info.getValue()}
                 defaultLabel="No Deadline"
-                iconClassName="size-3.5 mr-2"
+                iconClassName="size-4.5 mr-2"
                 labelClassName="text-xs tracking-wide"
+                includeQuickDates
             />
         ),
     });

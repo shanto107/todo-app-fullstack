@@ -31,12 +31,13 @@ export default function TaskCard({ task }: TaskCardType) {
                 </div>
 
                 <div className="flex items-center justify-between">
-                    <Badge className="p-0" variant={"ghost"}>
+                    <Badge>
                         <DateBadge
                             date={task.deadline}
                             defaultLabel="No Deadline"
                             iconClassName="size-4 mr-2"
                             labelClassName="text-sm tracking-wide"
+                            includeQuickDates
                         />
                     </Badge>
                     {taskPriority && (

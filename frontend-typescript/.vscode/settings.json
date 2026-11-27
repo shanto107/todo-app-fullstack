@@ -1,0 +1,20 @@
+{
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.experimental.configFile": "src/index.css",
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "class:list",
+    "inputClassName",
+    "listClassName",
+    "labelClassName"
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    "[a-zA-Z]*ClassName='([^']+)'",
+    "[a-zA-Z]*ClassName=\"([^\"]+)\"",
+    "[a-zA-Z]*ClassName=\\{`([^`]+)`\\}"
+  ]
+}

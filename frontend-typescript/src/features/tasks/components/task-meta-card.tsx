@@ -30,7 +30,9 @@ export default function TaskMetaCard({ task, form }: TaskMetaCardProps) {
     return (
         <Card className="rounded-sm">
             <CardHeader>
-                <CardTitle className="text-[1rem] tracking-wider">Details</CardTitle>
+                <CardTitle className="text-[1rem] tracking-wider">
+                    Details
+                </CardTitle>
             </CardHeader>
             <CardContent className="text-sm">
                 <MetaRow
@@ -73,7 +75,14 @@ export default function TaskMetaCard({ task, form }: TaskMetaCardProps) {
                     label="Deadline"
                     value={
                         <form.AppField name="deadline">
-                            {(field) => <field.DatePicker disabled={isDeleted} />}
+                            {(field) => (
+                                <field.DatePicker
+                                    variant="compact"
+                                    disabled={isDeleted}
+                                    defaultLabel="Not Given"
+                                    includeQuickDates
+                                />
+                            )}
                         </form.AppField>
                     }
                 />

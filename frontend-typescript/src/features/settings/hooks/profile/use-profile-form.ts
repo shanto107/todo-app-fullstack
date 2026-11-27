@@ -2,6 +2,7 @@ import { toast } from "sonner";
 
 import { useAppForm } from "@/components/common/form/hooks";
 import { ApiError } from "@/lib/api/api-error";
+import { authClient } from "@/services/auth-client";
 
 import { PROFILE_EDITABLE_FIELDS } from "../../constants/profile.form";
 import {
@@ -12,9 +13,17 @@ import { profileFormSchema } from "../../schemas/profile.schema";
 import type { Profile } from "../../types/profile.types";
 import { useUpdateProfile } from "./use-update-profile";
 
-export function useProfileForm(profile: Profile) {
+type UseProfileFormOptions = {
+    onSuccess?: () => void;
+};
+
+export function useProfileForm(
+    profile: Profile,
+    options?: UseProfileFormOptions,
+) {
     const updateProfileMutation = useUpdateProfile();
     const defaultValues = getDefaultProfileFormValues(profile);
+    const { refetch } = authClient.useSession();
 
     const form = useAppForm({
         defaultValues,
@@ -38,7 +47,9 @@ export function useProfileForm(profile: Profile) {
             try {
                 const updatedProfile =
                     await updateProfileMutation.mutateAsync(payload);
+                await refetch();
                 formApi.reset(getDefaultProfileFormValues(updatedProfile));
+                options?.onSuccess?.();
                 toast.success("Profile Updated Successfully!");
             } catch (error) {
                 if (error instanceof ApiError) {

@@ -75,6 +75,7 @@ export default function AddTaskForm({ onSuccess }: AddTaskFormProps) {
                             <field.DatePicker
                                 variant={"compact"}
                                 defaultLabel="Deadline"
+                                includeQuickDates
                             />
                         )}
                     </form.AppField>
