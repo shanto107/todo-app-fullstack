@@ -1,6 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "../../helpers/name";
-import { IdCard, Mail } from "lucide-react";
+import { House, IdCard, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type SettingsHeaderProps = {
     name?: string | null;
@@ -15,6 +18,7 @@ export default function SettingsHeader({
     image,
     employeeId,
 }: SettingsHeaderProps) {
+    const isMobile = useIsMobile();
     return (
         <header className="border-accent/50 relative overflow-hidden rounded-lg border-2">
             {/* Decorative background */}

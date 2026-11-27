@@ -47,14 +47,17 @@ export function useProfileForm(
             try {
                 const updatedProfile =
                     await updateProfileMutation.mutateAsync(payload);
+                await authClient.getSession({
+                    query: {
+                        disableCookieCache: true,
+                    },
+                });
                 await refetch();
                 formApi.reset(getDefaultProfileFormValues(updatedProfile));
                 options?.onSuccess?.();
                 toast.success("Profile Updated Successfully!");
             } catch (error) {
-                if (error instanceof ApiError) {
-                    toast.error(error.message);
-                } else {
+                if (!(error instanceof ApiError)) {
                     toast.error("Failed to update profile. Please try again.");
                 }
             }
